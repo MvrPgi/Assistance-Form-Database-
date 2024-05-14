@@ -122,7 +122,24 @@ entry_4 = Entry(
     fg="#000716",
     highlightthickness=0
 )
-entry_4.place(x=40.0, y=150.0, width=450.0, height=20.0)
+entry_4.place(x=40.0, y=150.0, width=290.0, height=20.0)
+
+# Relationship
+canvas.create_text(
+    360.0,
+    130.0,
+    anchor="nw",
+    text="Relationship",
+    fill="#000000",
+    font=("InknutAntiqua Regular", 8 * -1)
+)
+entry_3 = Entry(
+    bd=0,
+    bg="#FFF4F4",
+    fg="#000716",
+    highlightthickness=0
+) 
+entry_3.place(x=360.0, y=150.0, width=130.0, height=20.0)
 
 # Contact Number
 canvas.create_text(
@@ -260,22 +277,7 @@ entry_12 = Entry(
 )
 entry_12.place(x=260.0, y=300.0, width=100.0, height=20.0)
 
-# Status
-canvas.create_text(
-    380.0,
-    280.0,
-    anchor="nw",
-    text="Status",
-    fill="#000000",
-    font=("InknutAntiqua Regular", 8 * -1)
-)
-entry_13 = Entry(
-    bd=0,
-    bg="#FFF4F4",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_13.place(x=380.0, y=300.0, width=100.0, height=20.0)
+
 
 # Button
 button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
