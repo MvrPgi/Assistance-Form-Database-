@@ -20,7 +20,6 @@ mydb = mysql.connector.connect(
 #create_table_sql = """
 #CREATE TABLE IF NOT EXISTS Applicant_Details (
 #    Applicant_ID VARCHAR(10) PRIMARY KEY,
-#    Applicant_Status VARCHAR(20) NOT NULL,
 #    Full_Name VARCHAR(50) NOT NULL,
 #    Address VARCHAR(85) NOT NULL,
 #    Civil_Status CHAR(2) NOT NULL CHECK (Civil_Status IN ('S', 'M', 'W', 'SE')),
