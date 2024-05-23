@@ -17,12 +17,26 @@ class Applicant_Details:
         print("You have disconnected to the  database")
 
       def insert(self,Application_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion,Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome,Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
-          query = "INSERT INTO Applicant_Details (Application_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome) VALUES (
-        %(Application_Status)s, %(Full_Name)s, %(Address)s, %(Civil_Status)s, %(Birth_Date)s, %(Age)s, %(Sex)s,
-        %(Nationality)s, %(Religion)s, %(Highest_Educ_Attainment)s, %(Occupation)s, %(Monthly_Income)s, %(Membership)s,
-        %(OtherSourceOfIncome)s, %(Monthly_Expenditures)s, %(GrossMonthlyIncome)s, %(NetMonthlyIncome)s
-    )
-          data = (Application_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome)
-          self.cursor.execute(query, data)
-          self.con.commit()
-          messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")        
+        query = "INSERT INTO Applicant_Details (Application_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome) VALUES (%(Application_Status)s, %(Full_Name)s, %(Address)s, %(Civil_Status)s, %(Birth_Date)s, %(Age)s, %(Sex)s, %(Nationality)s, %(Religion)s, %(Highest_Educ_Attainment)s, %(Occupation)s, %(Monthly_Income)s, %(Membership)s, %(OtherSourceOfIncome)s, %(Monthly_Expenditures)s, %(GrossMonthlyIncome)s, %(NetMonthlyIncome)s)"
+        data = {
+            "Application_Status": Application_Status,
+            "Full_Name": Full_Name,
+            "Address": Address,
+            "Civil_Status": Civil_Status,
+            "Birth_Date": Birth_Date,
+            "Age": Age,
+            "Sex": Sex,
+            "Nationality": Nationality,
+            "Religion": Religion,
+            "Highest_Educ_Attainment": Highest_Educ_Attainment,
+            "Occupation": Occupation,
+            "Monthly_Income": Monthly_Income,
+            "Membership": Membership,
+            "OtherSourceOfIncome": OtherSourceOfIncome,
+            "Monthly_Expenditures": Monthly_Expenditures,
+            "GrossMonthlyIncome": GrossMonthlyIncome,
+            "NetMonthlyIncome": NetMonthlyIncome
+              }
+        self.cursor.execute(query, data)
+        self.con.commit()
+        messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")        
