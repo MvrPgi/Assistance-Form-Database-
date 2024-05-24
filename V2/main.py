@@ -1,3 +1,4 @@
+
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 import mysql.connector as mysql
@@ -19,7 +20,7 @@ class Applicant_Details_GUI:
 
     # Commit data function
     def commit_data(self):
-        data = {
+        data = { 
             "Application_Status": entry_17.get(),
             "Full_Name": entry_16.get(),
             "Address": entry_15.get(),
@@ -90,7 +91,7 @@ def quit():
     window.quit()
 
 # Main Window Setup
-window = Tk()
+window = Tk() #
 window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
 window.title("My Application Window")
 window.configure(bg=BACKGROUND_COLOR)
@@ -108,11 +109,11 @@ canvas.place(x=0, y=0)
 
 # Entry Fields
 entries_info = [
-    (749, 230, 271, 16, "entry_1.png", "Net Monthly Income"),
-    (749, 200, 271, 16, "entry_2.png", "Gross Monthly Income"),
-    (749, 172, 271, 16, "entry_3.png", "Monthly Expenditures"),
-    (749, 144, 271, 16, "entry_4.png", "Other Sources Of Income"),
-    (749, 114, 271, 16, "entry_5.png", "Monthly Income"),
+    (749, 230, 271, 15, "entry_1.png", "Net Monthly Income"),
+    (749, 200, 271, 15, "entry_2.png", "Gross Monthly Income"),
+    (749, 172, 271, 15, "entry_3.png", "Monthly Expenditures"),
+    (749, 144, 271, 15, "entry_4.png", "Other Sources Of Income"),
+    (749, 114, 271, 15, "entry_5.png", "Monthly Income"),
     (749, 86, 271, 16, "entry_6.png", "Occupation"),
     (232, 372, 271, 16, "entry_7.png", "Membership"),
     (232, 344, 271, 16, "entry_8.png", "Educational Attainment"),
@@ -127,7 +128,7 @@ entries_info = [
     (232, 86, 271, 16, "entry_17.png", "Application Status"),
 ]
 
-entry_widgets = []
+entry_widgets = [] # List to store entry widgets
 
 for x, y, width, height, img, label in entries_info:
     entry_widgets.append(create_entry(canvas, x, y, width, height, img))
