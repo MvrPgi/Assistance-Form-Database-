@@ -2,10 +2,8 @@ from mysql_config import dbConfig
 import mysql.connector as mysql
 from tkinter import messagebox
 
-class Applicant_Details:
+class DatabaseConnection:
     
-
-
       def __init__(self):
           self.con = mysql.connect(**dbConfig)
           self.cursor = self.con.cursor()

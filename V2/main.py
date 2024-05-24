@@ -1,7 +1,7 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 import mysql.connector as mysql
-from mysql_connection import Applicant_Details
+from mysql_connection import DatabaseConnection
 
 # Database connection
 def connect_to_db():
@@ -15,7 +15,7 @@ def connect_to_db():
 class Applicant_Details_GUI:
 
     def __init__(self):
-        self.applicant_details = Applicant_Details()  # Create an instance of the Applicant_Details class
+        self.applicant_details = DatabaseConnection()  # Create an instance of the Applicant_Details class
 
     # Commit data function
     def commit_data(self):
@@ -41,19 +41,25 @@ class Applicant_Details_GUI:
 
         try:
             # Create an instance of the Applicant_Details class
-            applicant_details = Applicant_Details()
+            applicant_details = DatabaseConnection()
             applicant_details.insert(**data)
         except mysql.Error as err:
           print(f"Error: {err}")
 
-# Constants
+# Define paths and constants
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path("assets/frame0")
+ASSETS_PATH = OUTPUT_PATH / "assets/frame0"
+
+# Window dimensions
 WINDOW_WIDTH = 1066
 WINDOW_HEIGHT = 441
+
+# Colors
 BACKGROUND_COLOR = "#FFFFFF"
 ENTRY_BACKGROUND = "#FFF4F4"
 ENTRY_FOREGROUND = "#000716"
+
+# Font settings
 FONT_FAMILY = "InknutAntiqua Regular"
 FONT_SIZE = 13
 
@@ -80,10 +86,13 @@ def create_text(canvas, x, y, text):
         fill="#000000",
         font=(FONT_FAMILY, FONT_SIZE * -1)
     )
+def quit():
+    window.quit()
 
 # Main Window Setup
 window = Tk()
 window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
+window.title("My Application Window")
 window.configure(bg=BACKGROUND_COLOR)
 
 canvas = Canvas(
@@ -122,7 +131,7 @@ entry_widgets = []
 
 for x, y, width, height, img, label in entries_info:
     entry_widgets.append(create_entry(canvas, x, y, width, height, img))
-    create_text(canvas, x - 246, y - 4, label)
+    create_text(canvas, x - 170, y - 4, label)
 
 entry_1, entry_2, entry_3, entry_4, entry_5, entry_6, entry_7, entry_8, entry_9, entry_10, entry_11, entry_12, entry_13, entry_14, entry_15, entry_16, entry_17 = entry_widgets
 
@@ -136,6 +145,16 @@ button_1 = Button(
     relief="flat"
 )
 button_1.place(x=958, y=380, width=62, height=34)
+
+button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
+button_2 = Button(
+    image=button_image_2,
+    borderwidth=0,
+    highlightthickness=0,
+    command=window.quit,
+    relief="flat"
+)
+button_2.place(x=892, y=380, width=62, height=34)
 
 # Header Text
 canvas.create_text(
