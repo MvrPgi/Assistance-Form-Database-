@@ -1,4 +1,4 @@
-from V4.mysql_config import dbConfig
+from mysql_config import dbConfig
 import mysql.connector as mysql
 from tkinter import messagebox
 

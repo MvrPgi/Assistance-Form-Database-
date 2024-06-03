@@ -2,7 +2,7 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 import mysql.connector as mysql
-from mysql_connection import DatabaseConnection
+from V4.mysql_connection import DatabaseConnection
 
 # Database connection
 def connect_to_db():
