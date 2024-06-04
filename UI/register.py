@@ -2,7 +2,7 @@ import sys
 import os
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, Entry
-from PIL import Image, ImageTk 
+
 
 def resource_path(relative_path):
     try:
@@ -49,21 +49,33 @@ class Register(tk.Canvas):
         self.create_text(700, 250.0,anchor ="nw", text="Region",fill="#000000",font=("Mada Regular", 8 * -1))
         ############################
         self.create_text(49.0, 265.0,anchor ="nw", text="Civil Status",fill="#000000",font=("Mada Regular", 10 * -1))
+        ############################
         self.create_text(49.0, 290.0,anchor ="nw", text="Birthdate:",fill="#000000",font=("Mada Regular", 10 * -1))
-        self.create_text(230.0, 290.0,anchor ="nw", text="Age:",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(227.0, 290.0,anchor ="nw", text="Age:",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(420.0, 290.0,anchor ="nw", text = "Sex",fill="#000000",font=("Mada Regular", 10 * -1))
+        ############################           
         self.create_text(49.0, 321.5,anchor ="nw", text = "Nationality",fill="#000000",font=("Mada Regular", 10 * -1))
-        self.create_text(230.0, 321.5,anchor ="nw", text = "Religion",fill="#000000",font=("Mada Regular", 10 * -1))
-
+        self.create_text(227.0, 321.5,anchor ="nw", text = "Religion",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(49.0, 353, anchor ="nw", text = "Highest Educational Attainment",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(420.0, 321, anchor ="nw", text = "Occupation",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(650.0, 321, anchor ="nw", text = "Membership",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(49.0, 390, anchor ="nw", text = "Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(227.0, 390, anchor ="nw", text = "Other Sources Of Income",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(420.0, 390, anchor ="nw", text = "Monthly Expenditure",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(559.0, 390, anchor ="nw", text = "Gross Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1))
+        self.create_text(700.0, 390, anchor ="nw", text = "Net Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1))
         #LOAD THE IMAGES
         self.image_image_1 = PhotoImage(file=resource_path("resources/APP_1/image_1.png"))  
         self.image_entry_3 = PhotoImage(file=resource_path("resources/APP_1/entry_3.png"))
         self.image_entry_5 = PhotoImage(file=resource_path("resources/APP_1/entry_5.png"))
         self.image_image_6 = PhotoImage(file=resource_path("resources/APP_1/image_6.png"))
         self.image_entry_11 = PhotoImage(file=resource_path("resources/APP_1/entry_11.png"))
+        self.image_entry_12 = PhotoImage(file=resource_path("resources/APP_1/entry_12.png"))    
+        self.image_entry_9 = PhotoImage(file=resource_path("resources/APP_1/entry_9.png"))
        
 
         #PLACE THE IMAGES
-        self.create_image(415.0, 46.0, image=self.image_image_1)
+        self.create_image(405.0, 46.0, image=self.image_image_1)
         self.create_image(120.0, 150.5, image=self.image_image_6)
         self.create_image(409.0, 190.5, image=self.image_entry_3)
         self.create_image(409.0, 237.5, image=self.image_entry_3)
@@ -73,6 +85,15 @@ class Register(tk.Canvas):
         self.create_image(298.5, 310.5, image=self.image_entry_5)   
         self.create_image(120.5, 340.5, image=self.image_entry_5)
         self.create_image(298.5, 340.5, image=self.image_entry_5)
+        self.create_image(490.5, 342.5, image=self.image_entry_5)
+        self.create_image(698.5, 342.5, image=self.image_entry_5)
+        self.create_image(120.5, 410.5, image=self.image_entry_5)
+        self.create_image(298.5, 410.5, image=self.image_entry_9)
+        self.create_image(490.5, 410.5, image=self.image_entry_9)
+        self.create_image(629.5, 410.5, image=self.image_entry_9)
+        self.create_image(770.5, 410.5, image=self.image_entry_9)
+
+      
   
         
 
@@ -164,6 +185,92 @@ class Register(tk.Canvas):
         width=142.0,
         height=10.0
 )
+        self.Religion = Entry(
+        bd=0,
+        bg="#FFE5AB",
+        fg="#000716",
+        highlightthickness=0
+)
+        self.Religion.place(
+        x=230.0,
+        y=335.5,
+        width=142.0,
+        height=10.0
+)
+        self.Occupation = Entry(
+        bd=0,
+        bg="#FFE5AB",
+        fg="#000716",
+        highlightthickness=0
+)
+        self.Occupation.place(
+        x=420.0,
+        y=335.5,
+        width=142.0,
+        height=10.0
+)
+        self.Monthly_Income = Entry(
+        bd=0,
+        bg="#FFE5AB",
+        fg="#000716",
+        highlightthickness=0
+)
+        self.Monthly_Income.place(
+        x=52.0,
+        y=405.5,
+        width=110.0,
+        height=10.0
+)
+        self.Other_Sources_Of_Income = Entry(
+        bd=0,
+        bg="#FFE5AB",
+        fg="#000716",
+        highlightthickness=0
+)
+        self.Other_Sources_Of_Income.place(
+        x=230.0,
+        y=405.5,
+        width=110.0,
+        height=10.0
+)
+        self.Monthly_Expenditure = Entry(
+        bd=0,
+        bg="#FFE5AB",
+        fg="#000716",
+        highlightthickness=0
+)
+        self.Monthly_Expenditure.place(
+        x=420.0,
+        y=405.5,
+        width=110.0,
+        height=10.0
+)
+        self.Gross_Monthly_Income = Entry(
+        bd=0,
+        bg="#FFE5AB",
+        fg="#000716",
+        highlightthickness=0
+)
+        self.Gross_Monthly_Income.place(
+        x=559.0,
+        y=405.5,
+        width=110.0,
+        height=10.0
+)
+        self.Net_Monthly_Income = Entry(
+        bd=0,
+        bg="#FFE5AB",
+        fg="#000716",
+        highlightthickness=0
+)
+        self.Net_Monthly_Income.place(
+        x=700.0,
+        y=405.5,
+        width=110.0,
+        height=10.0
+)
+     
+        
 
 
 
