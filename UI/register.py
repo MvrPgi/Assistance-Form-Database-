@@ -31,12 +31,15 @@ class Register(tk.Canvas):
         self.button_image_1 = PhotoImage(file=resource_path("resources/APP_1/button_1.png"))
        
         
-        #BACKGROUND IMAGE
-        self.create_image(120.0, 150.5, image=self.image_image_6)
+##########################################################################################################################################################################
+################################################################        BACKGROUND IMAGE        ##########################################################################
+##########################################################################################################################################################################
+
         self.create_image(405.0, 46.0, image=self.image_image_1)
 
         #ENTRY IMAGES
-        self.pageImage1_id = [] # Store the image ids to hide them later
+        self.pageImage1_id = [] 
+        self.pageImage1_id.append(self.create_image(409.0, 120.5, image=self.image_entry_6))
         self.pageImage1_id.append(self.create_image(409.0, 190.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(409.0, 237.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(397.0, 120.5, image=self.image_entry_11))
@@ -50,10 +53,11 @@ class Register(tk.Canvas):
         self.pageImage1_id.append(self.create_image(280.5, 410.5, image=self.image_entry_16))
         self.pageImage1_id.append(self.create_image(472.5, 410.5, image=self.image_entry_16))
         self.pageImage1_id.append(self.create_image(612.5, 410.5, image=self.image_entry_16))
-        self.pageImage1_id.append(self.create_image(750.5, 410.5, image=self.image_entry_16))      
+        self.pageImage1_id.append(self.create_image(750.5, 410.5, image=self.image_entry_16))  
 
-        
-        #CREATE THE TEXTS OF FIRST PAGE
+##########################################################################################################################################################################
+############################################################    CREATE THE TEXTS OF FIRST PAGE    ########################################################################
+##########################################################################################################################################################################
         self.PageText1_id = []     
         self.PageText1_id.append(self.create_text(49.0, 100.0, anchor="nw", text="Reference No:", fill="#000000", font=("Mada Regular", 10 * -1)))
         self.PageText1_id.append(self.create_text(289.0, 100,anchor ="nw", text="Date:",fill="#000000",font=("Mada Regular", 10 * -1)))
@@ -84,8 +88,11 @@ class Register(tk.Canvas):
         self.PageText1_id.append(self.create_text(700.0, 390, anchor ="nw", text = "Net Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1)))
 
                 
+##########################################################################################################################################################################
+############################################################    CREATING ENTRYWIDGET P1     ##############################################################################
+##########################################################################################################################################################################
 
-    # Creating and placing the entry widget of the first page
+
         self.Reference_No = Entry(
         bd=0,
         bg="#FFE5AB",
@@ -283,8 +290,13 @@ class Register(tk.Canvas):
         width=100.0,
         height=30.0
 )
-# 2ND PAGE
-            
+##########################################################################################################################################################################
+############################################################    CREATING ENTRYWIDGET P2     ##############################################################################
+##########################################################################################################################################################################
+
+
+
+
 # HIDE THE WIDGETS
     def hide(self):
             for image_id in self.pageImage1_id:
@@ -327,7 +339,9 @@ class Register(tk.Canvas):
             self.Other_Sources_Of_Income.place()
             self.Monthly_Expenditure.place()
             self.Gross_Monthly_Income.place()
-            self.Net_Monthly_Income.place()     
+            self.Net_Monthly_Income.place()
+            
+                 
      
 
 
@@ -338,5 +352,4 @@ class Register(tk.Canvas):
 
         
        
-
     
