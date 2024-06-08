@@ -32,11 +32,12 @@ class Register(tk.Canvas):
        
         
         #BACKGROUND IMAGE
-        self.create_image(120.0, 150.5, image=self.image_image_6)
+       
         self.create_image(405.0, 46.0, image=self.image_image_1)
 
         #ENTRY IMAGES
         self.pageImage1_id = [] # Store the image ids to hide them later
+        self.pageImage1_id.append(self.create_image(120.0, 150.5, image=self.image_image_6))
         self.pageImage1_id.append(self.create_image(409.0, 190.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(409.0, 237.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(397.0, 120.5, image=self.image_entry_11))
@@ -348,37 +349,37 @@ class Register(tk.Canvas):
                 )
         self.Post_Graduate.place(
                 x=49.0,
-                y=375.5,
+                y=370.5,
                 width=100.0,
                 height=15.0
                 )
         self.College.place(
                 x=170.0,
-                y=375.5,
+                y=370.5,
                 width=60.0,
                 height=15.0
                 )
         self.Elementary_School.place(
                 x=270.0,
-                y=375.5,
+                y=370.5,
                 width=80.0,
                 height=15.0
                 )
         self.Vocational.place(
                 x=370.0,
-                y=375.5,
+                y=370.5,
                 width=80.0,
                 height=15.0
                 )
         self.High_School.place(
                 x=470.0,
-                y=375.5,
+                y=370.5,
                 width=80.0,
                 height=15.0
                 )
         self._None.place(
                 x=570.0,
-                y=375.5,
+                y=370.5,
                 width=60.0,
                 height=15.0
                 )
@@ -632,18 +633,13 @@ class Register(tk.Canvas):
         width=100.0,
         height=30.0
 )
-#         self.button_2 = tk.Button(
-#         image=self.button_image_1,
-#         borderwidth=0,
-#         highlightthickness=0,
-#         command = self.show
-# )   
-#         self.button_2.place(
-#         x=505.0,
-#         y=450.0,
-#         width=100.0,
-#         height=30.0
-# )
+        self.button_2 = tk.Button(
+        image=self.button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command = self.show,
+)
+
 # 2ND PAGE
             
 # HIDE THE WIDGETS
@@ -652,44 +648,98 @@ class Register(tk.Canvas):
                 self.itemconfigure(image_id, state="hidden")
             for text_id in self.PageText1_id:
                 self.itemconfigure(text_id, state="hidden")
-            self.Reference_No.place_forget()
-            self.Date.place_forget()
-            self.FullName.place_forget()
-            self.Permanent_Address.place_forget()
-            self.Birthdate.place_forget()
-            self.Age.place_forget()
-            self.Nationality.place_forget()
-            self.Religion.place_forget()
-            self.Occupation.place_forget()
-            self.Monthly_Income.place_forget()
-            self.Other_Sources_Of_Income.place_forget()
-            self.Monthly_Expenditure.place_forget()
-            self.Gross_Monthly_Income.place_forget()
-            self.Net_Monthly_Income.place_forget()
+                self.New_Status.place_forget()
+                self.Old_Status.place_forget()
+                self.Single.place_forget()
+                self.Widow.place_forget()
+                self.Married.place_forget()
+                self.Separated.place_forget()
+                self.With_Partner.place_forget()
+                self.Male.place_forget()
+                self.Female.place_forget()
+                self.Post_Graduate.place_forget()
+                self.College.place_forget()
+                self.Elementary_School.place_forget()
+                self.Vocational.place_forget()
+                self.High_School.place_forget()
+                self._None.place_forget()
+                self.Member.place_forget()
+                self.Non_Member.place_forget()
+                self.Dependent.place_forget()
+                self.Reference_No.place_forget()
+                self.Date.place_forget()
+                self.FullName.place_forget()
+                self.Permanent_Address.place_forget()
+                self.Birthdate.place_forget()
+                self.Age.place_forget()
+                self.Nationality.place_forget()
+                self.Religion.place_forget()
+                self.Occupation.place_forget()
+                self.Monthly_Income.place_forget()
+                self.Other_Sources_Of_Income.place_forget()
+                self.Monthly_Expenditure.place_forget()
+                self.Gross_Monthly_Income.place_forget()
+                self.Net_Monthly_Income.place_forget()
+                self.button_2.place(
+                x=100.0,
+                y=450.0,
+                width=100.0,
+                height=30.0
+                )
+
 
 
     
-# # SHOW THE WIDGETS
-#     def show(self):
-
-#         for image_id in self.pageImage1_id:
-#             self.itemconfigure(image_id, state="normal")
-#         for text_id in self.PageText1_id:
-#             self.itemconfigure(text_id, state="normal")
-#             self.Reference_No.place()
-#             self.Date.place()
-#             self.FullName.place()
-#             self.Permanent_Address.place()
-#             self.Birthdate.place()
-#             self.Age.place()
-#             self.Nationality.place()
-#             self.Religion.place()
-#             self.Occupation.place()
-#             self.Monthly_Income.place()
-#             self.Other_Sources_Of_Income.place()
-#             self.Monthly_Expenditure.place()
-#             self.Gross_Monthly_Income.place()
-#             self.Net_Monthly_Income.place()     
+# SHOW THE WIDGETS
+    def show(self):
+            for image_id in self.pageImage1_id:
+                self.itemconfigure(image_id, state="normal")
+            for text_id in self.PageText1_id:
+                self.itemconfigure(text_id, state="normal")
+                self.New_Status.place(
+                x=550.0,
+                y=115.5,
+                width=50.0,
+                height=10.0
+                )
+                self.Old_Status.place(
+                x=640.0,
+                y=115.5,
+                width=50.0,
+                height=10.0
+                )
+                self.Single.place(
+                x=49.0,
+                y=275.5,
+                width=60.0,
+                height=15.0
+                )
+                self.Widow.place(
+                x=170.0,
+                y=275.5,
+                width=60.0,
+                height=15.0
+                )
+                self.Married.place(
+                x=270.0,
+                y=275.5,
+                width=60.0,
+                height=15.0
+                )
+                self.Separated.place(
+                x=370.0,
+                y=275.5,
+                width=70.0,
+                height=15.0
+                )
+                self.With_Partner.place(
+                x=470.0,
+                y=276.5,
+                width=80.0,
+                height=15.0
+                )
+                
+    
      
 
 
