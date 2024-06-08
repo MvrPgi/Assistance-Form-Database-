@@ -1,8 +1,7 @@
 from UI.register import Register
-import sys
-import os
 import tkinter as tk
-from tkinter import PhotoImage, messagebox, Entry
+
+
 
 
 class App(tk.Tk):
