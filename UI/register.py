@@ -1,15 +1,6 @@
-import sys
-import os
+from resources.FileTracker.tracker import resource_path
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, Entry, Radiobutton
-
-
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
 
 
 
@@ -85,10 +76,10 @@ class Register(tk.Canvas):
         self.PageText1_id.append(self.create_text(559.0, 390, anchor ="nw", text = "Gross Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1)))
         self.PageText1_id.append(self.create_text(700.0, 390, anchor ="nw", text = "Net Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1)))
 
-# RADIO BUTTON
+		# RADIO BUTTON
         self.Applicant_Status = tk.StringVar() 
-        self.Applicant_Status.set("New Applicant")
-        self.Civil_Status = tk.StringVar()
+        self.Applicant_Status.set("New Applicant") # Default value
+        self.Civil_Status = tk.StringVar() 
         self.Civil_Status.set("Single  ")
         self.Membership = tk.StringVar()
         self.Membership.set("Member")
