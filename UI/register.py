@@ -24,9 +24,15 @@ class Register(tk.Canvas):
         
         #BACKGROUND IMAGE
        
+##########################################################################################################################################################################
+################################################################        BACKGROUND IMAGE        ##########################################################################
+##########################################################################################################################################################################
+
         self.create_image(405.0, 46.0, image=self.image_image_1)
 
         #ENTRY IMAGES
+        self.pageImage1_id = [] 
+        self.pageImage1_id.append(self.create_image(409.0, 120.5, image=self.image_image_6))
         self.pageImage1_id = [] # Store the image ids to hide them later
         self.pageImage1_id.append(self.create_image(120.0, 150.5, image=self.image_image_6))
         self.pageImage1_id.append(self.create_image(409.0, 190.5, image=self.image_entry_3))
@@ -42,10 +48,11 @@ class Register(tk.Canvas):
         self.pageImage1_id.append(self.create_image(280.5, 410.5, image=self.image_entry_16))
         self.pageImage1_id.append(self.create_image(472.5, 410.5, image=self.image_entry_16))
         self.pageImage1_id.append(self.create_image(612.5, 410.5, image=self.image_entry_16))
-        self.pageImage1_id.append(self.create_image(750.5, 410.5, image=self.image_entry_16))      
+        self.pageImage1_id.append(self.create_image(750.5, 410.5, image=self.image_entry_16))  
 
-        
-        #CREATE THE TEXTS OF FIRST PAGE
+##########################################################################################################################################################################
+############################################################    CREATE THE TEXTS OF FIRST PAGE    ########################################################################
+##########################################################################################################################################################################
         self.PageText1_id = []     
         self.PageText1_id.append(self.create_text(49.0, 100.0, anchor="nw", text="Reference No:", fill="#000000", font=("Mada Regular", 10 * -1)))
         self.PageText1_id.append(self.create_text(289.0, 100,anchor ="nw", text="Date:",fill="#000000",font=("Mada Regular", 10 * -1)))
@@ -76,369 +83,8 @@ class Register(tk.Canvas):
         self.PageText1_id.append(self.create_text(559.0, 390, anchor ="nw", text = "Gross Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1)))
         self.PageText1_id.append(self.create_text(700.0, 390, anchor ="nw", text = "Net Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1)))
 
-		# RADIO BUTTON
-        self.Applicant_Status = tk.StringVar() 
-        self.Applicant_Status.set("New Applicant") # Default value
-        self.Civil_Status = tk.StringVar() 
-        self.Civil_Status.set("Single  ")
-        self.Membership = tk.StringVar()
-        self.Membership.set("Member")
-        self.Sex = tk.StringVar()
-        self.Sex.set("Female")
-        self.Highest_Educational_Attainment = tk.StringVar()
-        self.Highest_Educational_Attainment.set("None")
+                
 
-        self.New_Status = Radiobutton(
-            self,
-            text="New",
-            bg="#FFFFFF",
-            fg="#000716",
-            activebackground="#FFFFFF",
-            activeforeground="#000716",
-            borderwidth=0,
-            highlightthickness=0,
-            value="New Applicant",
-            variable=self.Applicant_Status,
-        )
-
-        self.Old_Status = Radiobutton(
-            self,
-            text="Old",
-            bg="#FFFFFF",
-            fg="#000716",
-            activebackground="#FFFFFF",
-            activeforeground="#000716",
-            borderwidth=0,
-            highlightthickness=0,
-            value="Old Applicant",
-            variable=self.Applicant_Status,
-        )
-        self.New_Status.place(
-                x=550.0,
-                y=115.5,
-                width=50.0,
-                height=10.0
-                )
-        self.Old_Status.place(
-                x=640.0,
-                y=115.5,
-                width=50.0,
-                height=10.0
-                )
-        self.Single = Radiobutton(        
-            self,
-            text="Single",
-            bg="#FFFFFF",
-            fg="#000716",
-            activebackground="#FFFFFF",
-            activeforeground="#000716",
-            borderwidth=0,
-            highlightthickness=0,
-            value="Single",
-            variable=self.Civil_Status,
-            font=("Mada Regular", 10 * -1)
-        )
-        self.Widow = Radiobutton(
-                self,
-                text="Widow",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Widow",
-                variable=self.Civil_Status,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.Married = Radiobutton(
-                self,
-                text="Married",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Married",
-                variable=self.Civil_Status,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.Separated = Radiobutton(
-                self,
-                text="Separated",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Separated",
-                variable=self.Civil_Status,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.With_Partner = Radiobutton(
-                self,
-                text="With Partner",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="With Partner",
-                variable=self.Civil_Status,
-                font=("Mada Regular", 10 * -1)
-                )
-        # CIVIL STATUS PLACE
-        self.Single.place(
-                x=49.0,
-                y=275.5,
-                width=60.0,
-                height=15.0
-                )
-        self.Widow.place(
-                x=170.0,
-                y=275.5,
-                width=60.0,
-                height=15.0
-                )
-        self.Married.place(
-                x=270.0,
-                y=275.5,
-                width=60.0,
-                height=15.0
-                )
-        self.Separated.place(
-                x=370.0,
-                y=275.5,
-                width=70.0,
-                height=15.0
-                )
-        self.With_Partner.place(
-                x=470.0,
-                y=276.5,
-                width=80.0,
-                height=15.0
-                )
-        self.Male = Radiobutton(
-                self,
-                text = "Male",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value = "Male",
-                variable= self.Sex,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.Female = Radiobutton(
-                self,
-                text ="Female",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value = "Female",       
-                variable = self.Sex,
-                font=("Mada Regular", 10 * -1)
-                ) 
-        self.Male.place(
-                x=410.0,
-                y=305.5,
-                width=60.0,
-                height=15.0
-        )       
-        self.Female.place(
-                x=500.0,
-                y=305.5,
-                width=60.0,
-                height=15.0
-        )
-
-        self.Post_Graduate = Radiobutton(
-                self,
-                text="Post Graduate",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Post Graduate",
-                variable=self.Highest_Educational_Attainment,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.College = Radiobutton(
-                self,
-                text="College",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="College",
-                variable=self.Highest_Educational_Attainment,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.Elementary_School = Radiobutton(
-                self,
-                text="Elementary",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Elementary",
-                variable=self.Highest_Educational_Attainment,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.Vocational = Radiobutton(
-                self,
-                text="Vocational",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Vocational",
-                variable=self.Highest_Educational_Attainment,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.High_School = Radiobutton(
-                self,
-                text="High School",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="High School",
-                variable=self.Highest_Educational_Attainment,
-                font=("Mada Regular", 10 * -1)
-                )
-        self._None = Radiobutton(
-                self,
-                text="None",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="None",
-                variable=self.Highest_Educational_Attainment,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.Post_Graduate.place(
-                x=49.0,
-                y=370.5,
-                width=100.0,
-                height=15.0
-                )
-        self.College.place(
-                x=170.0,
-                y=370.5,
-                width=60.0,
-                height=15.0
-                )
-        self.Elementary_School.place(
-                x=270.0,
-                y=370.5,
-                width=80.0,
-                height=15.0
-                )
-        self.Vocational.place(
-                x=370.0,
-                y=370.5,
-                width=80.0,
-                height=15.0
-                )
-        self.High_School.place(
-                x=470.0,
-                y=370.5,
-                width=80.0,
-                height=15.0
-                )
-        self._None.place(
-                x=570.0,
-                y=370.5,
-                width=60.0,
-                height=15.0
-                )
-        
-
-        self.Member = Radiobutton(
-                self,
-                text="Member",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Member",
-                variable=self.Membership,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.Non_Member = Radiobutton(
-                self,
-                text="Non-Member",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Non-Member",
-                variable=self.Membership,
-                font=("Mada Regular", 10 * -1)
-                )
-        self.Dependent = Radiobutton( 
-                self,
-                text="Dependent",
-                bg="#FFFFFF",
-                fg="#000716",
-                activebackground="#FFFFFF",
-                activeforeground="#000716",
-                borderwidth=0,
-                highlightthickness=0,
-                value="Dependent",
-                variable=self.Membership,
-                font=("Mada Regular", 10 * -1)
-                )
-        #MEMBERSHIP PLACE
-        self.Member.place(
-                x=585.0,
-                y=335.5,
-                width=59.0,
-                height=15.0
-                )
-        self.Non_Member.place(
-                x=655.0,
-                y=335.5,
-                width=75.0,
-                height=15.0
-                )
-        self.Dependent.place(
-                x=730.0,
-                y=335.5,
-                width=80.0,
-                height=15.0
-                )
-        
-        
-
-
-    # Creating and placing the entry widget of the first page
         self.Reference_No = Entry(
         bd=0,
         bg="#FFE5AB",
@@ -628,9 +274,14 @@ class Register(tk.Canvas):
         image=self.button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command = self.show,
+        command = self.show
+)   
+        self.button_2.place(
+        x=505.0,
+        y=450.0,
+        width=100.0,
+        height=30.0
 )
-
 # 2ND PAGE
             
 # HIDE THE WIDGETS
@@ -683,55 +334,26 @@ class Register(tk.Canvas):
     
 # SHOW THE WIDGETS
     def show(self):
-            for image_id in self.pageImage1_id:
-                self.itemconfigure(image_id, state="normal")
-            for text_id in self.PageText1_id:
-                self.itemconfigure(text_id, state="normal")
-                self.New_Status.place(
-                x=550.0,
-                y=115.5,
-                width=50.0,
-                height=10.0
-                )
-                self.Old_Status.place(
-                x=640.0,
-                y=115.5,
-                width=50.0,
-                height=10.0
-                )
-                self.Single.place(
-                x=49.0,
-                y=275.5,
-                width=60.0,
-                height=15.0
-                )
-                self.Widow.place(
-                x=170.0,
-                y=275.5,
-                width=60.0,
-                height=15.0
-                )
-                self.Married.place(
-                x=270.0,
-                y=275.5,
-                width=60.0,
-                height=15.0
-                )
-                self.Separated.place(
-                x=370.0,
-                y=275.5,
-                width=70.0,
-                height=15.0
-                )
-                self.With_Partner.place(
-                x=470.0,
-                y=276.5,
-                width=80.0,
-                height=15.0
-                )
-                
-    
+        for image_id in self.pageImage1_id:
+            self.itemconfigure(image_id, state="normal")
+        for text_id in self.PageText1_id:
+            self.itemconfigure(text_id, state="normal")
+            self.Reference_No.place()
+            self.Date.place()
+            self.FullName.place()
+            self.Permanent_Address.place()
+            self.Birthdate.place()
+            self.Age.place()
+            self.Nationality.place()
+            self.Religion.place()
+            self.Occupation.place()
+            self.Monthly_Income.place()
+            self.Other_Sources_Of_Income.place()
+            self.Monthly_Expenditure.place()
+            self.Gross_Monthly_Income.place()
+            self.Net_Monthly_Income.place()     
      
+
 
 
 
@@ -741,5 +363,4 @@ class Register(tk.Canvas):
 
         
        
-
     
