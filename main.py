@@ -3,7 +3,8 @@ from UI.login import Login
 import sys
 import os
 import tkinter as tk
-from tkinter import PhotoImage, messagebox, Entry
+
+
 
 
 class App(tk.Tk):
@@ -11,7 +12,7 @@ class App(tk.Tk):
         super().__init__()
         
         self.title("Main App")
-        self.geometry("820x500") 
+        self.geometry("820x500")
         self.resizable(False, False)
         self.configure(bg="#FFFFFF")
         

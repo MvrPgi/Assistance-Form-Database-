@@ -1,15 +1,6 @@
-import sys
-import os
+from resources.FileTracker.tracker import resource_path
 import tkinter as tk
-from tkinter import PhotoImage, messagebox, Entry
-
-
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
+from tkinter import PhotoImage, messagebox, Entry, Radiobutton
 
 
 
@@ -31,6 +22,8 @@ class Register(tk.Canvas):
         self.button_image_1 = PhotoImage(file=resource_path("resources/APP_1/button_1.png"))
        
         
+        #BACKGROUND IMAGE
+       
 ##########################################################################################################################################################################
 ################################################################        BACKGROUND IMAGE        ##########################################################################
 ##########################################################################################################################################################################
@@ -40,6 +33,8 @@ class Register(tk.Canvas):
         #ENTRY IMAGES
         self.pageImage1_id = [] 
         self.pageImage1_id.append(self.create_image(409.0, 120.5, image=self.image_image_6))
+        self.pageImage1_id = [] # Store the image ids to hide them later
+        self.pageImage1_id.append(self.create_image(120.0, 150.5, image=self.image_image_6))
         self.pageImage1_id.append(self.create_image(409.0, 190.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(409.0, 237.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(397.0, 120.5, image=self.image_entry_11))
@@ -61,6 +56,7 @@ class Register(tk.Canvas):
         self.PageText1_id = []     
         self.PageText1_id.append(self.create_text(49.0, 100.0, anchor="nw", text="Reference No:", fill="#000000", font=("Mada Regular", 10 * -1)))
         self.PageText1_id.append(self.create_text(289.0, 100,anchor ="nw", text="Date:",fill="#000000",font=("Mada Regular", 10 * -1)))
+        self.PageText1_id.append(self.create_text(550.0, 100.0,anchor ="nw", text="Applicant Status:",fill="#000000",font=("Mada Regular", 10 * -1)))
         self.PageText1_id.append(self.create_text(49.0,172.0,anchor ="nw", text="Full Name Of The Patient    ",fill="#000000",font=("Mada Regular", 10 * -1)))
         self.PageText1_id.append(self.create_text(87.0,203.0,anchor ="nw", text="Surname",fill="#000000",font=("Mada Regular", 8 * -1)))
         self.PageText1_id.append(self.create_text(385., 205,anchor ="nw", text="First Name", fill="#000000",font=("Mada Regular", 8 * -1)))
@@ -88,10 +84,6 @@ class Register(tk.Canvas):
         self.PageText1_id.append(self.create_text(700.0, 390, anchor ="nw", text = "Net Monthly Income",fill="#000000",font=("Mada Regular", 10 * -1)))
 
                 
-##########################################################################################################################################################################
-############################################################    CREATING ENTRYWIDGET P1     ##############################################################################
-##########################################################################################################################################################################
-
 
         self.Reference_No = Entry(
         bd=0,
@@ -273,7 +265,7 @@ class Register(tk.Canvas):
       
 )
         self.button_1.place(
-        x=405.0,
+        x=635.0,
         y=450.0,
         width=100.0,
         height=30.0
@@ -290,34 +282,54 @@ class Register(tk.Canvas):
         width=100.0,
         height=30.0
 )
-##########################################################################################################################################################################
-############################################################    CREATING ENTRYWIDGET P2     ##############################################################################
-##########################################################################################################################################################################
-
-
-
-
+# 2ND PAGE
+            
 # HIDE THE WIDGETS
     def hide(self):
             for image_id in self.pageImage1_id:
                 self.itemconfigure(image_id, state="hidden")
             for text_id in self.PageText1_id:
                 self.itemconfigure(text_id, state="hidden")
-            self.Reference_No.place_forget()
-            self.Date.place_forget()
-            self.FullName.place_forget()
-            self.Permanent_Address.place_forget()
-            self.Birthdate.place_forget()
-            self.Age.place_forget()
-            self.Nationality.place_forget()
-            self.Religion.place_forget()
-            self.Occupation.place_forget()
-            self.Monthly_Income.place_forget()
-            self.Other_Sources_Of_Income.place_forget()
-            self.Monthly_Expenditure.place_forget()
-            self.Gross_Monthly_Income.place_forget()
-            self.Net_Monthly_Income.place_forget()
-            self.button_1.place_forget()
+                self.New_Status.place_forget()
+                self.Old_Status.place_forget()
+                self.Single.place_forget()
+                self.Widow.place_forget()
+                self.Married.place_forget()
+                self.Separated.place_forget()
+                self.With_Partner.place_forget()
+                self.Male.place_forget()
+                self.Female.place_forget()
+                self.Post_Graduate.place_forget()
+                self.College.place_forget()
+                self.Elementary_School.place_forget()
+                self.Vocational.place_forget()
+                self.High_School.place_forget()
+                self._None.place_forget()
+                self.Member.place_forget()
+                self.Non_Member.place_forget()
+                self.Dependent.place_forget()
+                self.Reference_No.place_forget()
+                self.Date.place_forget()
+                self.FullName.place_forget()
+                self.Permanent_Address.place_forget()
+                self.Birthdate.place_forget()
+                self.Age.place_forget()
+                self.Nationality.place_forget()
+                self.Religion.place_forget()
+                self.Occupation.place_forget()
+                self.Monthly_Income.place_forget()
+                self.Other_Sources_Of_Income.place_forget()
+                self.Monthly_Expenditure.place_forget()
+                self.Gross_Monthly_Income.place_forget()
+                self.Net_Monthly_Income.place_forget()
+                self.button_2.place(
+                x=100.0,
+                y=450.0,
+                width=100.0,
+                height=30.0
+                )
+
+
 
     
 # SHOW THE WIDGETS
@@ -339,10 +351,9 @@ class Register(tk.Canvas):
             self.Other_Sources_Of_Income.place()
             self.Monthly_Expenditure.place()
             self.Gross_Monthly_Income.place()
-            self.Net_Monthly_Income.place()
-            
-                 
+            self.Net_Monthly_Income.place()     
      
+
 
 
 
