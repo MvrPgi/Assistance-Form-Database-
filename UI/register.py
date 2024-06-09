@@ -39,7 +39,7 @@ class Register(tk.Canvas):
 
         #ENTRY IMAGES
         self.pageImage1_id = [] 
-        self.pageImage1_id.append(self.create_image(409.0, 120.5, image=self.image_entry_6))
+        self.pageImage1_id.append(self.create_image(409.0, 120.5, image=self.image_image_6))
         self.pageImage1_id.append(self.create_image(409.0, 190.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(409.0, 237.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(397.0, 120.5, image=self.image_entry_11))
