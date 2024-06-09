@@ -2,13 +2,8 @@ import sys
 import os
 import tkinter as tk
 from tkinter import PhotoImage, Entry
+from resources.FileTracker.tracker import resource_path
 
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
 
 class Login(tk.Canvas):
     def __init__(self, master = None):
