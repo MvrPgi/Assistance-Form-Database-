@@ -50,9 +50,5 @@ class Login(tk.Canvas):
         self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command=lambda: print("button_1 clicked"), relief="flat")
         self.Button_1.place(x=532.0, y=358.0, width=234.0, height=29.0)
 
-    # 6 10 Text
-    # 11 Remove
-        
-
 
         
