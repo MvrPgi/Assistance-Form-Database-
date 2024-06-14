@@ -1,11 +1,9 @@
 from UI.register import Register
 from UI.login import Login
+from UI.adminlogin import AdminLogin
 import sys
 import os
 import tkinter as tk
-
-
-
 
 class App(tk.Tk):
     def __init__(self):
