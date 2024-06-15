@@ -16,12 +16,11 @@ class DatabaseConnection:
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------APPLICANT DETAILS--------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
-  def insert(self,Application_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion,Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome,Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
+  def insert_applicant_details(self, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion,Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome,Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
     # Insert data into the Applicant_Details table
     query = "INSERT INTO Applicant_Details (Application_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome) VALUES (%(Application_Status)s, %(Full_Name)s, %(Address)s, %(Civil_Status)s, %(Birth_Date)s, %(Age)s, %(Sex)s, %(Nationality)s, %(Religion)s, %(Highest_Educ_Attainment)s, %(Occupation)s, %(Monthly_Income)s, %(Membership)s, %(OtherSourceOfIncome)s, %(Monthly_Expenditures)s, %(GrossMonthlyIncome)s, %(NetMonthlyIncome)s)" # SQL query
     # Data to be inserted
     data = {
-      "Application_Status": Application_Status,
       "Full_Name": Full_Name,
       "Address": Address,
       "Civil_Status": Civil_Status,
@@ -53,7 +52,7 @@ class DatabaseConnection:
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------HOUSEHOLD DETAILS--------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
-  def insert(self,Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome):
+  def insert_household_details(self,Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome):
     household_query = "INSERT INTO Household_Details (Applicant_ID, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome) VALUES (%(Applicant_ID)s, %(Hhold_Fam_Name)s, %(Hhold_Fam_Age)s, %(Hhold_Fam_CivilStatus)s, %(Hhold_Fam_RSWithPatient)s, %(Hhold_Fam_HighestEducAttain)s, %(Hhold_Fam_Occupation)s, %(Hhold_Fam_MonthlyIncome)s)"
     last_applicant_id = self.get_last_applicant_id() # Get the last applicant ID
     household_data = { # Data to be inserted
@@ -73,7 +72,7 @@ class DatabaseConnection:
 #--------------------------------------------------------------------------------------------------------------------------------------------------------  
 #-------------------------------------------------------REFERENCE DETAILS--------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
-  def insert(self, ReferenceNo, Date, ApplicantStatus):
+  def insert_reference_details(self, ReferenceNo, Date, ApplicantStatus):
     query = "INSERT INTO Reference_Details (ReferenceNo, Applicant_ID, Date, Applicant, Status) VALUES (%(ReferenceNo)s, %(Applicant_ID)s, %(Date)s, %(Status)s)"
     last_applicant_id = self.get_last_applicant_id() # Get the last applicant ID
     data = {
