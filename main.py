@@ -1,8 +1,6 @@
 from UI.register import Register
 from UI.login import Login
 from UI.adminlogin import AdminLogin
-import sys
-import os
 import tkinter as tk
 
 class App(tk.Tk):
@@ -14,7 +12,7 @@ class App(tk.Tk):
         self.resizable(False, False)
         self.configure(bg="#FFFFFF")
         
-        self.login = Login(self)
+        self.login = Register(self)
         self.login.place(x=0, y=0)
 
 if __name__ == "__main__":
