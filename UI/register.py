@@ -1,11 +1,14 @@
 from resources.FileTracker.tracker import resource_path
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, Entry, Radiobutton
+import mysql.connector as mysql
+from mysql_connection import DatabaseConnection
 
 
 
 class Register(tk.Canvas):
     def __init__(self, master=None):
+        self.applicant_details = DatabaseConnection()  # Create an instance of the Applicant_Details class
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
 
 
@@ -20,6 +23,7 @@ class Register(tk.Canvas):
         self.image_entry_9 = PhotoImage(file=resource_path("resources/APP_1/entry_9.png"))
         self.image_entry_16 = PhotoImage(file=resource_path("resources/APP_1/entry_16.png"))
         self.button_image_1 = PhotoImage(file=resource_path("resources/APP_1/button_1.png"))
+ 
        
         
         #BACKGROUND IMAGE
@@ -90,13 +94,13 @@ class Register(tk.Canvas):
 #Radio Button
         self.New_Status = Radiobutton(self, text="New", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="New Applicant", variable=self.Applicant_Status)
         self.Old_Status = Radiobutton(self, text="Old", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Old Applicant", variable=self.Applicant_Status)
-        self.Single = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Single", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
-        self.Widow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Widow", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
-        self.Married = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Married", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
-        self.Separated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Separated", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
-        self.With_Partner = Radiobutton(self, text="With Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="With Partner", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
-        self.Male = Radiobutton(self, text="Male", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Male", variable=self.Sex, font=("Mada Regular", 10 * -1))
-        self.Female = Radiobutton(self, text="Female", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Female", variable=self.Sex, font=("Mada Regular", 10 * -1))
+        self.Single = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="S", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
+        self.Widow = Radiobutton(self, text="W", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Widow", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
+        self.Married = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
+        self.Separated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="SE", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
+        self.With_Partner = Radiobutton(self, text="With Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="C", variable=self.Civil_Status, font=("Mada Regular", 10 * -1))
+        self.Male = Radiobutton(self, text="M", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Male", variable=self.Sex, font=("Mada Regular", 10 * -1))
+        self.Female = Radiobutton(self, text="F", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Female", variable=self.Sex, font=("Mada Regular", 10 * -1))
         self.Post_Graduate = Radiobutton(self, text="Post Graduate", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Post Graduate", variable=self.Highest_Educational_Attainment, font=("Mada Regular", 10 * -1))
         self.College = Radiobutton(self, text="College", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="College", variable=self.Highest_Educational_Attainment, font=("Mada Regular", 10 * -1))
         self.Elementary_School = Radiobutton(self, text="Elementary", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Elementary", variable=self.Highest_Educational_Attainment, font=("Mada Regular", 10 * -1))
@@ -192,14 +196,14 @@ class Register(tk.Canvas):
                 
 #RADIO BUTTON
         self.HCivilStatus = tk.StringVar()
-        self.HCivilStatus.set("Single")
+        self.HCivilStatus.set("S")
         self.HHigeshtEducationalAttainment = tk.StringVar()
         self.HHigeshtEducationalAttainment.set("None")
 
-        self.HSingle = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Single", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
-        self.HWidow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Widow", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
-        self.HMarried = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Married", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
-        self.HSeparated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Separated", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
+        self.HSingle = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="S", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
+        self.HWidow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="W", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
+        self.HMarried = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
+        self.HSeparated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="SE", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
         self.HPost_Graduate = Radiobutton(self, text="Post Graduate", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Post Graduate", variable=self.HHigeshtEducationalAttainment, font=("Mada Regular", 10 * -1))
         self.HCollege = Radiobutton(self, text="College", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="College", variable=self.HHigeshtEducationalAttainment, font=("Mada Regular", 10 * -1))
         self.HElementary_School = Radiobutton(self, text="Elementary", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Elementary", variable=self.HHigeshtEducationalAttainment, font=("Mada Regular", 10 * -1))
@@ -219,8 +223,8 @@ class Register(tk.Canvas):
 # Creating and placing the button widget
         self.button_1 = tk.Button(image=self.button_image_1,borderwidth=0,highlightthickness=0,command = self.next_page)
         self.button_1.place(x=635.0,y=450.0,width=100.0,height=30.0)
-        self.button_2 = tk.Button(image=self.image_button2_1,borderwidth=0,highlightthickness=0,command = self.back_page,
-)
+        self.button_2 = tk.Button(image=self.image_button2_1,borderwidth=0,highlightthickness=0,command = self.back_page,)
+        self.button_3 = tk.Button(image=self.image_button1_1,borderwidth=0,highlightthickness=0,command = self.commit_data)
 
     def next_page(self):
             for image_id in self.pageImage1_id:
@@ -279,6 +283,8 @@ class Register(tk.Canvas):
                 self.Hrelation.place(x=40.0, y=314.0, width=245.0, height=10.0)
                 self.Hoccupation.place(x=40.0, y=410.0, width=200.0, height=10.0)
                 self.Hmonthlyincome.place(x=319.0, y=410.0, width=160.0, height=10.0)
+                self.button_1.place_forget()
+                self.button_3.place(x=635.0,y=450.0,width=100.0,height=30.0)
 
 
 
@@ -342,10 +348,78 @@ class Register(tk.Canvas):
                 self.Member.place(x=585.0, y=335.5, width=59.0, height=15.0)
                 self.Non_Member.place(x=655.0, y=335.5, width=75.0, height=15.0)
                 self.Dependent.place(x=730.0, y=335.5, width=80.0, height=15.0)
+                self.button_1.place(x=635.0,y=450.0,width=100.0,height=30.0)
+                self.button_2.place_forget()
+                self.button_3.place_forget()
 
             
 
-            
+    def commit_data(self): # TABLE 1
+        data = { 
+            "Reference_No": self.Reference_No.get(),
+            "Status": self.Applicant_Status.get(),
+            "Date": self.Date.get(),
+        }
+        try:
+            # Create an instance of the Applicant_Details class
+            applicant_details = DatabaseConnection()
+            applicant_details.insert_reference_details(**data)
+        except mysql.Error as err:
+            print(f"Error: {err}")
+        finally:
+            print("Data inserted successfully")
+    def commit_data(self):  # TABLE 2
+        data = { 
+        "Full_Name": self.FullName.get(),
+        "Address": self.Permanent_Address.get(),
+        "Civil_Status": self.Civil_Status.get(),
+        "Birth_Date": self.Birthdate.get(),
+        "Age": self.Age.get(),
+        "Sex": self.Sex.get(),
+        "Nationality": self.Nationality,
+        "Religion": self.Religion,
+        "Highest_Educ_Attainment": self.Highest_Educational_Attainment.get(),
+        "Occupation": self.Occupation.get(),
+        "Monthly_Income": self.Monthly_Income.get(),
+        "Membership":self.Membership.get(),
+        "OtherSourceOfIncome": self.Other_Sources_Of_Income.get(),
+        "Monthly_Expenditures": self.Monthly_Expenditure,
+        "GrossMonthlyIncome": self.Gross_Monthly_Income.get(),
+        "NetMonthlyIncome": self.Net_Monthly_Income.get()
+        }
+        try:
+            # Create an instance of the Applicant_Details class
+            applicant_details = DatabaseConnection()
+            applicant_details.insert_applicant_details(*data)
+        except mysql.Error as err:
+            print(f"Error: {err}")
+        finally:
+            print("Data inserted successfully")
+
+    def commit_data(self):  #TABLE 3
+        data = { 
+        "Hhold_Fam_Name": self.Hname.get(),
+        "Hhold_Fam_Age": self.Hage.get(),
+        "Hhold_Fam_CivilStatus": self.HCivilStatus.get(),
+        "Hhold_Fam_RSWithPatient": self.Hrelation.get(),
+        "Highest_Educational_Attainment": self.HHigeshtEducationalAttainment.get(),
+        "Hhold_Fam_Occupation": self.Hoccupation.get(), 
+        "Hhold_Fam_MonthlyIncome": self.Hmonthlyincome.get(),
+
+        }
+        try:
+            # Create an instance of the Applicant_Details class
+            applicant_details = DatabaseConnection()
+            applicant_details.insert_household_details(*data)
+        except mysql.Error as err:
+            print(f"Error: {err}")
+        finally:
+            print("Data Inserted Successfully")
+
+
+    
+
+
 
         
        
