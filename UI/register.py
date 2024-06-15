@@ -204,6 +204,8 @@ class Register(tk.Canvas):
         self.HWidow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="W", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
         self.HMarried = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
         self.HSeparated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="SE", variable=self.HCivilStatus, font=("Mada Regular", 10 * -1))
+
+
         self.HPost_Graduate = Radiobutton(self, text="Post Graduate", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Post Graduate", variable=self.HHigeshtEducationalAttainment, font=("Mada Regular", 10 * -1))
         self.HCollege = Radiobutton(self, text="College", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="College", variable=self.HHigeshtEducationalAttainment, font=("Mada Regular", 10 * -1))
         self.HElementary_School = Radiobutton(self, text="Elementary", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Elementary", variable=self.HHigeshtEducationalAttainment, font=("Mada Regular", 10 * -1))
@@ -289,6 +291,7 @@ class Register(tk.Canvas):
 
 
 
+
     
 #SHOW THE WIDGETS
     def back_page(self):
@@ -354,68 +357,59 @@ class Register(tk.Canvas):
 
             
 
-    def commit_data(self): # TABLE 1
-        data = { 
+    def commit_data(self):
+        # Collect data for Table 1
+        data1 = {
             "Reference_No": self.Reference_No.get(),
-            "Status": self.Applicant_Status.get(),
             "Date": self.Date.get(),
+            "Applicant_Status": self.Applicant_Status.get(),
+            
         }
+
+        # Collect data for Table 2
+        data2 = {
+            "Full_Name": self.FullName.get(),
+            "Address": self.Permanent_Address.get(),
+            "Civil_Status": self.Civil_Status.get(),
+            "Birth_Date": self.Birthdate.get(),
+            "Age": self.Age.get(),
+            "Sex": self.Sex.get(),
+            "Nationality": self.Nationality.get(),
+            "Religion": self.Religion.get(),
+            "Highest_Educ_Attainment": self.Highest_Educational_Attainment.get(),
+            "Occupation": self.Occupation.get(),
+            "Monthly_Income": self.Monthly_Income.get(),
+            "Membership": self.Membership.get(),
+            "OtherSourceOfIncome": self.Other_Sources_Of_Income.get(),
+            "Monthly_Expenditures": self.Monthly_Expenditure.get(),
+            "GrossMonthlyIncome": self.Gross_Monthly_Income.get(),
+            "NetMonthlyIncome": self.Net_Monthly_Income.get()
+        }
+
+        # Collect data for Table 3
+        data3 = {
+            "Hhold_Fam_Name": self.Hname.get(),
+            "Hhold_Fam_Age": self.Hage.get(),
+            "Hhold_Fam_CivilStatus": self.HCivilStatus.get(),
+            "Hhold_Fam_RSWithPatient": self.Hrelation.get(),
+            "Highest_Educational_Attainment": self.HHigeshtEducationalAttainment.get(),
+            "Hhold_Fam_Occupation": self.Hoccupation.get(),
+            "Hhold_Fam_MonthlyIncome": self.Hmonthlyincome.get(),
+        }
+
+        # Commit data to database
         try:
             # Create an instance of the Applicant_Details class
             applicant_details = DatabaseConnection()
-            applicant_details.insert_reference_details(**data)
+            applicant_details.insert_reference_details(*data1)
+            applicant_details.insert_applicant_details(*data2)
+            applicant_details.insert_household_details(*data3)
+            print(data1,data2,data3)
+            
         except mysql.Error as err:
             print(f"Error: {err}")
         finally:
             print("Data inserted successfully")
-    def commit_data(self):  # TABLE 2
-        data = { 
-        "Full_Name": self.FullName.get(),
-        "Address": self.Permanent_Address.get(),
-        "Civil_Status": self.Civil_Status.get(),
-        "Birth_Date": self.Birthdate.get(),
-        "Age": self.Age.get(),
-        "Sex": self.Sex.get(),
-        "Nationality": self.Nationality,
-        "Religion": self.Religion,
-        "Highest_Educ_Attainment": self.Highest_Educational_Attainment.get(),
-        "Occupation": self.Occupation.get(),
-        "Monthly_Income": self.Monthly_Income.get(),
-        "Membership":self.Membership.get(),
-        "OtherSourceOfIncome": self.Other_Sources_Of_Income.get(),
-        "Monthly_Expenditures": self.Monthly_Expenditure,
-        "GrossMonthlyIncome": self.Gross_Monthly_Income.get(),
-        "NetMonthlyIncome": self.Net_Monthly_Income.get()
-        }
-        try:
-            # Create an instance of the Applicant_Details class
-            applicant_details = DatabaseConnection()
-            applicant_details.insert_applicant_details(*data)
-        except mysql.Error as err:
-            print(f"Error: {err}")
-        finally:
-            print("Data inserted successfully")
-
-    def commit_data(self):  #TABLE 3
-        data = { 
-        "Hhold_Fam_Name": self.Hname.get(),
-        "Hhold_Fam_Age": self.Hage.get(),
-        "Hhold_Fam_CivilStatus": self.HCivilStatus.get(),
-        "Hhold_Fam_RSWithPatient": self.Hrelation.get(),
-        "Highest_Educational_Attainment": self.HHigeshtEducationalAttainment.get(),
-        "Hhold_Fam_Occupation": self.Hoccupation.get(), 
-        "Hhold_Fam_MonthlyIncome": self.Hmonthlyincome.get(),
-
-        }
-        try:
-            # Create an instance of the Applicant_Details class
-            applicant_details = DatabaseConnection()
-            applicant_details.insert_household_details(*data)
-        except mysql.Error as err:
-            print(f"Error: {err}")
-        finally:
-            print("Data Inserted Successfully")
-
 
     
 
