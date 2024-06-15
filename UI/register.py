@@ -217,24 +217,9 @@ class Register(tk.Canvas):
         
 
 # Creating and placing the button widget
-        self.button_1 = tk.Button(
-        image=self.button_image_1,
-        borderwidth=0,
-        highlightthickness=0,
-        command = self.next_page
-      
-)
-        self.button_1.place(
-        x=635.0,
-        y=450.0,
-        width=100.0,
-        height=30.0
-)
-        self.button_2 = tk.Button(
-        image=self.image_button2_1,
-        borderwidth=0,
-        highlightthickness=0,
-        command = self.back_page,
+        self.button_1 = tk.Button(image=self.button_image_1,borderwidth=0,highlightthickness=0,command = self.next_page)
+        self.button_1.place(x=635.0,y=450.0,width=100.0,height=30.0)
+        self.button_2 = tk.Button(image=self.image_button2_1,borderwidth=0,highlightthickness=0,command = self.back_page,
 )
 
     def next_page(self):
