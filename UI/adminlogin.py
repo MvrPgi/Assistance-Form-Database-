@@ -1,3 +1,5 @@
+import sys
+import os
 import tkinter as tk
 from tkinter import PhotoImage, Entry
 from resources.FileTracker.tracker import resource_path
@@ -11,7 +13,7 @@ class AdminLogin(tk.Canvas):
 
         #ENTRY
         self.image_entry_1 = PhotoImage(file=resource_path("resources/login/entry_1.png"))
-        self.image_entry_2 = PhotoImage(file=resource_path("resources/login/entry_2.png"))
+        self.image_entry_2 = PhotoImage(file=resource_path("resources/login/entry_1.png"))
 
         #IMAGES
         self.image_2 = PhotoImage(file=resource_path("resources/login/image_2.png"))
@@ -36,7 +38,7 @@ class AdminLogin(tk.Canvas):
         self.create_text(160.0, 270.0, anchor="nw",text="Philippine Charity Sweepstakes Office",fill="#000000",font=("Mada Bold", 17 * -1))
         self.create_text(610.0, 62.0, anchor="nw",text="Admin Login",fill="#FFFFFF",font=("Mada Bold", 17 * -1))
         self.create_text(565.0, 94.0, anchor="nw", text = "Enter your admin credentials", fill="#FFFFFF", font=("Mada Light", 14 * -1))
-
+        
         self.Email = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
         self.Email.place(x=531.0, y=232.0, width=241.0, height=18.0)
 
