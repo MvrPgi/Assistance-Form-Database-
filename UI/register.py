@@ -40,7 +40,7 @@ class Register(tk.Canvas):
         self.pageImage1_id.append(self.create_image(409.0, 190.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(409.0, 237.5, image=self.image_entry_3))
         self.pageImage1_id.append(self.create_image(397.0, 120.5, image=self.image_entry_11))
-        self.pageImage1_id.append(self.create_image(155.5, 120.5, image=self.image_entry_11))
+        # self.pageImage1_id.append(self.create_image(155.5, 120.5, image=self.image_entry_11))
         self.pageImage1_id.append(self.create_image(120.5, 310.5, image=self.image_entry_5))
         self.pageImage1_id.append(self.create_image(298.5, 310.5, image=self.image_entry_5))
         self.pageImage1_id.append(self.create_image(120.5, 340.5, image=self.image_entry_5))
@@ -141,8 +141,10 @@ class Register(tk.Canvas):
         
 #ENTRY
         initial_reference_id = self.ReferenceHandle.get_last_reference_id()
-        self.Reference_No = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Reference_No = Entry(bd=0,bg="#FFFFFF", fg="#000716", highlightthickness=0)
         self.Reference_No.insert(0, initial_reference_id)
+        self.Reference_No.config(state='readonly')
+
         self.Date = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
         self.FullName = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
         self.Permanent_Address = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
@@ -157,7 +159,7 @@ class Register(tk.Canvas):
         self.Gross_Monthly_Income = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
         self.Net_Monthly_Income = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
 #PLACE ENTRY
-        self.Reference_No.place(x=50.0, y=115.5, width=210.0, height=10.0)
+        self.Reference_No.place(x=60.0, y=115.5, width=43.0, height=10.0)
         self.Date.place(x=290.0, y=115.5, width=208.0, height=10.0)
         self.FullName.place(x=53.0, y=185.5, width=712.0, height=10.0)
         self.Permanent_Address.place(x=52.0, y=232.5, width=716.0, height=10.0)
