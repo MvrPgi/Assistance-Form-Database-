@@ -12,6 +12,34 @@ class DatabaseConnection:
   def __del__(self):  # Destructor
     self.con.close() # Close the connection
     print("You have disconnected to the  database") # Print a message to indicate that the connection was closed
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------GET LAST REFERENCE ID----------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+  def get_last_reference_id(self): 
+    # SQL query to get the last inserted reference ID directly
+    last_reference_id_query =  "SELECT reference_No FROM reference ORDER BY reference_No DESC LIMIT 1"
+    self.cursor.execute(last_reference_id_query) 
+    result = self.cursor.fetchone() 
+    if result is None:
+        new_reference_id = "XY0001"
+    else:
+        last_reference_id = result[0]
+        numeric_part = int(last_reference_id[2:]) 
+        new_numeric_part = numeric_part + 1 
+        new_reference_id = f"XY{new_numeric_part:04d}" 
+    
+    return new_reference_id
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------GET LAST APPLICANT ID----------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+  def get_last_applicant_id(self): # Get the last applicant ID
+    last_applicant_id_query = "SELECT LAST_INSERT_ID()" # SQL query to get the last inserted ID
+    self.cursor.execute(last_applicant_id_query) # Execute the query
+    last_applicant_id = self.cursor.fetchone()# Fetch the result
+    return last_applicant_id[0]# Return the last applicant ID
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
   
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------APPLICANT DETAILS--------------------------------------------------------------------------------
@@ -41,15 +69,7 @@ class DatabaseConnection:
     self.cursor.execute(query, data) # Execute the query
     self.con.commit() # Commit the transaction
     messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")# Display a message box to indicate that the record was added successfully
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
-# -------------------------------------------------------GET LAST APPLICANT ID----------------------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
-  def get_last_applicant_id(self): # Get the last applicant ID
-    last_applicant_id_query = "SELECT LAST_INSERT_ID()" # SQL query to get the last inserted ID
-    self.cursor.execute(last_applicant_id_query) # Execute the query
-    last_applicant_id = self.cursor.fetchone()# Fetch the result
-    return last_applicant_id[0]# Return the last applicant ID
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # -------------------------------------------------------HOUSEHOLD DETAILS--------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
   def insert_household_details(self,Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome):
@@ -75,8 +95,9 @@ class DatabaseConnection:
   def insert_reference_details(self, Reference_No, Date, Applicant_Status):
     query = "INSERT INTO Reference(Reference_No, Applicant_ID, Date, Applicant_Status) VALUES (%(Reference_No)s, %(Applicant_ID)s, %(Date)s, %(Applicant_Status)s)"
     last_applicant_id = self.get_last_applicant_id() # Get the last applicant ID
+    last_reference_id = self.get_last_reference_id() # Get the last applicant ID
     data = {
-      "Reference_No": Reference_No, # Data to be inserted
+      "Reference_No": last_reference_id, # Data to be inserted
       "Applicant_ID": last_applicant_id, 
       "Date": Date,
       "Applicant_Status": Applicant_Status
