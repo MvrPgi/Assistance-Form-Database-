@@ -85,11 +85,11 @@ class Register(tk.Canvas):
         self.Applicant_Status = tk.StringVar() 
         self.Applicant_Status.set("New Applicant") # Default value
         self.Civil_Status = tk.StringVar() 
-        self.Civil_Status.set("Single  ")
+        self.Civil_Status.set("S ")
         self.Membership = tk.StringVar()
         self.Membership.set("Member")
         self.Sex = tk.StringVar()
-        self.Sex.set("Female")
+        self.Sex.set("F")
         self.Highest_Educational_Attainment = tk.StringVar()
         self.Highest_Educational_Attainment.set("None")
 #Radio Button
