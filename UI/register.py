@@ -10,7 +10,10 @@ class Register(tk.Canvas):
     def __init__(self, master=None):
        
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
-        self.applicant_details = DatabaseConnection()  # Create an instance of the Applicant_Details class
+        self.applicant_details = DatabaseConnection() # Create an instance of the Applicant_Details class
+        self.ReferenceHandle = DatabaseConnection()
+        
+        
 
 
 
@@ -133,8 +136,13 @@ class Register(tk.Canvas):
         self.Non_Member.place(x=655.0, y=335.5, width=75.0, height=15.0)
         self.Dependent.place(x=730.0, y=335.5, width=80.0, height=15.0)
 
+
+
+        
 #ENTRY
-        self.Reference_No = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        initial_reference_id = self.ReferenceHandle.get_last_reference_id()
+        self.Reference_No = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Reference_No.insert(0, initial_reference_id)
         self.Date = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
         self.FullName = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
         self.Permanent_Address = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
@@ -163,6 +171,7 @@ class Register(tk.Canvas):
         self.Monthly_Expenditure.place(x=420.0, y=405.5, width=105.0, height=10.0)
         self.Gross_Monthly_Income.place(x=559.0, y=405.5, width=105.0, height=10.0)
         self.Net_Monthly_Income.place(x=700.0, y=405.5, width=105.0, height=10.0)
+
 
 
 
@@ -230,6 +239,7 @@ class Register(tk.Canvas):
         self.button_2 = tk.Button(image=self.image_button2_1,borderwidth=0,highlightthickness=0,command = self.back_page,)
         self.button_3 = tk.Button(image=self.image_button1_1,borderwidth=0,highlightthickness=0,command = self.commit_data)
 
+
     def next_page(self):
             for image_id in self.pageImage1_id:
                 self.itemconfigure(image_id, state="hidden")
@@ -289,7 +299,7 @@ class Register(tk.Canvas):
                 self.Hmonthlyincome.place(x=319.0, y=410.0, width=160.0, height=10.0)
                 self.button_1.place_forget()
                 self.button_3.place(x=635.0,y=450.0,width=100.0,height=30.0)
-
+                
 
 
 
@@ -358,61 +368,7 @@ class Register(tk.Canvas):
                 self.button_3.place_forget()
 
             
-                
-    # def commit_data(self):
-        
-    #     data1 = {
-    #         "Reference_No": self.Reference_No.get(),
-    #         "Date": self.Date.get(),
-    #         "Applicant_Status": self.Applicant_Status.get(),
             
-    #     }
-
-    #     # Collect data for Table 2
-    #     data2 = {
-    #         "Full_Name": self.FullName.get(),
-    #         "Address": self.Permanent_Address.get(),
-    #         "Civil_Status": self.Civil_Status.get(),
-    #         "Birth_Date": self.Birthdate.get(),
-    #         "Age": self.Age.get(),
-    #         "Sex": self.Sex.get(),
-    #         "Nationality": self.Nationality.get(),
-    #         "Religion": self.Religion.get(),
-    #         "Highest_Educ_Attainment": self.Highest_Educational_Attainment.get(),
-    #         "Occupation": self.Occupation.get(),
-    #         "Monthly_Income": self.Monthly_Income.get(),
-    #         "Membership": self.Membership.get(),
-    #         "OtherSourceOfIncome": self.Other_Sources_Of_Income.get(),
-    #         "Monthly_Expenditures": self.Monthly_Expenditure.get(),
-    #         "GrossMonthlyIncome": self.Gross_Monthly_Income.get(),
-    #         "NetMonthlyIncome": self.Net_Monthly_Income.get()
-    #     }
-
-    #     # Collect data for Table 3
-    #     data3 = {
-    #         "Hhold_Fam_Name": self.Hname.get(),
-    #         "Hhold_Fam_Age": self.Hage.get(),
-    #         "Hhold_Fam_CivilStatus": self.HCivilStatus.get(),
-    #         "Hhold_Fam_RSWithPatient": self.Hrelation.get(),
-    #         "Highest_Educational_Attainment": self.HHigeshtEducationalAttainment.get(),
-    #         "Hhold_Fam_Occupation": self.Hoccupation.get(),
-    #         "Hhold_Fam_MonthlyIncome": self.Hmonthlyincome.get(),
-    #     }
-
-    #     # Commit data to database
-    #     try:
-    #         # Create an instance of the Applicant_Details class
-    #         self.applicant_details = DatabaseConnection()
-    #         self.applicant_details.insert_reference_details(*data1)
-    #         self.applicant_details.insert_applicant_details(*data2)
-    #         self.applicant_details.insert_household_details(*data3)
-            
-            
-    #     except mysql.Error as err:
-    #         print(data1,data2,data3)
-    #         print(f"Error: {err}")
-    #     finally:
-    #         print("Data inserted successfully")
 
     
     def commit_data(self):
@@ -460,6 +416,16 @@ class Register(tk.Canvas):
 
         finally:
             print("Data insertion completed")
+
+
+    def get_reference_id(self):
+        # Call get_last_reference_id from DatabaseHandler instance
+        reference_id = self.ReferenceHandle.get_last_reference_id()
+        self.Reference_No.delete(0, 'end')  # Clear previous content if any
+        self.Reference_No.insert(0, reference_id)
+        print(f"Fetched Reference ID: {reference_id}")
+        return reference_id
+    
 
 
         
