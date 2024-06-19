@@ -243,6 +243,7 @@ class Register(tk.Canvas):
 
 
     def next_page(self):
+#HIDE THE WIDGETS PAGE 1
             for image_id in self.pageImage1_id:
                 self.itemconfigure(image_id, state="hidden")
             for text_id in self.pageText1_id:
@@ -279,6 +280,8 @@ class Register(tk.Canvas):
                 self.Monthly_Expenditure.place_forget()
                 self.Gross_Monthly_Income.place_forget()
                 self.Net_Monthly_Income.place_forget()
+
+# LOAD THE IMAGES PAGE 2
                 for image_id in self.pageImage2_id:
                         self.itemconfigure(image_id, state="normal")
                 for text_id in self.pageText2_id:
@@ -309,10 +312,12 @@ class Register(tk.Canvas):
     
 #SHOW THE WIDGETS
     def back_page(self):
+#SHOW THE WIDGETS PAGE 1
             for image_id in self.pageImage1_id:
                 self.itemconfigure(image_id, state="normal")
             for text_id in self.pageText1_id:
                 self.itemconfigure(text_id, state="normal")
+#HIDE THE WIDGETS PAGE 2
             for image_id in self.pageImage2_id:
                 self.itemconfigure(image_id, state="hidden")
             for text_id in self.pageText2_id:
