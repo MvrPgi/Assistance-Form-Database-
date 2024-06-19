@@ -3,7 +3,7 @@
 Welcome to the Information Management Prerequisite Project repository! This project is designed as a prerequisite assignment for our Information Management course.
 
 ## Pre-requisites
-## Installing SQL Connector
+###### Installing SQL Connector
 You can install `mysql-connector-python` using `pip`, Python's package installer. Open your terminal or command prompt and enter the following command:
 ```bash
 pip install mysql-connector-python
