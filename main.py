@@ -1,6 +1,8 @@
 from UI.register import Register
 from UI.login import Login
 from UI.adminlogin import AdminLogin
+from UI.adminBench import AdminBench
+
 import tkinter as tk
 
 class App(tk.Tk):
@@ -12,9 +14,14 @@ class App(tk.Tk):
         self.resizable(False, False)
         self.configure(bg="#FFFFFF")
         
-        self.login = Register(self)
-        self.login.place(x=0, y=0)
+        self.open_admin_bench_button = tk.Button(self, text="Open Admin Bench", command=self.open_admin_bench)
+        self.open_admin_bench_button.pack(pady=20)
 
+    def open_admin_bench(self):
+        self.withdraw()
+        admin_bench_window = AdminBench()
+        admin_bench_window.mainloop()
+        
 if __name__ == "__main__":
     app = App()
     app.mainloop()
