@@ -16,6 +16,7 @@ class DatabaseConnection:
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------GET LAST REFERENCE ID----------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
+
   def get_last_reference_id(self): 
     # SQL query to get the last inserted reference ID directly
     last_reference_id_query =  "SELECT reference_No FROM reference ORDER BY reference_No DESC LIMIT 1"
@@ -34,13 +35,24 @@ class DatabaseConnection:
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------GET LAST APPLICANT ID----------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
   def get_last_applicant_id(self): # Get the last applicant ID
     last_applicant_id_query = "SELECT LAST_INSERT_ID()" # SQL query to get the last inserted ID
     self.cursor.execute(last_applicant_id_query) # Execute the query
     last_applicant_id = self.cursor.fetchone()# Fetch the result
     return last_applicant_id[0]# Return the last applicant ID
+
+
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
-  
+# -------------------------------------------------------FETCH APPLICANT DETAILS--------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  def FetchApplincatDetailsA(self):
+    self.cursor.execute("SELECT * FROM Applicant_Details")
+    rows = self.cursor.fetchall()          
+    return rows  
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------APPLICANT DETAILS--------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -70,7 +82,33 @@ class DatabaseConnection:
     self.con.commit() # Commit the transaction
     messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")# Display a message box to indicate that the record was added successfully
 
-# -------------------------------------------------------HOUSEHOLD DETAILS--------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------UPDATE APPLICANT DETAILS-------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  def update_applicant_details(self, Applicant_ID, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
+    query = """
+        UPDATE Applicant_Details
+        SET Full_Name=%s, Address=%s, Civil_Status=%s, Birth_Date=%s, Age=%s, Sex=%s, Nationality=%s, Religion=%s,
+            Highest_Educ_Attainment=%s, Occupation=%s, Monthly_Income=%s, Membership=%s, OtherSourceOfIncome=%s,
+            Monthly_Expenditures=%s, GrossMonthlyIncome=%s, NetMonthlyIncome=%s
+        WHERE Applicant_ID=%s
+    """
+    data = (Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome, Applicant_ID)
+    
+    self.cursor.execute(query, data)
+    self.con.commit()
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------FETCH HOUSEHOLD DETAILS--------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  def FetchApplincatDetailsH(self):
+    self.cursor.execute("SELECT * FROM Household_Details")
+    rows = self.cursor.fetchall()          
+    return rows  
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------HOUSEHOLD DETAILS--------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
   def insert_household_details(self,Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome):
     household_query = "INSERT INTO household_details (Applicant_ID, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome) VALUES (%(Applicant_ID)s, %(Hhold_Fam_Name)s, %(Hhold_Fam_Age)s, %(Hhold_Fam_CivilStatus)s, %(Hhold_Fam_RSWithPatient)s, %(Hhold_Fam_HighestEducAttain)s, %(Hhold_Fam_Occupation)s, %(Hhold_Fam_MonthlyIncome)s)"
@@ -89,9 +127,20 @@ class DatabaseConnection:
     self.con.commit()
     messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")
 
+
+    
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------FETCH REFERENCE DETAILS--------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  def FetchApplincatDetailsR(self):
+    self.cursor.execute("SELECT * FROM Reference")
+    rows = self.cursor.fetchall()          
+    return rows  
+
 #--------------------------------------------------------------------------------------------------------------------------------------------------------  
 #-------------------------------------------------------REFERENCE DETAILS--------------------------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
   def insert_reference_details(self, Reference_No, Date, Applicant_Status):
     query = "INSERT INTO Reference(Reference_No, Applicant_ID, Date, Applicant_Status) VALUES (%(Reference_No)s, %(Applicant_ID)s, %(Date)s, %(Applicant_Status)s)"
     last_applicant_id = self.get_last_applicant_id() # Get the last applicant ID
@@ -105,4 +154,8 @@ class DatabaseConnection:
     self.cursor.execute(query, data)
     self.con.commit()
     messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")
+
+
+
+
 
