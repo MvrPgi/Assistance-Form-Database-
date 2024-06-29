@@ -23,3 +23,57 @@ VALUES
 (18, 'Zyrus M. De Leon', '484 Sto. Cristo Street, St. Anthony Village, Carmona, Cavite', 'S', '1993-04-13', 31, 'M', 'Filipino', 'Born Again', 'Non-Member', 'High School', 'Teaching Assistant', 16500, 'None', 12000, 9000, 3000),
 (19, 'Arianne B. Cruz', '8 Molave St. Cityhomes, Tanay, Rizal', 'M', '1992-05-26', 32, 'F', 'Filipino', 'Iglesia ni Cristo', 'Dependent', 'Vocational', 'Financial Manager', 48000, 'Residential Property', 17000, 11000, 6000),
 (20, 'Solenn P. Verde', '108 Panay Avenue 1100, Pasay City', 'M', '1999-09-17', 24, 'F', 'Filipino', 'Catholic', 'Member', 'College', 'Service Desk', 32000, 'Freelance', 11000, 5000, 6000);
+
+
+
+
+
+INSERT INTO Household_Details (
+    Household_ID, Applicant_ID, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome
+) VALUES
+(1, 1, 'Alexander Montillano', 32, 'M', 'Brother', 'College', 'Partimer', 15900),
+(2, 2, 'Olivia Castillo', 31, 'M', 'Daughter', 'Post-Gradute', 'Carpenter', 5000),
+(3, 3, 'Liam Reyes', 63, 'W', 'Father', 'None', 'Truck Driver', 11000),
+(4, 4, 'Amari Rivera', 28, 'M', 'Spouse', 'College', 'Journalist', 30000),
+(5, 5, 'Eman Ayala', 25, 'S', 'Cousin', 'College', 'Writer', 50000),
+(6, 6, 'Andrew Rosa', 15, 'S', 'Nephew', 'College', 'Student', 100000),
+(7, 7, 'Lei Reyes', 60, 'M', 'Father', 'Post-Graduate', 'Retired', 17000),
+(8, 8, 'Kevin Flores', 45, 'S', 'Uncle', 'College', 'Radiologist', 40000),
+(9, 9, 'John Dela Cruz', 40, 'SE', 'Brother', 'Vocational', 'Electrician', 10000),
+(10, 10, 'Jun Mendoza', 32, 'SE', 'Brother', 'College', 'Accountant', 80000),
+(11, 11, 'Akeela S. Fajardo', 30, 'M', 'Mother', 'College', 'Service Desk', 20000),
+(12, 11, 'Leshan S. Fajardo', 35, 'M', 'Father', 'College', 'Barista', 18000),
+(13, 12, 'Larry Z. Santos', 32, 'M', 'Spouse', 'Vocational', 'Electrician', 22000),
+(14, 13, 'Kira O. Buenaventura', 26, 'S', 'Sister', 'College', 'Nurse', 25000),
+(15, 14, 'Marie T. Trinidad', 59, 'W', 'Mother', 'College', 'Teacher', 30000),
+(16, 15, 'Apple H. Bayani', 32, 'M', 'Sister', 'College', 'Accountant', 34000),
+(17, 16, 'Alex F. Alcalde', 61, 'W', 'Father', 'Vocational', 'Plumber', 12000),
+(18, 17, 'Dale A. Leviste', 21, 'S', 'Brother', 'College', 'Carpenter', 19000),
+(19, 17, 'Rina A. Leviste', 62, 'W', 'Mother', 'None', 'Teacher', 35000),
+(20, 17, 'Renn A. Leviste', 23, 'S', 'Sister', 'College', 'Pharmacist', 22000);
+
+
+
+INSERT INTO Reference (Reference_No, Applicant_ID, Date, Applicant_Status)
+VALUES 
+('XY0001', 1, '2024-04-23', 'OLD APPLICANT'),
+('XY0002', 2, '2024-04-25', 'NEW APPLICANT'),
+('XY0003', 3, '2024-04-28', 'OLD APPLICANT'),
+('XY0004', 4, '2024-05-01', 'NEW APPLICANT'),
+('XY0005', 5, '2024-05-02', 'NEW APPLICANT'),
+('XY0006', 6, '2024-05-03', 'OLD APPLICANT'),
+('XY0007', 7, '2024-05-04', 'OLD APPLICANT'),
+('XY0008', 8, '2024-05-08', 'OLD APPLICANT'),
+('XY0009', 9, '2024-05-10', 'OLD APPLICANT'),
+('XY0010', 10, '2024-05-11', 'NEW APPLICANT'),
+('XY0011', 11, '2024-05-13', 'OLD APPLICANT'),
+('XY0012', 12, '2024-05-15', 'OLD APPLICANT'),
+('XY0013', 13, '2024-05-17', 'NEW APPLICANT'),
+('XY0014', 14, '2024-05-19', 'OLD APPLICANT'),
+('XY0015', 15, '2024-05-25', 'NEW APPLICANT'),
+('XY0016', 16, '2024-05-29', 'NEW APPLICANT'),
+('XY0017', 17, '2024-05-30', 'NEW APPLICANT'),
+('XY0018', 18, '2024-06-01', 'OLD APPLICANT'),
+('XY0019', 19, '2024-06-11', 'OLD APPLICANT'),
+('XY0020', 20, '2024-06-19', 'NEW APPLICANT');
+
