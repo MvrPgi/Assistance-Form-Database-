@@ -135,7 +135,7 @@ class DatabaseConnection:
 
   def FetchApplincatDetailsR(self):
     self.cursor.execute("SELECT * FROM Reference")
-    rows = self.cursor.fetchall()          
+    rows = self.cursor.fetchall()  
     return rows  
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------  
@@ -156,6 +156,49 @@ class DatabaseConnection:
     messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")
 
 
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------COUNT APPLICANT DETAILS-------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+  def count_applicant_details(self):
+      query = "SELECT COUNT(*) FROM Applicant_Details"
+      self.cursor.execute(query)
+      result = self.cursor.fetchone()
+      return result[0]
 
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------COUNT MALE DETAILS------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  def count_male_applicant_details(self):
+      query = "SELECT COUNT(*) FROM Applicant_Details WHERE Sex = 'M'"
+      self.cursor.execute(query)
+      result = self.cursor.fetchone()
+      return result[0]
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------- SEX APPLICANT DETAILS-------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+  def FetchMaleApplincatDetails(self):
+    self.cursor.execute("SELECT * FROM Applicant_Details WHERE Sex = 'M'")
+    rows = self.cursor.fetchall()  
+    return rows  
+  
+  def FetchFemaleApplincatDetails(self):
+    self.cursor.execute("SELECT * FROM Applicant_Details WHERE Sex = 'F'")
+    rows = self.cursor.fetchall()  
+    return rows  
+
+
+  
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------COUNT FEMALE DETAILS-------------------------------------------------------------------------
+
+  def count_female_applicant_details(self):
+      query = "SELECT COUNT(*) FROM Applicant_Details WHERE Sex = 'F'"
+      self.cursor.execute(query)
+      result = self.cursor.fetchone()
+      return result[0]
 
 
