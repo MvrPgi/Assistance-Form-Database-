@@ -8,7 +8,6 @@ from resources.FileTracker.tracker import resource_path
 
 class AdminBench(tk.Toplevel):
         
-
     def __init__(self, master=None):
         super().__init__(master)
         self.title("Admin Bench")
@@ -42,6 +41,7 @@ class AdminBench(tk.Toplevel):
         self.CountEntry.place(x=120.0, y=167.0, anchor="center")
         self.CountEntry.insert(0, Count)
         self.CountEntry.config(state="readonly")
+        
 
         # Count the number of male applicants
         self.canvas.create_text(320.0, 150.0, text="Total Number Of Male Applicant: ", font=("Mada Regular", 10*-1), fill="#000000")
@@ -51,7 +51,7 @@ class AdminBench(tk.Toplevel):
         self.CountEntry_M.insert(0, Count_M)
         self.CountEntry_M.config(state="readonly")
 
-
+        # Count the number of female applicants
         self.canvas.create_text(520.0, 150.0, text="Total Number Of Female Applicant: ", font=("Mada Regular", 10*-1), fill="#000000")
         Count_F = self.database.count_female_applicant_details()
         self.CountEntry_M = Entry(self.canvas, font=("Mada Regular", 10*-1), bd=0, bg="#FFE5AB", highlightthickness=0,fg="#000716",justify="center")
@@ -168,7 +168,6 @@ class AdminBench(tk.Toplevel):
 
 
 
-
     def update(self, item):
         new_values = [self.entries[col].get() for col in self.columns]
         self.tree.item(item, values=new_values)
@@ -182,7 +181,7 @@ class AdminBench(tk.Toplevel):
 
         self.edit_window.destroy()
 
-    def highlight(self,event ):
+    def highlight(self,event):
         item = self.tree.selection()[0] # Get the selected item
         values = self.tree.item(item, "values") # Get the values of the selected item
 
@@ -192,7 +191,7 @@ class AdminBench(tk.Toplevel):
 
         self.edit_window.title("Edit") 
 
-        self.RadioButtonVariable = tk.BooleanVar(value=True)
+        self.RadioButtonVariable = tk.BooleanVar(value=False)
         self.RadioButton = tk.Radiobutton(self.edit_window,variable=self.RadioButtonVariable,value=True ,text="Enable",command=self.toggle_entries)
         self.RadioButton.grid(row=0, column=0)
         self.RadioButton = tk.Radiobutton(self.edit_window, text="Disable",variable=self.RadioButtonVariable,value=False,command=self.toggle_entries)
@@ -205,7 +204,7 @@ class AdminBench(tk.Toplevel):
         for i, col in enumerate(self.columns): # Create the entry widgets
             tk.Label(self.LowerFrameEdit, text=col).grid(row=i, column=0) # Create a label
             entry = tk.Entry(self.LowerFrameEdit,width=30, justify="center")# Create an entry widget
-            entry.grid(row=i, column=1)# Place the entry widget
+            entry.grid(row=i, column=1,padx=5,pady =2)# Place the entry widget
             entry.insert(0, values[i]) # Insert the value of the selected item into the entry widget
             self.entries[col] = entry # Store the entry widget
 
@@ -214,18 +213,23 @@ class AdminBench(tk.Toplevel):
         self.entries[self.columns[0]].config(state="readonly")
 
 
-        tk.Button(self.edit_window, text="Save", command=lambda: self.update(item)).grid(row=17, column=0)
+        self.saveButton = tk.Button(self.edit_window, text="Save",state='disabled', command=lambda: self.update(item))
+        self.saveButton.grid(row=17, column=0, columnspan=2,pady=7)
 
     def toggle_entries(self):
-        if self.RadioButtonVariable.get() == "True":
+        if self.RadioButtonVariable.get() == True:
+            self.saveButton.config(state="normal")
             for entry in self.entries.values():
-                entry.config(state="normal")        
+                entry.config(state="normal")
+            self.entries[self.columns[0]].config(state="readonly")          
                 
-        elif self.RadioButtonVariable.get() == "False":
+
+        elif self.RadioButtonVariable.get() == False:
+            self.saveButton.config(state="disabled")
             for entry in self.entries.values():
                 entry.config(state="readonly")
-        self.entries[self.columns[0]].config(state="readonly")
-
+            self.entries[self.columns[0]].config(state="readonly")
+            
 
     def on_close(self):
         self.destroy()
