@@ -32,7 +32,6 @@ class App(tk.Tk):
         # Create and pack Register canvas into the main_frame
         register_canvas = Register(master=self.main_frame)
         register_canvas.pack(fill=tk.BOTH, expand=True)
-        
 
 
     def open_admin_bench(self):
@@ -40,10 +39,7 @@ class App(tk.Tk):
         admin_bench_window = AdminBench()
         admin_bench_window.mainloop()
 
-    def open_register(self):
-        self.withdraw()
-        register_window = Register()
-        register_window.mainloop()
+
         
 if __name__ == "__main__":
     app = App()
