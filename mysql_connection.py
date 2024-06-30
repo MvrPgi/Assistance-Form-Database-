@@ -48,6 +48,11 @@ class DatabaseConnection:
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------FETCH APPLICANT DETAILS--------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
+  def FetchRefApplincatDetails(self):
+     self.cursor.execute("SELECT Reference_No,R.Applicant_ID,Date,Applicant_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome FROM reference AS R, applicant_details AS A WHERE R.Applicant_ID = A.Applicant_ID;")
+     rows = self.cursor.fetchall()
+     return rows
+  
 
   def FetchApplincatDetailsA(self):
     self.cursor.execute("SELECT * FROM Applicant_Details")
@@ -86,7 +91,7 @@ class DatabaseConnection:
 # -------------------------------------------------------UPDATE APPLICANT DETAILS-------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  def update_applicant_details(self, Applicant_ID, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
+  def UpdateApplicantDetails(self, Applicant_ID, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
     query = """
         UPDATE Applicant_Details
         SET Full_Name=%s, Address=%s, Civil_Status=%s, Birth_Date=%s, Age=%s, Sex=%s, Nationality=%s, Religion=%s,
@@ -98,6 +103,42 @@ class DatabaseConnection:
     
     self.cursor.execute(query, data)
     self.con.commit()
+
+    
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------UPDATE REFERENCE APPLICANT DETAILS---------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  def UpdateRefApplicantDetails(self, Reference_No, Applicant_ID, Date, Applicant_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
+      # Update the reference table
+      query_reference = """
+          UPDATE reference
+          SET Applicant_ID=%s, Date=%s, Applicant_Status=%s
+          WHERE Reference_No=%s
+      """
+      data_reference = (Applicant_ID, Date, Applicant_Status, Reference_No)
+      
+      self.cursor.execute(query_reference, data_reference)
+
+
+
+      # Update the applicant_details table
+      query_applicant_details = """
+          UPDATE applicant_details
+          SET Full_Name=%s, Address=%s, Civil_Status=%s, Birth_Date=%s, Age=%s, Sex=%s, Nationality=%s, Religion=%s,
+              Highest_Educ_Attainment=%s, Occupation=%s, Monthly_Income=%s, Membership=%s, OtherSourceOfIncome=%s,
+              Monthly_Expenditures=%s, GrossMonthlyIncome=%s, NetMonthlyIncome=%s
+          WHERE Applicant_ID=%s
+      """
+      data_applicant_details = (Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome, Applicant_ID)
+      
+      self.cursor.execute(query_applicant_details, data_applicant_details)
+      self.con.commit()
+      messagebox.showinfo(title="Edit Success",message="Edit Success")# Display a message box to indicate that the record was added successfully
+
+
+
+
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------FETCH HOUSEHOLD DETAILS--------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -180,16 +221,23 @@ class DatabaseConnection:
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-  def FetchMaleApplincatDetails(self):
-    self.cursor.execute("SELECT * FROM Applicant_Details WHERE Sex = 'M'")
-    rows = self.cursor.fetchall()  
-    return rows  
-  
-  def FetchFemaleApplincatDetails(self):
-    self.cursor.execute("SELECT * FROM Applicant_Details WHERE Sex = 'F'")
-    rows = self.cursor.fetchall()  
-    return rows  
+  def FetchMaleApplicantDetails(self):
+      query = """
+      SELECT Reference_No, R.Applicant_ID, Date, Applicant_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome 
+      FROM reference AS R, applicant_details AS A WHERE R.Applicant_ID = A.Applicant_ID AND Sex ='M';
+      """
+      self.cursor.execute(query)
+      rows = self.cursor.fetchall()
+      return rows
 
+  def FetchFemaleApplicantDetails(self):
+      query = """
+      SELECT Reference_No, R.Applicant_ID, Date, Applicant_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome 
+      FROM reference AS R, applicant_details AS A WHERE R.Applicant_ID = A.Applicant_ID AND Sex ='F';
+      """
+      self.cursor.execute(query)
+      rows = self.cursor.fetchall()
+      return rows
 
   
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
