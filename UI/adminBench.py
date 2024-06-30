@@ -65,10 +65,8 @@ class AdminBench(tk.Toplevel):
 
   
         # Create a button to fetch data
-        self.FetchApplicant = tk.Button(self.canvas,image =self.button_image_1,borderwidth=0,highlightthickness=0, command=self.FetchApplicantData)
+        self.FetchApplicant = tk.Button(self.canvas,image =self.button_image_1,borderwidth=0,highlightthickness=0, command=self.FetchReferenceApplicantData)
         self.FetchApplicant.place(x=120.0, y=320, anchor="center")
-        # self.FetchApplicant = tk.Button(self.canvas,text= "GET DATA",borderwidth=0,width=20,highlightthickness=0, command=self.FetchApplicantData)
-        # self.FetchApplicant.place(x=120.0, y=300, anchor="center")
 
 
         self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male","Female"], state="readonly", width=10)
@@ -89,7 +87,7 @@ class AdminBench(tk.Toplevel):
         
         # Create a treeview to display the data
         self.columns = ( # Create the columns
-            "Applicant ID", "FullName", "Address", "Civil Status", "BirthDate", "Age",
+            "Reference No","Applicant ID","Date","Applicant Status", "Fullname", "Address", "Civil Status", "BirthDate", "Age",
             "Sex", "Nationality", "Religion", "Educational Attainment",
             "Occupation",  "Monthly Income","Membership", "OtherSourceOfIncome", "Monthly Expenditures",
             "GrossMonthlyIncome", "NetMonthlyIncome"
@@ -103,18 +101,19 @@ class AdminBench(tk.Toplevel):
         self.tree.bind('<Double-1>', self.highlight)
 
         column_widths = {
-            "ApplicantID": 100, "FullName": 150, "Address": 300, "Civil Status": 75, 
-            "BirthDate": 100, "Age": 100, "Sex": 100, "Nationality": 100, "Religion": 100,
-             "Educational Attainment": 250, "Occupation": 150,"Monthly Income": 150, 
-             "Membership": 100, "OtherSourceOfIncome": 150, "Monthly Expenditures": 175,
+            "Reference No": 100, "Applicant ID": 100, "Date": 100, "Applicant Status": 150, "Fullname": 150, "Address": 300, 
+            "Civil Status": 75, "BirthDate": 100, "Age": 50, "Sex": 50, "Nationality": 100, "Religion": 100,
+            "Educational Attainment": 250, "Occupation": 150, "Monthly Income": 150, 
+            "Membership": 100, "OtherSourceOfIncome": 150, "Monthly Expenditures": 175,
             "GrossMonthlyIncome": 150, "NetMonthlyIncome": 150
         }
-        
-        
 
         for col in self.columns: # Create the headings  and set the column width
             self.tree.heading(col, text=col)
             self.tree.column(col, width=column_widths.get(col, 100),anchor=tk.CENTER)
+
+
+        
 
         
         # Create a vertical scrollbar/ horizontal scrollbar
@@ -129,18 +128,35 @@ class AdminBench(tk.Toplevel):
         self.protocol("WM_DELETE_WINDOW", self.on_close)
 
 
-        # self.database = DatabaseConnection()
-    def FetchApplicantData(self):
-        rows = self.database.FetchApplincatDetailsA()
-        
+
+    def FetchReferenceApplicantData(self):
+        rows = self.database.FetchRefApplincatDetails()
+
         for row in self.tree.get_children():
             self.tree.delete(row)# Clear the existing data in the treeview
 
+        for row in rows:
+            self.tree.insert('', 'end', values=row)
+
+
+    def MaleFetchApplicantData(self):
+        rows = self.database.FetchMaleApplicantDetails()
+
+        for row in self.tree.get_children():
+            self.tree.delete(row)  # Clear the existing data in the Treeview
 
         for row in rows:
-            self.tree.insert('', 'end', values=row)# Insert new data into the treeview
+            self.tree.insert('', 'end', values=row)  # Insert new data into the Treeview
 
+    def FemaleFetchApplicantData(self):
+        rows = self.database.FetchFemaleApplicantDetails()
 
+        for row in self.tree.get_children():
+            self.tree.delete(row)  # Clear the existing data in the Treeview
+
+        for row in rows:
+            self.tree.insert('', 'end', values=row)  # Insert new data into the Treeview
+    
     def GenderPicker(self,event):
         if self.ComboBoxSex.get() =='Male':
             self.MaleFetchApplicantData()
@@ -148,27 +164,8 @@ class AdminBench(tk.Toplevel):
             self.FemaleFetchApplicantData()
 
 
-    def MaleFetchApplicantData(self):
-        rows = self.database.FetchMaleApplincatDetails()
-        
-        for row in self.tree.get_children():
-            self.tree.delete(row)# Clear the existing data in the treeview
 
-        for row in rows:
-            self.tree.insert('', 'end', values=row)# Insert new data into the treeview
-
-    def FemaleFetchApplicantData(self):
-        rows = self.database.FetchFemaleApplincatDetails()
-        
-        for row in self.tree.get_children():
-            self.tree.delete(row)# Clear the existing data in the treeview
-
-        for row in rows:
-            self.tree.insert('', 'end', values=row)# Insert new data into the treeview
-
-
-
-    def update(self, item):
+    def UpdateApplicantDetails(self, item):
         new_values = [self.entries[col].get() for col in self.columns]
         self.tree.item(item, values=new_values)
 
@@ -176,7 +173,20 @@ class AdminBench(tk.Toplevel):
         self.database.update_applicant_details(
             new_values[0], new_values[1], new_values[2], new_values[3], new_values[4], new_values[5], new_values[6],  # Update the database with the new values
             new_values[7], new_values[8], new_values[9], new_values[10], new_values[11], new_values[12], 
-            new_values[13], new_values[14], new_values[15], new_values[16]
+            new_values[13], new_values[14], new_values[15], new_values[16], new_values[17], new_values[18], new_values[19], new_values[20], new_values[21]
+        )
+
+        self.edit_window.destroy()
+
+    def UpdateRefApplicantDetails(self, item):
+        new_values = [self.entries[col].get() for col in self.columns]
+        self.tree.item(item, values=new_values)
+
+        # Update the database with the new values
+        self.database.UpdateRefApplicantDetails(
+            new_values[0], new_values[1], new_values[2], new_values[3], new_values[4], new_values[5], new_values[6],  # Update the database with the new values
+            new_values[7], new_values[8], new_values[9], new_values[10], new_values[11], new_values[12], 
+            new_values[13], new_values[14], new_values[15], new_values[16], new_values[17], new_values[18], new_values[19]
         )
 
         self.edit_window.destroy()
@@ -186,7 +196,7 @@ class AdminBench(tk.Toplevel):
         values = self.tree.item(item, "values") # Get the values of the selected item
 
         self.edit_window = tk.Toplevel(self)
-        self.edit_window.geometry("350x450")
+        self.edit_window.geometry("350x550")
         self.edit_window.wm_resizable(False, False)
 
         self.edit_window.title("Edit") 
@@ -210,10 +220,12 @@ class AdminBench(tk.Toplevel):
 
         for entry in self.entries.values():
             entry.config(state="readonly")        
-        self.entries[self.columns[0]].config(state="readonly")
+        for i in range(3):
+            self.entries[self.columns[i]].config(state="readonly")
 
 
-        self.saveButton = tk.Button(self.edit_window, text="Save",state='disabled', command=lambda: self.update(item))
+
+        self.saveButton = tk.Button(self.edit_window, text="Save",state='disabled', command=lambda: self.UpdateRefApplicantDetails(item))
         self.saveButton.grid(row=17, column=0, columnspan=2,pady=7)
 
     def toggle_entries(self):
@@ -221,19 +233,34 @@ class AdminBench(tk.Toplevel):
             self.saveButton.config(state="normal")
             for entry in self.entries.values():
                 entry.config(state="normal")
-            self.entries[self.columns[0]].config(state="readonly")          
+            for i in range(3):
+                self.entries[self.columns[i]].config(state="readonly")      
                 
 
         elif self.RadioButtonVariable.get() == False:
             self.saveButton.config(state="disabled")
             for entry in self.entries.values():
                 entry.config(state="readonly")
-            self.entries[self.columns[0]].config(state="readonly")
+            for i in range(3):
+                self.entries[self.columns[i]].config(state="readonly")
             
 
     def on_close(self):
         self.destroy()
         self.master.destroy()  
+
+
+
+    def FetchApplicantData(self):
+        rows = self.database.FetchApplincatDetailsA()
+        
+        for row in self.tree.get_children():
+            self.tree.delete(row)# Clear the existing data in the treeview
+
+
+        for row in rows:
+            self.tree.insert('', 'end', values=row)# Insert new data into the treeview
+
 
 
 
