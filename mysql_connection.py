@@ -136,7 +136,32 @@ class DatabaseConnection:
       self.con.commit()
       messagebox.showinfo(title="Edit Success",message="Edit Success")# Display a message box to indicate that the record was added successfully
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------DELETE APPLICANT DETAILS-------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  def DeleteApplicantDetails(self, Applicant_ID):
+      try:
+          # Delete from houshold_details
+          query = "DELETE FROM household_details WHERE Applicant_ID = %s"
+          self.cursor.execute(query, (Applicant_ID,))
+          
+          # Delete from reference
+          query = "DELETE FROM reference WHERE Applicant_ID = %s"
+          self.cursor.execute(query, (Applicant_ID,))
+          
+          # Delete from applicant_details
+          query = "DELETE FROM applicant_details WHERE Applicant_ID = %s"
+          self.cursor.execute(query, (Applicant_ID,))
+          
+          # Commit changes
+          self.con.commit()
+          print("Records deleted successfully.")
+      except Exception as e:
+          # Rollback in case of error
+          self.con.rollback()
+          print(f"An error occurred: {e}")
+      messagebox.showinfo(title="Delete Success",message="Delete Success")# Display a message box to indicate that the record was added successfully
 
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------

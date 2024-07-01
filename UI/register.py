@@ -175,8 +175,6 @@ class Register(tk.Canvas):
         self.Net_Monthly_Income.place(x=700.0, y=405.5, width=105.0, height=10.0)
 
 
-
-
 # 2ND PAGE
 #LOAD THE IMAGES        
         self.image_image1_1 = PhotoImage(file=resource_path("resources/APP_1.1/image_1.png"))
@@ -410,6 +408,15 @@ class Register(tk.Canvas):
                 self.Hoccupation.get(),
                 self.Hmonthlyincome.get()
             )
+            # self.applicant_details.insert_household_details(
+            #     "John Doe",  # Hname
+            #     42,  # Hage
+            #     "M",  # HCivilStatus
+            #     "Spouse",  # Hrelation
+            #     "College Graduate",  # HHighestEducationalAttainment
+            #     "Software Engineer",  # Hoccupation
+            #     7500  # Hmonthlyincome
+            # )           
 
             # Insert reference details
             self.applicant_details.insert_reference_details(
