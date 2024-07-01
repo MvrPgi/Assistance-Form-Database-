@@ -7,8 +7,8 @@ from mysql_connection import DatabaseConnection
 
 
 class Register(tk.Canvas):
+    
     def __init__(self, master=None):
-       
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
         self.applicant_details = DatabaseConnection() # Create an instance of the Applicant_Details class
         self.ReferenceHandle = DatabaseConnection()
@@ -173,8 +173,6 @@ class Register(tk.Canvas):
         self.Monthly_Expenditure.place(x=420.0, y=405.5, width=105.0, height=10.0)
         self.Gross_Monthly_Income.place(x=559.0, y=405.5, width=105.0, height=10.0)
         self.Net_Monthly_Income.place(x=700.0, y=405.5, width=105.0, height=10.0)
-
-
 
 
 # 2ND PAGE
@@ -410,6 +408,15 @@ class Register(tk.Canvas):
                 self.Hoccupation.get(),
                 self.Hmonthlyincome.get()
             )
+            self.applicant_details.insert_household_details(
+                "John Doe",  # Hname
+                42,  # Hage
+                "M",  # HCivilStatus
+                "Spouse",  # Hrelation
+                "College Graduate",  # HHighestEducationalAttainment
+                "Software Engineer",  # Hoccupation
+                7500  # Hmonthlyincome
+            )           
 
             # Insert reference details
             self.applicant_details.insert_reference_details(

@@ -1,6 +1,6 @@
-import sys
-import os
+
 import tkinter as tk
+from UI.register import Register
 from tkinter import PhotoImage, Entry, messagebox
 from mysql_connection import DatabaseConnection
 import mysql.connector
@@ -71,6 +71,10 @@ class Login(tk.Canvas):
                 break
         else:
             messagebox.showerror("Login", "Invalid username or email.")
+
+
+
+
 
 
         

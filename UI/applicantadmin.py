@@ -44,3 +44,8 @@ class ApplicantAdmin(tk.Canvas):
 
 
 
+   
+
+
+
+
