@@ -22,4 +22,4 @@ A complete database system must be developed to manage Individual Medical Assist
 ## Features
 
 - **Automated Form Gathering**: Extract and process form data from incoming emails.
-- **Database Management**: Store and manage gathered data using SQL..
+- **Database Management**: Store and manage gathered data using SQL...
