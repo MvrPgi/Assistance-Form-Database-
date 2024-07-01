@@ -1,7 +1,9 @@
 import sys
 import os
 import tkinter as tk
-from tkinter import PhotoImage, Entry
+from tkinter import PhotoImage, Entry, messagebox
+from mysql_connection import DatabaseConnection
+import mysql.connector
 from resources.FileTracker.tracker import resource_path
 
 
@@ -33,24 +35,42 @@ class Login(tk.Canvas):
         
         
         self.create_text(531.0, 138.0, anchor = "nw", text = "Log In", fill="#FFFFFF", font=("Mada Bold", 17 * -1))
-        self.create_text(531.0, 206.0, anchor = "nw", text = "Email", fill="#000000", font=("Mada Bold", 17 * -1))
+        self.create_text(531.0, 206.0, anchor = "nw", text = "Username", fill="#000000", font=("Mada Bold", 17 * -1))
         self.create_text(531.0, 262.0, anchor="nw",text="Password",fill="#000000",font=("Mada Bold", 17 * -1))
         self.create_text(160.0, 270.0, anchor="nw",text="Philippine Charity Sweepstakes Office",fill="#000000",font=("Mada Bold", 17 * -1))
         self.create_text(600.0, 62.0, anchor="nw",text="Welcome Back!",fill="#FFFFFF",font=("Mada Bold", 17 * -1))
         self.create_text(540.0, 94.0, anchor="nw", text = "Don't have an account yet?", fill="#FFFFFF", font=("Mada Light", 14 * -1))
 
-        self.Email = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
-        self.Email.place(x=531.0, y=232.0, width=241.0, height=18.0)
+        self.Username = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Username.place(x=531.0, y=232.0, width=241.0, height=18.0)
 
-        self.Password = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Password = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0, show = "•")
         self.Password.place(x=531.0, y=286.0, width=241.0, height=18.0)
 
-        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command=lambda: print("button_1 clicked"), relief="flat")
+        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command= self.login_button, relief="flat")
         self.Button_1.place(x=532.0, y=358.0, width=234.0, height=29.0)
 
         self.Button_2 = tk.Button(self, image=self.image_button_2, borderwidth=0, highlightthickness=0, command=lambda: print("button_2 clicked"), relief ="flat")
         self.Button_2.place(x=715.0, y=90.0)
-        
+
+        self.database = DatabaseConnection()
+    
+    def login_button(self):
+        mysqldb = mysql.connector.connect(host = "localhost", user = "root", password = "1234", database = "practice")
+        mycursor = mysqldb.cursor()
+
+        username = self.Username.get()
+        password = self.Password.get()
+
+        mycursor.execute("SELECT username, _password FROM user")
+        results = mycursor.fetchall()
+
+        for x in results:
+            if username == x[0] and password == x[1]:
+                messagebox.showinfo("Login", "Login Successfully.")
+                break
+        else:
+            messagebox.showerror("Login", "Invalid username or email.")
 
 
         
