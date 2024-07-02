@@ -24,13 +24,15 @@ class App(tk.Tk):
         self.current_frame = None
         self.switch_frame('applicantadmin')
 
-
     def clear_frame(self):
         print("Clearing frame...")
-        # Clear the main_frame and destroy current frame
         if self.current_frame is not None:
-            print(f"Destroying current frame: {self.current_frame.__class__.__name__}")
+            # Clear Entry widgets
+            for widget in self.current_frame.winfo_children():
+                if isinstance(widget, tk.Entry):
+                    widget.delete(0, tk.END)
             self.current_frame.destroy()
+            self.current_frame = None
         else:
             print("No current frame to destroy.")
 
@@ -40,26 +42,29 @@ class App(tk.Tk):
 
         if frame_name == 'applicantadmin':
             self.current_frame = ApplicantAdmin(master=self.main_frame, switch_frame=self.switch_frame)
-            self.current_frame.pack(fill=tk.BOTH, expand=True)
         elif frame_name == 'adminbench':
             self.withdraw()  # Hide the main window
             admin_bench_window = AdminBench(master=self)
             admin_bench_window.mainloop()
         elif frame_name == 'register':
             self.current_frame = Register(master=self.main_frame, switch_frame=self.switch_frame)
-            self.current_frame.pack(fill=tk.BOTH, expand=True)
         elif frame_name == 'login':
             self.current_frame = Login(master=self.main_frame, switch_frame=self.switch_frame)
-            self.current_frame.pack(fill=tk.BOTH, expand=True)
         elif frame_name == 'adminlogin':
             self.current_frame = AdminLogin(master=self.main_frame, switch_frame=self.switch_frame)
-            self.current_frame.pack(fill=tk.BOTH, expand=True)
         elif frame_name == 'signup':
             self.current_frame = Signup(master=self.main_frame, switch_frame=self.switch_frame)
-            self.current_frame.pack(fill=tk.BOTH, expand=True)
         else:
             print(f"Frame '{frame_name}' not recognized.")
             return
+
+        if self.current_frame is not None:
+            self.current_frame.pack(fill=tk.BOTH, expand=True)
+
+
+
+
+            
 
 if __name__ == "__main__":
     app = App()
