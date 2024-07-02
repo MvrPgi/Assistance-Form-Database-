@@ -8,8 +8,9 @@ from resources.FileTracker.tracker import resource_path
 
 
 class Login(tk.Canvas):
-    def __init__(self, master = None):
+    def __init__(self, master = None,switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
+        self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
         #BUTTON
         self.image_button_1 = PhotoImage(file=resource_path("resources/login/button_1.png"))
@@ -47,7 +48,7 @@ class Login(tk.Canvas):
         self.Password = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0, show = "•")
         self.Password.place(x=531.0, y=286.0, width=241.0, height=18.0)
 
-        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command= self.login_button, relief="flat")
+        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command= self.go_to_register, relief="flat")
         self.Button_1.place(x=532.0, y=358.0, width=234.0, height=29.0)
 
         self.Button_2 = tk.Button(self, image=self.image_button_2, borderwidth=0, highlightthickness=0, command=lambda: print("button_2 clicked"), relief ="flat")
@@ -72,6 +73,10 @@ class Login(tk.Canvas):
         else:
             messagebox.showerror("Login", "Invalid username or email.")
 
+
+    def go_to_register(self):
+        if self.switch_frame:
+            self.switch_frame('register')
 
 
 
