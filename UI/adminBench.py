@@ -18,72 +18,41 @@ class AdminBench(tk.Toplevel):
 
         
         # Create the upper frame
-        self.UpperFrame = tk.Frame(self)
-        self.UpperFrame.pack(side="top", fill=tk.BOTH, expand=True)
+        self.UpperFrame = tk.Frame(self,height=200)
+        self.UpperFrame.pack(side="top", fill=tk.X)
 
    
    
         # Create a canvas in the upper frame
         self.canvas = tk.Canvas(self.UpperFrame, bg="#FFFFFF")
-        self.canvas.pack(side="top", fill=tk.BOTH, expand=True)
-
-
-        self.image_1 = PhotoImage(file=resource_path("resources/adminbench/image_1.png"))
-        self.canvas.create_image(960.0, 30, image = self.image_1)
-        self.button_image_1 = PhotoImage(file=resource_path("resources/adminbench/button_1.png"))
-        self.button_image_2 = PhotoImage(file=resource_path("resources/adminbench/button_2.png"))
-        self.button_image_3 = PhotoImage(file=resource_path("resources/adminbench/button_3.png"))
-
-        # Count the number of applicants
-        self.canvas.create_text(120.0, 150.0, text="Total Number Of Applicant: ", font=("Mada Regular", 10*-1), fill="#000000")
-        Count = self.database.count_applicant_details()
-        self.CountEntry = Entry(self.canvas, font=("Mada Regular", 10*-1), bd=0, bg="#FFE5AB", highlightthickness=0,fg="#000716",justify="center")
-        self.CountEntry.place(x=120.0, y=167.0, anchor="center")
-        self.CountEntry.insert(0, Count)
-        self.CountEntry.config(state="readonly")
-        
-
-        # Count the number of male applicants
-        self.canvas.create_text(320.0, 150.0, text="Total Number Of Male Applicant: ", font=("Mada Regular", 10*-1), fill="#000000")
-        Count_M = self.database.count_male_applicant_details()
-        self.CountEntry_M = Entry(self.canvas, font=("Mada Regular", 10*-1), bd=0, bg="#FFE5AB", highlightthickness=0,fg="#000716",justify="center")
-        self.CountEntry_M.place(x=320.0, y=167.0, anchor="center")
-        self.CountEntry_M.insert(0, Count_M)
-        self.CountEntry_M.config(state="readonly")
-
-        # Count the number of female applicants
-        self.canvas.create_text(520.0, 150.0, text="Total Number Of Female Applicant: ", font=("Mada Regular", 10*-1), fill="#000000")
-        Count_F = self.database.count_female_applicant_details()
-        self.CountEntry_M = Entry(self.canvas, font=("Mada Regular", 10*-1), bd=0, bg="#FFE5AB", highlightthickness=0,fg="#000716",justify="center")
-        self.CountEntry_M.place(x=520.0, y=167.0, anchor="center")
-        self.CountEntry_M.insert(0, Count_F)
-        self.CountEntry_M.config(state="readonly")
+        self.canvas.pack(fill=tk.BOTH, expand=True)
+  
+        self.Header = PhotoImage(file=resource_path("resources/adminbench/header.png"))
+        self.canvas.create_image(960.0, 30, image = self.Header)
 
     
 
-  
-        # Create a button to fetch data
-        self.FetchApplicant = tk.Button(self.canvas,image =self.button_image_1,borderwidth=0,highlightthickness=0, command=self.FetchReferenceApplicantData)
-        self.FetchApplicant.place(x=120.0, y=320, anchor="center")
-        self.DeleteButton = tk.Button(self.canvas,text="Delete",borderwidth=0,highlightthickness=0, command=self.DeleteSelectRow)
-        self.DeleteButton.place(x=320.0, y=320, anchor="center")
-
 
         self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male","Female"], state="readonly", width=10)
-        self.ComboBoxSex.place(x=520.0, y=300, anchor="center")
+        self.ComboBoxSex.place(x=920.0, y=150, anchor="center")
         self.ComboBoxSex.bind("<<ComboboxSelected>>",self.GenderPicker)
 
 
-        self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male","Female"], state="readonly", width=10)
-        self.ComboBoxSex.place(x=520.0, y=300, anchor="center")
-        self.ComboBoxSex.bind("<<ComboboxSelected>>",self.GenderPicker)
+        self.DeleteButtonImage = PhotoImage(file=resource_path("resources/adminbench/deleteButton.png"))
+        self.deleteButton = tk.Button(self.canvas, image=self.DeleteButtonImage, command=lambda: print("hello word"))
+        self.deleteButton.place(x=1020.0, y=150, anchor="center",width=95, height=23)
+
+        self.UpdateButtonImage = PhotoImage(file=resource_path("resources/adminbench/updateButton.png"))
+        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command=lambda: print("hello word"))
+        self.updateButton.place(x=1120.0, y=150, anchor="center",width=95, height=23)
 
 
 
 
         # Create the lower frame
-        self.LowerFrame = tk.Frame(self)
-        self.LowerFrame.pack(side="bottom", fill=tk.BOTH, expand=True)
+        self.LowerFrame = tk.Frame(self, bg="#FFFFFF",height=600)
+        self.LowerFrame.pack(side="top", fill=tk.BOTH, expand=True,pady=10)
+
         
         # Create a treeview to display the data
         self.columns = ( # Create the columns
@@ -92,14 +61,14 @@ class AdminBench(tk.Toplevel):
             "Occupation",  "Monthly Income","Membership", "OtherSourceOfIncome", "Monthly Expenditures",
             "GrossMonthlyIncome", "NetMonthlyIncome"
         )
-        self.tree = ttk.Treeview(self.LowerFrame, columns=self.columns, show='headings',height=10)
+        self.tree = ttk.Treeview(self.LowerFrame, columns=self.columns, show='headings',height=600)
         self.tree.pack_propagate(False)
-        self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=15, pady=10)
+        self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=15, pady=20)
 
 
         self.style = ttk.Style()
         self.style.configure("Treeview.Heading", background="#FFFFF", foreground="#000000", font=("Helvetica", 10))
-        # self.style.configure("Treeview", background="#FFE5AB", foreground="#000000", font=("Helvetica", 10))
+        self.style.configure("Treeview",rowheight=25)
         
         self.tree.bind('<Double-1>', self.highlight)
 
@@ -118,27 +87,17 @@ class AdminBench(tk.Toplevel):
 
 
 
-
-        
-
-        
-        # Create a vertical scrollbar/ horizontal scrollbar
-        self.VScroll = ttk.Scrollbar(self.LowerFrame, orient=tk.VERTICAL, command=self.tree.yview)
-        self.VScroll.pack(side=tk.RIGHT, fill=tk.Y)
-        self.tree.configure(yscrollcommand=self.VScroll.set)
-        self.HScroll = ttk.Scrollbar(self, orient=tk.HORIZONTAL, command=self.tree.xview)
+        # Create the horizontal scrollbar
+        self.HScroll = ttk.Scrollbar(self.UpperFrame, orient=tk.HORIZONTAL, command=self.tree.xview)
         self.HScroll.pack(side=tk.BOTTOM, fill=tk.X)
+
+        # Configure the tree view to use the scrollbar
         self.tree.configure(xscrollcommand=self.HScroll.set)
-
-
-
-        self.LowerFrame.config(width=1150, height=500)  # Set the width and height as needed
-
         # Destroy the window when the close button is clicked
         self.protocol("WM_DELETE_WINDOW", self.on_close)
 
 
-
+        self.FetchReferenceApplicantData()
 
     def FetchReferenceApplicantData(self):
         rows = self.database.FetchRefApplincatDetails()
@@ -148,8 +107,8 @@ class AdminBench(tk.Toplevel):
 
         
         # Define alternating colors
-        color1 = "#FFFFFF"  # Light grey
-        color2 = "#FFE5AB"  # Slightly darker grey
+        color1 = "#CFCECE"  # Light grey
+        color2 = "#FFFFFF"  # Slightly darker grey
 
         # Insert data with alternating colors
         for index, row in enumerate(rows):

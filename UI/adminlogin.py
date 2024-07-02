@@ -40,17 +40,17 @@ class AdminLogin(tk.Canvas,):
         self.create_text(610.0, 62.0, anchor="nw",text="Admin Login",fill="#FFFFFF",font=("Mada Bold", 17 * -1))
         self.create_text(565.0, 94.0, anchor="nw", text = "Enter your admin credentials", fill="#FFFFFF", font=("Mada Light", 14 * -1))
         
-        self.Email = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Email = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
         self.Email.place(x=531.0, y=232.0, width=241.0, height=18.0)
 
-        self.Password = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Password = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
         self.Password.place(x=531.0, y=286.0, width=241.0, height=18.0)
 
-        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command=self.GoAdmin ,relief="flat")
+        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command=self.GoAdminPage ,relief="flat")
         self.Button_1.place(x=532.0, y=358.0, width=234.0, height=29.0)
 
-    def GoAdmin(self):
+    def GoAdminPage(self):
             print("GoAdmin called")
             if self.switch_frame:
-                print("Switching to adminbench")
-                self.switch_frame('adminbench')
+                print("Switching to adminhomepage...")
+                self.switch_frame('adminhomepage')
