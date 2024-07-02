@@ -11,7 +11,7 @@ class AdminBench(tk.Toplevel):
     def __init__(self, master=None):
         super().__init__(master)
         self.title("Admin Bench")
-        self.geometry("1920x700")
+        self.geometry("1910x700")
         self.configure(bg="#FFFFFF")
         self.resizable(False, False)
         self.database = DatabaseConnection()
@@ -61,12 +61,12 @@ class AdminBench(tk.Toplevel):
 
     
 
-
-
   
         # Create a button to fetch data
         self.FetchApplicant = tk.Button(self.canvas,image =self.button_image_1,borderwidth=0,highlightthickness=0, command=self.FetchReferenceApplicantData)
         self.FetchApplicant.place(x=120.0, y=320, anchor="center")
+        self.DeleteButton = tk.Button(self.canvas,text="Delete",borderwidth=0,highlightthickness=0, command=self.DeleteSelectRow)
+        self.DeleteButton.place(x=320.0, y=320, anchor="center")
 
 
         self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male","Female"], state="readonly", width=10)
@@ -92,12 +92,15 @@ class AdminBench(tk.Toplevel):
             "Occupation",  "Monthly Income","Membership", "OtherSourceOfIncome", "Monthly Expenditures",
             "GrossMonthlyIncome", "NetMonthlyIncome"
         )
-        self.tree = ttk.Treeview(self.LowerFrame, columns=self.columns, show='headings')
-        self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.tree = ttk.Treeview(self.LowerFrame, columns=self.columns, show='headings',height=10)
+        self.tree.pack_propagate(False)
+        self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=15, pady=10)
+
 
         self.style = ttk.Style()
-        self.style.configure("Treeview.Heading", background="#D97F76", foreground="#000000", font=("Helvetica", 10))
-        self.style.configure("Treeview", background="#FFFFFF", foreground="#000000", fieldbackground="yellow")
+        self.style.configure("Treeview.Heading", background="#FFFFF", foreground="#000000", font=("Helvetica", 10))
+        # self.style.configure("Treeview", background="#FFE5AB", foreground="#000000", font=("Helvetica", 10))
+        
         self.tree.bind('<Double-1>', self.highlight)
 
         column_widths = {
@@ -113,6 +116,9 @@ class AdminBench(tk.Toplevel):
             self.tree.column(col, width=column_widths.get(col, 100),anchor=tk.CENTER)
 
 
+
+
+
         
 
         
@@ -124,8 +130,13 @@ class AdminBench(tk.Toplevel):
         self.HScroll.pack(side=tk.BOTTOM, fill=tk.X)
         self.tree.configure(xscrollcommand=self.HScroll.set)
 
+
+
+        self.LowerFrame.config(width=1150, height=500)  # Set the width and height as needed
+
         # Destroy the window when the close button is clicked
         self.protocol("WM_DELETE_WINDOW", self.on_close)
+
 
 
 
@@ -135,8 +146,21 @@ class AdminBench(tk.Toplevel):
         for row in self.tree.get_children():
             self.tree.delete(row)# Clear the existing data in the treeview
 
-        for row in rows:
-            self.tree.insert('', 'end', values=row)
+        
+        # Define alternating colors
+        color1 = "#FFFFFF"  # Light grey
+        color2 = "#FFE5AB"  # Slightly darker grey
+
+        # Insert data with alternating colors
+        for index, row in enumerate(rows):
+            tag = f"color_{index % 2}"  # Alternating tag
+            color = color1 if index % 2 == 0 else color2
+            self.tree.tag_configure(tag, background=color)
+            self.tree.insert('', 'end', values=row, tags=(tag,))
+
+
+
+
 
 
     def MaleFetchApplicantData(self):
@@ -190,6 +214,47 @@ class AdminBench(tk.Toplevel):
         )
 
         self.edit_window.destroy()
+
+
+    def SelectDeleteRow(self, event):
+        select = self.tree.selection()
+        if not select:
+            print("No item selected.")
+            return None
+
+        item_id = select[0]
+        values = self.tree.item(item_id, "values")
+        return values
+    
+
+    def DeleteSelectRow(self):
+        select = self.tree.selection()
+        if not select:
+            print("No item selected.")
+            return
+        
+        item_id = select[0]
+        
+        if not self.tree.exists(item_id):
+            print(f"Item {item_id} not found.")
+            return
+        
+        values = self.tree.item(item_id, "values")
+
+        # Assuming the second value in the row is the primary key for deletion
+        primary_key = values[1]
+        
+        try:
+            self.database.DeleteApplicantDetails(primary_key)
+        except Exception as e:
+            print(f"Error deleting from database: {e}")
+            return
+
+        # Remove item from Treeview
+        self.tree.delete(item_id)
+
+
+
 
     def highlight(self,event):
         item = self.tree.selection()[0] # Get the selected item
@@ -251,15 +316,15 @@ class AdminBench(tk.Toplevel):
 
 
 
-    def FetchApplicantData(self):
-        rows = self.database.FetchApplincatDetailsA()
+    # def FetchApplicantData(self):
+    #     rows = self.database.FetchApplincatDetailsA()
         
-        for row in self.tree.get_children():
-            self.tree.delete(row)# Clear the existing data in the treeview
+    #     for row in self.tree.get_children():
+    #         self.tree.delete(row)# Clear the existing data in the treeview
 
 
-        for row in rows:
-            self.tree.insert('', 'end', values=row)# Insert new data into the treeview
+    #     for row in rows:
+    #         self.tree.insert('', 'end', values=row)# Insert new data into the treeview
 
 
 

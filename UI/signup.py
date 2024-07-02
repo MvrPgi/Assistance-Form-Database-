@@ -5,8 +5,9 @@ from tkinter import PhotoImage, Entry
 from resources.FileTracker.tracker import resource_path
 
 class Signup(tk.Canvas):
-    def __init__ (self, master = None):
+    def __init__ (self, master = None,switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
+        self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
         #BUTTON
         self.image_button_1 = PhotoImage(file=resource_path("resources/signup/button_1.png"))
