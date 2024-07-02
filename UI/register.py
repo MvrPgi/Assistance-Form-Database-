@@ -8,14 +8,13 @@ from mysql_connection import DatabaseConnection
 
 class Register(tk.Canvas):
     
-    def __init__(self, master=None):
+    def __init__(self, master=None, switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
         self.applicant_details = DatabaseConnection() # Create an instance of the Applicant_Details class
         self.ReferenceHandle = DatabaseConnection()
+        self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
         
         
-
-
 
         #LOAD THE IMAGES
         self.image_image_1 = PhotoImage(file=resource_path("resources/APP_1/image_1.png"))  
@@ -239,6 +238,9 @@ class Register(tk.Canvas):
         self.button_2 = tk.Button(image=self.image_button2_1,borderwidth=0,highlightthickness=0,command = self.back_page,)
         self.button_3 = tk.Button(image=self.image_button1_1,borderwidth=0,highlightthickness=0,command = self.commit_data)
 
+        self.button_4 = tk.Button(self,text="back",borderwidth=0,highlightthickness=0,command = self.backtoHome)
+        self.button_4.place(x=400.0,y=450.0,width=100.0,height=30.0)
+
 
     def next_page(self):
 #HIDE THE WIDGETS PAGE 1
@@ -440,6 +442,14 @@ class Register(tk.Canvas):
         print(f"Fetched Reference ID: {reference_id}")
         return reference_id
     
+
+    def backtoHome(self):
+        print("Back to Home")
+        if self.switch_frame:
+            print("Switching to Home")
+            self.switch_frame('applicantadmin')
+        else:
+            print("Switch frame not none")
 
 
         
