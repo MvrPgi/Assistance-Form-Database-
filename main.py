@@ -5,6 +5,7 @@ from UI.login import Login
 from UI.register import Register
 from UI.signup import Signup
 from UI.adminlogin import AdminLogin
+from UI.adminHomepage import AdminHomepage
 
 import tkinter as tk
 from tkinter import ttk
@@ -42,6 +43,8 @@ class App(tk.Tk):
 
         if frame_name == 'applicantadmin':
             self.current_frame = ApplicantAdmin(master=self.main_frame, switch_frame=self.switch_frame)
+        elif frame_name == 'adminhomepage':
+            self.current_frame = AdminHomepage(master=self.main_frame, switch_frame=self.switch_frame)
         elif frame_name == 'adminbench':
             self.withdraw()  # Hide the main window
             admin_bench_window = AdminBench(master=self)
