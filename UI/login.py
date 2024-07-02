@@ -42,16 +42,16 @@ class Login(tk.Canvas):
         self.create_text(600.0, 62.0, anchor="nw",text="Welcome Back!",fill="#FFFFFF",font=("Mada Bold", 17 * -1))
         self.create_text(540.0, 94.0, anchor="nw", text = "Don't have an account yet?", fill="#FFFFFF", font=("Mada Light", 14 * -1))
 
-        self.Username = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Username = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
         self.Username.place(x=531.0, y=232.0, width=241.0, height=18.0)
 
-        self.Password = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0, show = "•")
+        self.Password = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0, show = "•")
         self.Password.place(x=531.0, y=286.0, width=241.0, height=18.0)
 
         self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command= self.go_to_register, relief="flat")
         self.Button_1.place(x=532.0, y=358.0, width=234.0, height=29.0)
 
-        self.Button_2 = tk.Button(self, image=self.image_button_2, borderwidth=0, highlightthickness=0, command=lambda: print("button_2 clicked"), relief ="flat")
+        self.Button_2 = tk.Button(self, image=self.image_button_2, borderwidth=0, highlightthickness=0, command=self.go_to_signup, relief ="flat")
         self.Button_2.place(x=715.0, y=90.0)
 
         self.database = DatabaseConnection()
@@ -77,6 +77,10 @@ class Login(tk.Canvas):
     def go_to_register(self):
         if self.switch_frame:
             self.switch_frame('register')
+
+    def go_to_signup(self):
+        if self.switch_frame:
+            self.switch_frame('signup')
 
 
 

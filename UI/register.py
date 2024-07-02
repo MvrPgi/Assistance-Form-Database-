@@ -136,27 +136,26 @@ class Register(tk.Canvas):
         self.Dependent.place(x=730.0, y=335.5, width=80.0, height=15.0)
 
 
-
         
 #ENTRY
         initial_reference_id = self.ReferenceHandle.get_last_reference_id()
-        self.Reference_No = Entry(bd=0,bg="#FFFFFF", fg="#000716", highlightthickness=0)
+        self.Reference_No = Entry(self,bd=0,bg="#FFFFFF", fg="#000716", highlightthickness=0)
         self.Reference_No.insert(0, initial_reference_id)
         self.Reference_No.config(state='readonly')
 
-        self.Date = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.FullName = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Permanent_Address = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Birthdate = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Age = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Nationality = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Religion = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Occupation = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Monthly_Income = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Other_Sources_Of_Income = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Monthly_Expenditure = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Gross_Monthly_Income = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
-        self.Net_Monthly_Income = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Date = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.FullName = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Permanent_Address = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Birthdate = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Age = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Nationality = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Religion = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Occupation = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Monthly_Income = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Other_Sources_Of_Income = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Monthly_Expenditure = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Gross_Monthly_Income = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
+        self.Net_Monthly_Income = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0);
 #PLACE ENTRY
         self.Reference_No.place(x=60.0, y=115.5, width=43.0, height=10.0)
         self.Date.place(x=290.0, y=115.5, width=208.0, height=10.0)
@@ -224,19 +223,19 @@ class Register(tk.Canvas):
         self.HNone = Radiobutton(self, text="None", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="None", variable=self.HHigeshtEducationalAttainment, font=("Mada Regular", 10 * -1))
 
 #ENTRY            
-        self.Hname = tk.Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
-        self.Hage = tk.Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
-        self.Hrelation = tk.Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
-        self.Hoccupation = tk.Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
-        self.Hmonthlyincome = tk.Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Hname = tk.Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Hage = tk.Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Hrelation = tk.Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Hoccupation = tk.Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Hmonthlyincome = tk.Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
 
         
 
 # Creating and placing the button widget
-        self.button_1 = tk.Button(image=self.button_image_1,borderwidth=0,highlightthickness=0,command = self.next_page)
+        self.button_1 = tk.Button(self,image=self.button_image_1,borderwidth=0,highlightthickness=0,command = self.next_page)
         self.button_1.place(x=635.0,y=450.0,width=100.0,height=30.0)
-        self.button_2 = tk.Button(image=self.image_button2_1,borderwidth=0,highlightthickness=0,command = self.back_page,)
-        self.button_3 = tk.Button(image=self.image_button1_1,borderwidth=0,highlightthickness=0,command = self.commit_data)
+        self.button_2 = tk.Button(self,image=self.image_button2_1,borderwidth=0,highlightthickness=0,command = self.back_page,)
+        self.button_3 = tk.Button(self,image=self.image_button1_1,borderwidth=0,highlightthickness=0,command = self.commit_data)
 
         self.button_4 = tk.Button(self,text="back",borderwidth=0,highlightthickness=0,command = self.backtoHome)
         self.button_4.place(x=400.0,y=450.0,width=100.0,height=30.0)

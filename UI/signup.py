@@ -43,17 +43,28 @@ class Signup(tk.Canvas):
         self.create_text(590.0, 62.0, anchor="nw",text="Create an Account",fill="#FFFFFF",font=("Mada Bold", 17 * -1))
         self.create_text(550.0, 94.0, anchor="nw", text = "Already have an account?", fill="#FFFFFF", font=("Mada Light", 14 * -1))
 
-        self.FullName = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.FullName = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
         self.FullName.place(x=531.0, y=210.0, width=241.0, height=18.0)
 
-        self.Email = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Email = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
         self.Email.place(x=531.0, y=260.0, width=241.0, height=18.0)
 
-        self.Password = Entry(bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
+        self.Password = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
         self.Password.place(x=531.0, y=310.0, width=241.0, height=18.0)
 
-        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command=lambda: print("button_1 clicked"), relief="flat")
+        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command=self.go_to_register, relief="flat")
         self.Button_1.place(x=532.0, y=358.0, width=234.0, height=29.0)
 
-        self.Button_2 = tk.Button(self, image=self.image_button_2, borderwidth=0, highlightthickness=0, command=lambda: print("button_2 clicked"), relief ="flat")
+        self.Button_2 = tk.Button(self, image=self.image_button_2, borderwidth=0, highlightthickness=0, command=self.go_to_login, relief ="flat")
         self.Button_2.place(x=720.0, y=93.0)
+
+
+    def go_to_register(self):
+        print("Signup button clicked")
+        if self.switch_frame:
+            self.switch_frame('register')
+
+    def go_to_login(self):
+        print("Login button clicked")
+        if self.switch_frame:
+            self.switch_frame('login')
