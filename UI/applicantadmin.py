@@ -8,43 +8,41 @@ class ApplicantAdmin(tk.Canvas):
 
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
-        # BUTTON IMAGES
-        self.image_button_1 = PhotoImage(file=resource_path("resources/applicantadmin/button_1.png"))
-        self.image_button_2 = PhotoImage(file=resource_path("resources/applicantadmin/button_2.png"))
 
-        # IMAGES
-        self.image_1 = PhotoImage(file=resource_path("resources/applicantadmin/image_1.png"))  # PCSO Building Picture
-        self.image_2 = PhotoImage(file=resource_path("resources/applicantadmin/image_2.png"))  # Black Rectangle Clear
-        self.image_3 = PhotoImage(file=resource_path("resources/applicantadmin/image_4.png"))  # Dark Blue Rectangle
-        self.image_4 = PhotoImage(file=resource_path("resources/applicantadmin/image_5.png"))  # PCSO Logo
-        self.image_5 = PhotoImage(file=resource_path("resources/applicantadmin/image_7.png"))  # White Square
-        self.image_6 = PhotoImage(file=resource_path("resources/applicantadmin/image_9.png"))  # PCSO Text
+        self.GradiantBg = PhotoImage(file=resource_path("resources/applicantadmin/landingPagebg.png"))
+        self.welcomText = PhotoImage(file=resource_path("resources/applicantadmin/WelcomeText.png"))
+        self.loginBg = PhotoImage(file=resource_path("resources/applicantadmin/loginBG.png"))
+        self.Logo = PhotoImage(file=resource_path("resources/applicantadmin/Logo.png"))
+        self.applicantButton = PhotoImage(file=resource_path("resources/applicantadmin/applicantButton.png"))
+        self.adminButton = PhotoImage(file=resource_path("resources/applicantadmin/adminButton.png"))
+        self.applicangButtonBG = PhotoImage(file=resource_path("resources/applicantadmin/blueBG.png"))
+        self.adminButtonBG = PhotoImage(file=resource_path("resources/applicantadmin/redBG.png"))
 
-        # IMAGES PLACE
-        self.create_image(275.0, 250.0, image=self.image_1)  # PCSO Building Picture
-        self.create_image(265.0, 250.0, image=self.image_2)  # Black Rectangle Clear
-        self.create_image(670.0, 250.0, image=self.image_3)  # Blue Rectangle with Edges
-        self.create_image(589.0, 73.0, image=self.image_4)  # PCSO Logo
-        self.create_image(661.0, 290.0, image=self.image_5)  # White Square
-        self.create_image(250.0, 220.0, image=self.image_6)  # PCSO Text
 
-        # TEXT PLACE
-        self.create_text(531.0, 132.0, anchor="nw", text="Welcome to our Application!", fill="#FFFFFF", font=("Mada Bold", 21 * -1))
-        self.create_text(580.0, 225.0, anchor="nw", text="Please click your destination", fill="#000000", font=("Mada SemiBold", 13 * -1))
-        self.create_text(625.0, 49.0, anchor="nw", text="PCSO IMAP\nAPPLICATION", fill="#FFFFFF", font=("Mada Bold", 20 * -1))
-        self.create_text(84.0, 273.0, anchor="nw", text="Philippine Charity Sweepstakes Office", fill="#FFFFFF", font=("Mada Bold", 19 * -1))
+        self.create_image(410.0, 250.0, image=self.GradiantBg)
+        self.create_image(300.0, 250, image=self.welcomText)
+        self.create_image(600.0, 250.0, image=self.loginBg)
+        self.create_image(610.0, 180.0, image=self.Logo)
+        self.create_image(600.0, 305.0, image=self.adminButtonBG)
+        self.create_image(600.0, 265.0, image=self.applicangButtonBG)
 
-        # BUTTONS
-        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command=self.go_to_admin_bench, relief="flat")
-        self.Button_1.place(x=535.0, y=315.0, width=248.0, height=39.0)
+        self.create_text(500.0, 210.0, anchor="nw", text="Please click you destination", fill="#000000", font=("Nokora", 17 * -1))
 
-        self.Button_2 = tk.Button(self, image=self.image_button_2, borderwidth=0, highlightthickness=0, command=self.go_to_register, relief="flat")
-        self.Button_2.place(x=535.0, y=260.0, width=248.0, height=39.0)
+        self.ApplicantButton = tk.Button(self, image=self.applicantButton, borderwidth=0, highlightthickness=0, command=self.gotoLogin, relief="flat")
+        self.ApplicantButton.place(x=475.0, y=257.0, width=250.0, height=25.0)
 
-    def go_to_admin_bench(self):
+        self.AdminButton = tk.Button(self, image=self.adminButton, borderwidth=0, highlightthickness=0, command=self.gotoAdminLogin, relief="flat")
+        self.AdminButton.place(x=475.0, y=298.0, width=250.0, height=25.0)
+
+
+  
+
+
+
+    def gotoAdminLogin(self):
         if self.switch_frame:
             self.switch_frame('adminlogin')
 
-    def go_to_register(self):
+    def gotoLogin(self):
         if self.switch_frame:
             self.switch_frame('login')

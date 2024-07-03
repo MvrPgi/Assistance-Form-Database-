@@ -9,60 +9,80 @@ class Signup(tk.Canvas):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
-        #BUTTON
-        self.image_button_1 = PhotoImage(file=resource_path("resources/signup/button_1.png"))
-        self.image_button_2 = PhotoImage(file=resource_path("resources/signup/button_2.png"))
+        self.GradiantBg = PhotoImage(file=resource_path("resources/signup/landingPagebg.png"))
+        self.welcomText = PhotoImage(file=resource_path("resources/signup/WelcomeText.png"))
+        self.loginBg = PhotoImage(file=resource_path("resources/signup/loginBG.png"))
+        self.Logo = PhotoImage(file=resource_path("resources/signup/Logo.png"))
+        self.signUPButtonPic = PhotoImage(file=resource_path("resources/signup/signupButton.png"))
+        self.signUpBG = PhotoImage(file=resource_path("resources/signup/signupBG.png"))
+        self.entryBg = PhotoImage(file=resource_path("resources/signup/textBOX.png"))
+        self.signuploginButton = PhotoImage(file=resource_path("resources/signup/loginButton.png"))
 
 
-        #ENTRY
-        self.image_entry_1 = PhotoImage(file=resource_path("resources/login/entry_1.png"))
-        self.image_entry_2 = PhotoImage(file=resource_path("resources/login/entry_2.png"))
+        self.create_image(410.0, 250.0, image=self.GradiantBg)
+        self.create_image(300.0, 250, image=self.welcomText)
+        self.create_image(600.0, 250.0, image=self.loginBg)
+        self.create_image(610.0, 120.0, image=self.Logo)
+        self.create_image(603.0, 170.0, image=self.entryBg)
+        self.create_image(603.0, 210.0, image=self.entryBg)
+        self.create_image(603.0, 250.0, image=self.entryBg)
+        self.create_image(603.0, 300.0, image=self.signUpBG)
 
-        #IMAGES
-        self.image_2 = PhotoImage(file=resource_path("resources/login/image_2.png"))
-        self.image_3 = PhotoImage(file=resource_path("resources/login/image_3.png"))
-        self.image_4 = PhotoImage(file=resource_path("resources/login/image_4.png"))
-        self.image_5 = PhotoImage(file=resource_path("resources/login/image_5.png"))
-        self.image_8 = PhotoImage(file=resource_path("resources/login/image_8.png"))
-        self.image_12 = PhotoImage(file=resource_path("resources/login/image_12.png"))
-        self.image_13 = PhotoImage(file=resource_path("resources/adminlogin/image_5.png"))
+        self.signUPButton = tk.Button(self, image=self.signUPButtonPic, command=self.go_to_login,borderwidth=0, highlightthickness=0,)
+        self.signUPButton.place(x=603.0, y=300.0, anchor="center", width=220, height=25)
 
-        self.create_image(50.0, 250.0, image = self.image_2) #Blue Rectangle with Edges
-        self.create_image(656.0, 250.0, image = self.image_3) #Pink Rectangle with Edges
-        self.create_image(60.0, 250.0, image = self.image_4) # Line Circle
-        self.create_image(79.0, 220.0, image = self.image_5) # PCSO Logo
-        self.create_image(653.0, 160.0, image = self.image_12) # Blue Rectangle Horizontal
-        self.create_image(653.0, 301.0, image = self.image_8)  # White Square
-        self.create_image(300.0, 220.0, image = self.image_13) # PCSO Text
-        
-        self.create_text(531.0, 138.0, anchor = "nw", text = "Sign-up", fill="#FFFFFF", font=("Mada Bold", 17 * -1))
-        self.create_text(531.0, 190.0, anchor = "nw", text="Full Name", fill="#000000", font=("Mada Bold", 17 * -1))
-        self.create_text(531.0, 240.0, anchor = "nw", text = "Email", fill="#000000", font=("Mada Bold", 17 * -1))
-        self.create_text(531.0, 290.0, anchor="nw",text="Password",fill="#000000",font=("Mada Bold", 17 * -1))
-        self.create_text(160.0, 270.0, anchor="nw",text="Philippine Charity Sweepstakes Office",fill="#000000",font=("Mada Bold", 17 * -1))
-        self.create_text(590.0, 62.0, anchor="nw",text="Create an Account",fill="#FFFFFF",font=("Mada Bold", 17 * -1))
-        self.create_text(550.0, 94.0, anchor="nw", text = "Already have an account?", fill="#FFFFFF", font=("Mada Light", 14 * -1))
+        self.create_line(470.0, 337.5, 735.0, 337.5, fill="#000000")
+        self.create_text(470.0, 340.0, anchor="nw", text="Already have an account?", fill="#000000", font=("Nokora", 12 * -1))
+        self.LoginButton = tk.Button(self, image=self.signuploginButton, command=self.go_to_login,borderwidth=0, highlightthickness=0,)
+        self.LoginButton.place(x=630.0, y=348.0, anchor="center", width=45, height=18)
 
-        self.FullName = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
-        self.FullName.place(x=531.0, y=210.0, width=241.0, height=18.0)
-
-        self.Email = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
-        self.Email.place(x=531.0, y=260.0, width=241.0, height=18.0)
-
-        self.Password = Entry(self,bd=0, bg="#FFE5AB", fg="#000716", highlightthickness=0)
-        self.Password.place(x=531.0, y=310.0, width=241.0, height=18.0)
-
-        self.Button_1 = tk.Button(self, image=self.image_button_1, borderwidth=0, highlightthickness=0, command=self.go_to_register, relief="flat")
-        self.Button_1.place(x=532.0, y=358.0, width=234.0, height=29.0)
-
-        self.Button_2 = tk.Button(self, image=self.image_button_2, borderwidth=0, highlightthickness=0, command=self.go_to_login, relief ="flat")
-        self.Button_2.place(x=720.0, y=93.0)
+        self.Username = Entry(self, bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0)
+        self.Username.place(x=480.0, y=160.0, width=240.0, height=25.0)
+        self.Fullname = Entry(self, bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0)
+        self.Fullname.place(x=480.0, y=200.0, width=240.0, height=25.0)
+        self.Password = Entry(self, bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0, show="•")
+        self.Password.place(x=480.0, y=240.0, width=240.0, height=25.0)
 
 
-    def go_to_register(self):
-        print("Signup button clicked")
-        if self.switch_frame:
-            self.switch_frame('register')
+
+
+        # Create placeholder labels
+        self.username_placeholder = tk.Label(self, text="Username", fg="grey", bg="white")
+        self.username_placeholder.place(x=485.0, y=160.0)
+        self.fullname_placeholder = tk.Label(self, text="Full Name", fg="grey", bg="white")
+        self.fullname_placeholder.place(x=485.0, y=200.0)
+        self.password_placeholder = tk.Label(self, text="Password", fg="grey", bg="white")
+        self.password_placeholder.place(x=485.0, y=240.0)
+
+        # Bind focus in and focus out events
+        self.Username.bind("<FocusIn>", self.clear_placeholder)
+        self.Username.bind("<FocusOut>", self.show_placeholder)
+        self.Fullname.bind("<FocusIn>", self.clear_placeholder)
+        self.Fullname.bind("<FocusOut>", self.show_placeholder)
+        self.Password.bind("<FocusIn>", self.clear_placeholder)
+        self.Password.bind("<FocusOut>", self.show_placeholder)
+
+        # Initial placeholder check
+        self.show_placeholder(None)
+
+    def clear_placeholder(self, event):
+        widget = event.widget
+        if widget == self.Username:
+            self.username_placeholder.place_forget()
+        elif widget == self.Fullname:
+            self.fullname_placeholder.place_forget()
+        elif widget == self.Password:
+            self.password_placeholder.place_forget()
+
+    def show_placeholder(self, event):
+        if not self.Username.get():
+            self.username_placeholder.place(x=485.0, y=160.0)
+        if not self.Fullname.get():
+            self.fullname_placeholder.place(x=485.0, y=200.0)
+        if not self.Password.get():
+            self.password_placeholder.place(x=485.0, y=240.0)
+ 
+
 
     def go_to_login(self):
         print("Login button clicked")
