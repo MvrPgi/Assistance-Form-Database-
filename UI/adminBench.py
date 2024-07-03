@@ -37,6 +37,11 @@ class AdminBench(tk.Toplevel):
         self.RefreshButtonImage = PhotoImage(file=resource_path("resources/adminbench/refreshButton.png"))
         self.refreshButton = tk.Button(self.canvas, image=self.RefreshButtonImage, command=self.FetchReferenceApplicantData)
         self.refreshButton.place(x=300.0, y=90, anchor="center", width=95, height=20)
+
+
+        self.backButton = tk.Button(self.canvas, text="Back", command=self.back_to_admin_homepage)
+        self.backButton.place(x=500.0, y=90, anchor="center", width=95, height=20)
+
         self.columns = (
             "Reference_No", "Applicant_ID", "Date", "Applicant_Status", "Full_Name", "Address", "Civil_Status", 
             "Birth_Date", "Age", "Sex", "Nationality", "Religion", "Highest Educational Attainment", "Occupation", 
@@ -254,17 +259,14 @@ class AdminBench(tk.Toplevel):
         self.destroy()
         self.master.destroy()  
 
+    def back_to_admin_homepage(self):
+        self.withdraw()
+        self.master.switch_frame('adminhomepage')
+        self.master.deiconify()
 
 
-    # def FetchApplicantData(self):
-    #     rows = self.database.FetchApplincatDetailsA()
-        
-    #     for row in self.tree.get_children():
-    #         self.tree.delete(row)# Clear the existing data in the treeview
 
 
-    #     for row in rows:
-    #         self.tree.insert('', 'end', values=row)# Insert new data into the treeview
 
 
 

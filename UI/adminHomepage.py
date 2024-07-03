@@ -21,9 +21,11 @@ class AdminHomepage(tk.Canvas):
 
         self.dashboardButton = PhotoImage(file=resource_path("resources/adminhome/dashboardButton.png"))
         self.tablesButton = PhotoImage(file=resource_path("resources/adminhome/tables.png"))
+        self.applicantsButton = PhotoImage(file=resource_path("resources/adminhome/ApplicantButton.png"))
+        self.HouseholdButton = PhotoImage(file=resource_path("resources/adminhome/HouseHoldButton.png"))
+        self.ReferenceButton = PhotoImage(file=resource_path("resources/adminhome/ReferenceButton.png"))
         self.profileButton = PhotoImage(file=resource_path("resources/adminhome/profile.png"))
-
-
+        self.logoutButton = PhotoImage(file=resource_path("resources/adminhome/LogoutButton.png"))
 
 
         self.create_image(410.0, 250.0, image = self.gradiantBG) 
@@ -61,12 +63,28 @@ class AdminHomepage(tk.Canvas):
 
         self.TablesButton.place(x=20.0, y=210.0, width=180.0, height=48.0)
 
+
+        
+        self.ApplicantTableButton = tk.Button(self, image=self.applicantsButton, borderwidth=0, highlightthickness=0, command=self.go_to_applicant, relief="flat")
+
+        
+        self.HouseholdTableButton = tk.Button(self, image=self.HouseholdButton, borderwidth=0, highlightthickness=0, command=self.go_to_household, relief="flat")
+
+
+        self.ReferenceTableButton = tk.Button(self, image=self.ReferenceButton, borderwidth=0, highlightthickness=0, command=self.go_to_reference, relief="flat")
+        self.ReferenceTableButton.place(x=40.0, y=340.0, width=140, height=28.0)
+
+
+        self.LogOutButton = tk.Button(self, image=self.logoutButton, borderwidth=0, highlightthickness=0, command= self.LogOut, relief="flat")
+        self.ApplicantTableButton.place(x=40.0, y=270.0, width=140, height=28.0)
+        self.HouseholdTableButton.place(x=40.0, y=305.0, width=140, height=28.0)
+        self.LogOutButton.place(x=40.0, y=375.0, width=140, height=28.0)
+
+        
         self.TableCanva = tk.Canvas(self, bg="#FFFFFF", height=220, width=540, highlightthickness=0)
         self.TableCanva.place(x=250.0, y=230.0)
         self.columns = (
             "Reference_No", "Applicant_ID", "Date")
-        
-
 
         self.Tree = ttk.Treeview(self.TableCanva, columns=self.columns, show='headings', height=10)
         self.Tree.pack_propagate(False) # Prevent the treeview from resizing with the window
@@ -90,7 +108,34 @@ class AdminHomepage(tk.Canvas):
             print("Switching to adminbench...")
             self.switch_frame('adminbench')
 
+    def go_to_household(self):
+        print("Go to applicanttable")
+        if self.switch_frame:
+            print("Switching to adminbench...")
+            self.switch_frame('household')
+    def go_to_applicant(self):
+        print("Go to applicanttable")
+        if self.switch_frame:
+            print("Switching to adminbench...")
+            self.switch_frame('applicant')
+    def go_to_reference(self):
+        print("Go to referencetable")
+        if self.switch_frame:
+            print("Switching to adminbench...")
+            self.switch_frame('reference')
 
+
+
+    def LogOut(self):
+        print("LogOut")
+        # Ask for confirmation
+        if messagebox.askyesno("Log Out", "Are you sure you want to log out?"):
+            print("Logging out...")
+            if self.switch_frame:
+                print("Switching to login...")
+                self.switch_frame('applicantadmin')
+        else:
+            print("Log out cancelled.")
     
     # def update_text_1(self):
     #     self.itemconfig(self.text_id_1, text=self.TotalApplicants.get())
