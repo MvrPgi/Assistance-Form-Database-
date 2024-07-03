@@ -27,7 +27,7 @@ class AdminBench(tk.Toplevel):
         self.ComboBoxSex.bind("<<ComboboxSelected>>", self.GenderPicker)
 
         self.DeleteButtonImage = PhotoImage(file=resource_path("resources/adminbench/deleteButton.png"))
-        self.deleteButton = tk.Button(self.canvas, image=self.DeleteButtonImage, command=lambda: print("hello world"))
+        self.deleteButton = tk.Button(self.canvas, image=self.DeleteButtonImage, command=self.DeleteRow)
         self.deleteButton.place(x=100.0, y=90, anchor="center", width=95, height=20)
 
         self.UpdateButtonImage = PhotoImage(file=resource_path("resources/adminbench/updateButton.png"))
@@ -47,7 +47,7 @@ class AdminBench(tk.Toplevel):
         
         # Create the Treeview widget
         self.tree = ttk.Treeview(self.canvas, columns=self.columns, show='headings', height=20)
-        self.tree.pack_propagate(False)
+        self.tree.pack_propagate(False) # Prevent the treeview from resizing with the window
         self.tree.place(x=955.0, y=400, anchor="center", width=1900, height=550)
 
         # Style configuration
@@ -63,7 +63,7 @@ class AdminBench(tk.Toplevel):
             "Address": 300, "Civil_Status": 75, "Birth_Date": 100, "Age": 50, "Sex": 50, "Nationality": 100, 
             "Religion": 100, "Highest Educational Attainment": 250, "Occupation": 150, "Monthly_Income": 150, 
             "Membership": 100, "OtherSourceOfIncome": 150, "Monthly_Expenditures": 175, "GrossMonthlyIncome": 150, 
-            "NetMonthlyIncome": 150, "Household_ID": 100, "Family Full Name": 150, "Family Age": 100,
+            "NetMonthlyIncome": 150, "Household_ID": 100, "Family Full Name": 150, "Family Age": 50,
             "Family Civil Status": 150, "Relationship": 100, "Family Highest Educational Attainment": 240,
             "Family Occupation": 150, "Family Income": 150
         }
@@ -80,8 +80,10 @@ class AdminBench(tk.Toplevel):
         # Configure the tree view to use the scrollbar
         self.tree.configure(xscrollcommand=self.HScroll.set)
 
+
         # Destroy the window when the close button is clicked
         self.protocol("WM_DELETE_WINDOW", self.on_close)
+
 
         self.FetchReferenceApplicantData()
 
@@ -160,43 +162,35 @@ class AdminBench(tk.Toplevel):
         self.edit_window.destroy()
 
 
-    def SelectDeleteRow(self, event):
-        select = self.tree.selection()
-        if not select:
-            print("No item selected.")
-            return None
-
-        item_id = select[0]
-        values = self.tree.item(item_id, "values")
-        return values
     
 
-    def DeleteSelectRow(self):
-        select = self.tree.selection()
-        if not select:
+
+    def DeleteRow(self):
+        selected_items = self.tree.selection()
+        if selected_items:
+            item = selected_items[0]  # Get the first selected item
+            values = self.tree.item(item, "values")  # Get the values of the selected item
+            
+            # Assuming the second value in the row is the primary key for deletion
+            primary_key = values[0]  # Adjust index based on your primary key column
+            
+            try:
+                self.database.delete_applicant_details(primary_key)
+                self.tree.delete(item)
+                print(f"Deleted item with primary key {primary_key}.")
+            except Exception as e:
+                print(f"Error deleting from database: {e}")
+        else:
             print("No item selected.")
-            return
-        
-        item_id = select[0]
-        
-        if not self.tree.exists(item_id):
-            print(f"Item {item_id} not found.")
-            return
-        
-        values = self.tree.item(item_id, "values")
 
-        # Assuming the second value in the row is the primary key for deletion
-        primary_key = values[1]
-        
-        try:
-            self.database.DeleteApplicantDetails(primary_key)
-        except Exception as e:
-            print(f"Error deleting from database: {e}")
-            return
-
-        # Remove item from Treeview
-        self.tree.delete(item_id)
-
+    def SelectDeleteRow(self, event):
+        selected_items = self.tree.selection()
+        if selected_items:
+            item = selected_items[0]  # Get the first selected item
+            values = self.tree.item(item, "values")  # Get the values of the selected item
+            print(values)
+        else:
+            print("No item selected.")
 
 
 
