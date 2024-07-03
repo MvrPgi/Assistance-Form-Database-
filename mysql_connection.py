@@ -128,7 +128,7 @@ Hhold_Fam_Occupation,Hhold_Fam_MonthlyIncome):
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 # -------------------------------------------------------DELETE APPLICANT DETAILS-------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
-  def DeleteDetails(self, reference_no):
+  def delete_applicant_details(self, reference_no):
         try:
             delete_household_query = """
             DELETE FROM Household_Details
@@ -156,8 +156,7 @@ Hhold_Fam_Occupation,Hhold_Fam_MonthlyIncome):
 
             # Commit the transaction
             self.con.commit()
-            messagebox.showinfo(title="PCSCO TABLE",message="Data Deleted")# Display a message box to indicate that the record was added successfully
-
+            print("Records deleted successfully.")
 
         except Error as e:
             print(f"Error: {e}")
@@ -245,7 +244,7 @@ Hhold_Fam_Occupation,Hhold_Fam_MonthlyIncome):
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
   
   def FetchRefApplincatHouseDetails(self):
-     self.cursor.execute("SELECT Reference_No,R.Applicant_ID,Date,Applicant_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality,Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome,Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome,Household_Id,Hhold_Fam_Name,Hhold_Fam_Age,Hhold_Fam_CivilStatus,Hhold_Fam_RSWithPatient,Hhold_Fam_HighestEducAttain,Hhold_Fam_Occupation,Hhold_Fam_MonthlyIncome FROM reference AS R, applicant_details AS A, household_details as H WHERE R.Applicant_ID = A.Applicant_ID AND A.Applicant_ID = H.Applicant_ID;")
+     self.cursor.execute("SELECT R.Reference_No, R.Applicant_ID, R.Date, R.Applicant_Status, A.Full_Name, A.Address, A.Civil_Status, A.Birth_Date, A.Age, A.Sex, A.Nationality, A.Religion, A.Highest_Educ_Attainment, A.Occupation, A.Monthly_Income, A.Membership, A.OtherSourceOfIncome, A.Monthly_Expenditures, A.GrossMonthlyIncome, A.NetMonthlyIncome, H.Household_ID, H.Hhold_Fam_Name, H.Hhold_Fam_Age, H.Hhold_Fam_CivilStatus, H.Hhold_Fam_RSWithPatient, H.Hhold_Fam_HighestEducAttain, H.Hhold_Fam_Occupation, H.Hhold_Fam_MonthlyIncome FROM Reference AS R JOIN Applicant_Details AS A ON R.Applicant_ID = A.Applicant_ID LEFT JOIN Household_Details AS H ON A.Applicant_ID = H.Applicant_ID;")
      rows = self.cursor.fetchall()
      return rows
   
@@ -281,12 +280,12 @@ Hhold_Fam_Occupation,Hhold_Fam_MonthlyIncome):
 
 
   def FetchMaleApplicantDetails(self):
-      self.cursor.execute("SELECT Reference_No,R.Applicant_ID,Date,Applicant_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality,Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome,Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome,Household_Id,Hhold_Fam_Name,Hhold_Fam_Age,Hhold_Fam_CivilStatus,Hhold_Fam_RSWithPatient,Hhold_Fam_HighestEducAttain,Hhold_Fam_Occupation,Hhold_Fam_MonthlyIncome FROM reference AS R, applicant_details AS A, household_details as H WHERE R.Applicant_ID = A.Applicant_ID AND A.Applicant_ID = H.Applicant_ID AND A.Sex = 'M';")
+      self.cursor.execute("SELECT R.Reference_No, R.Applicant_ID, R.Date, R.Applicant_Status, A.Full_Name, A.Address, A.Civil_Status, A.Birth_Date, A.Age, A.Sex, A.Nationality, A.Religion, A.Highest_Educ_Attainment, A.Occupation, A.Monthly_Income, A.Membership, A.OtherSourceOfIncome, A.Monthly_Expenditures, A.GrossMonthlyIncome, A.NetMonthlyIncome, H.Household_ID, H.Hhold_Fam_Name, H.Hhold_Fam_Age, H.Hhold_Fam_CivilStatus, H.Hhold_Fam_RSWithPatient, H.Hhold_Fam_HighestEducAttain, H.Hhold_Fam_Occupation, H.Hhold_Fam_MonthlyIncome FROM Reference AS R JOIN Applicant_Details AS A ON R.Applicant_ID = A.Applicant_ID LEFT JOIN Household_Details AS H ON A.Applicant_ID = H.Applicant_ID WHERE A.Sex ='M';")
       rows = self.cursor.fetchall()
       return rows
 
   def FetchFemaleApplicantDetails(self):
-      self.cursor.execute("SELECT Reference_No,R.Applicant_ID,Date,Applicant_Status, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality,Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome,Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome,Household_Id,Hhold_Fam_Name,Hhold_Fam_Age,Hhold_Fam_CivilStatus,Hhold_Fam_RSWithPatient,Hhold_Fam_HighestEducAttain,Hhold_Fam_Occupation,Hhold_Fam_MonthlyIncome FROM reference AS R, applicant_details AS A, household_details as H WHERE R.Applicant_ID = A.Applicant_ID AND A.Applicant_ID = H.Applicant_ID AND A.Sex = 'F';")
+      self.cursor.execute("SELECT R.Reference_No, R.Applicant_ID, R.Date, R.Applicant_Status, A.Full_Name, A.Address, A.Civil_Status, A.Birth_Date, A.Age, A.Sex, A.Nationality, A.Religion, A.Highest_Educ_Attainment, A.Occupation, A.Monthly_Income, A.Membership, A.OtherSourceOfIncome, A.Monthly_Expenditures, A.GrossMonthlyIncome, A.NetMonthlyIncome, H.Household_ID, H.Hhold_Fam_Name, H.Hhold_Fam_Age, H.Hhold_Fam_CivilStatus, H.Hhold_Fam_RSWithPatient, H.Hhold_Fam_HighestEducAttain, H.Hhold_Fam_Occupation, H.Hhold_Fam_MonthlyIncome FROM Reference AS R JOIN Applicant_Details AS A ON R.Applicant_ID = A.Applicant_ID LEFT JOIN Household_Details AS H ON A.Applicant_ID = H.Applicant_ID WHERE A.Sex ='F';")
       rows = self.cursor.fetchall()
       return rows
 
