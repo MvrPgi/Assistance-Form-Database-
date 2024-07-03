@@ -6,6 +6,9 @@ from UI.register import Register
 from UI.signup import Signup
 from UI.adminlogin import AdminLogin
 from UI.adminHomepage import AdminHomepage
+from UI.HouseHoldTable import AdminBenchHousehold
+from UI.ApplicantTable import AdminBenchHousehold
+from UI.referenceTable import AdminBenchReference
 
 import tkinter as tk
 from tkinter import ttk
@@ -16,6 +19,7 @@ class App(tk.Tk):
         self.title("Main App")
         self.geometry("820x500")
         self.resizable(False, False)
+
 
         # Initialize main frame
         self.main_frame = tk.Frame(self, bg="#FFFFFF")
@@ -49,6 +53,18 @@ class App(tk.Tk):
             self.withdraw()  # Hide the main window
             admin_bench_window = AdminBench(master=self)
             admin_bench_window.mainloop()
+        elif frame_name == 'household':
+            self.withdraw()  # Hide the main window
+            admin_bench_window = AdminBenchHousehold(master=self)
+            admin_bench_window.mainloop()
+        elif frame_name == 'applicant':
+            self.withdraw()  # Hide the main window
+            admin_bench_window = AdminBenchHousehold(master=self)
+            admin_bench_window.mainloop()
+        elif frame_name == 'reference':
+            self.withdraw()
+            admin_bench_window = AdminBenchReference(master=self)
+            admin_bench_window.mainloop()
         elif frame_name == 'register':
             self.current_frame = Register(master=self.main_frame, switch_frame=self.switch_frame)
         elif frame_name == 'login':
@@ -64,10 +80,6 @@ class App(tk.Tk):
         if self.current_frame is not None:
             self.current_frame.pack(fill=tk.BOTH, expand=True)
 
-
-
-
-            
 
 if __name__ == "__main__":
     app = App()
