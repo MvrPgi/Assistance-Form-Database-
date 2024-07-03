@@ -33,7 +33,7 @@ class Signup(tk.Canvas):
 
         self.create_line(470.0, 337.5, 735.0, 337.5, fill="#000000")
         self.create_text(470.0, 340.0, anchor="nw", text="Already have an account?", fill="#000000", font=("Nokora", 12 * -1))
-        self.LoginButton = tk.Button(self, image=self.signuploginButton, command=self.go_to_login,borderwidth=0, highlightthickness=0,)
+        self.LoginButton = tk.Button(self, image=self.signuploginButton, command=self.go_to_login,borderwidth=0, highlightthickness=0)
         self.LoginButton.place(x=630.0, y=348.0, anchor="center", width=45, height=18)
 
         self.Username = Entry(self, bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0)
