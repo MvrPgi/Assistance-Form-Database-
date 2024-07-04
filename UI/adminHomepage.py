@@ -11,12 +11,14 @@ from resources.FileTracker.tracker import resource_path
 class AdminHomepage(tk.Canvas):
     def __init__(self, master = None,switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
+        self.database = DatabaseConnection()
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
         self.dashboardLogo = PhotoImage(file=resource_path("resources/adminhome/dashboardlogo.png"))
         self.dashboardBG = PhotoImage(file=resource_path("resources/adminhome/dashboardbg.png"))
         self.gradiantBG = PhotoImage(file=resource_path("resources/adminhome/gradiant.png"))
         self.ShapeBg = PhotoImage(file=resource_path("resources/adminhome/shapebg.png"))
+        self.ButtonBG = PhotoImage(file=resource_path("resources/adminhome/ButtonBGA.png"))
 
 
         self.dashboardButton = PhotoImage(file=resource_path("resources/adminhome/dashboardButton.png"))
@@ -35,6 +37,9 @@ class AdminHomepage(tk.Canvas):
         self.create_image(330.0, 100.0, image = self.ShapeBg)
         self.create_image(520.0, 100.0, image = self.ShapeBg)
         self.create_image(710.0, 100.0, image = self.ShapeBg)
+        self.create_image(100.0, 165.0, image = self.ButtonBG)
+        self.create_image(100.0, 215.0, image = self.ButtonBG)
+        self.create_image(100.0, 380.0, image = self.ButtonBG)
         
 
         self.create_text(100.0, 40.0, anchor = "nw", text = "ADMIN", fill="#FFFFFF", font=("Nokora", 17 * -1,"bold"))
@@ -42,43 +47,50 @@ class AdminHomepage(tk.Canvas):
         self.create_line(20.0, 100.0, 200.0, 100.0, fill="#FFFFFF")
 
         self.create_text(270.0, 50.0, anchor = "nw", text = "Total No Of Applicants", fill="#000000", font=("Nokora", 12 * -1,"bold"))
-        self.create_text(470.0, 50.0, anchor = "nw", text = "Philhealth Members", fill="#000000", font=("Nokora", 12 * -1,"bold"))
+        self.create_text(455.0, 50.0, anchor = "nw", text = "Average Monthly Salary", fill="#000000", font=("Nokora", 12 * -1,"bold"))
         self.create_text(680.0, 50.0, anchor = "nw", text = "Dependent", fill="#000000", font=("Nokora", 12 * -1,"bold"))
-     
-        self.TotalApplicants = StringVar(value="100")
-        self.TotalPhilhealth = StringVar(value="80")
-        self.DependentlApplicants = StringVar(value="50")
+
+
+  
+
+
+        self.TotalApplicants = StringVar(value="0")
+        self.AverageApplicantSalary = StringVar(value="0")
+        self.DependentlApplicants = StringVar(value="0")
+
+        Applicantcount = self.database.count_applicant_details()
+        self.TotalApplicants.set(Applicantcount)
+
+        Salary = self.database.average_monthly_income()
+        Salary = "₱{:.0f}".format(Salary)
+        self.AverageApplicantSalary.set(Salary)
 
         # Create text items on the canvas
-        self.text_id_1 = self.create_text(290.0, 80.0, anchor="nw", text=self.TotalApplicants.get(), fill="#1B4B77", font=("Nokora", 30, "bold"))
-        self.text_id_2 = self.create_text(500.0, 80.0, anchor="nw", text=self.TotalPhilhealth.get(), fill="#1B4B77", font=("Nokora", 30, "bold"))
+        self.text_id_1 = self.create_text(310.0, 80.0, anchor="nw", text=self.TotalApplicants.get(), fill="#1B4B77", font=("Nokora", 30, "bold"))
+        self.text_id_2 = self.create_text(450.0, 80.0, anchor="nw", text=self.AverageApplicantSalary.get(), fill="#1B4B77", font=("Nokora", 30, "bold"))
         self.text_id_3 = self.create_text(700.0, 80.0, anchor="nw", text=self.DependentlApplicants.get(), fill="#1B4B77", font=("Nokora", 30, "bold"))
 
+        self.create_line(270, 140, 390, 140, fill="#1B4B77")
+        self.create_line(455, 140, 585, 140, fill="#1B4B77")
+        self.create_line(645, 140, 780, 140, fill="#1B4B77")
 
 
+
+#Button
         self.DashboardButton = tk.Button(self, image=self.dashboardButton, borderwidth=0, highlightthickness=0, command=lambda:print("DashBoard"), relief="flat")
-        self.DashboardButton.place(x=20.0, y=150.0, width=180.0, height=48.0)
-
+        self.DashboardButton.place(x=20.0, y=147.0, width=160.0, height=30.0)
         self.TablesButton = tk.Button(self, image=self.tablesButton, borderwidth=0, highlightthickness=0, command=self.go_to_maintable)
-
-        self.TablesButton.place(x=20.0, y=210.0, width=180.0, height=48.0)
-
-
-        
+        self.TablesButton.place(x=23.0, y=199.0, width=157.0, height=30.0)
         self.ApplicantTableButton = tk.Button(self, image=self.applicantsButton, borderwidth=0, highlightthickness=0, command=self.go_to_applicant, relief="flat")
-
-        
         self.HouseholdTableButton = tk.Button(self, image=self.HouseholdButton, borderwidth=0, highlightthickness=0, command=self.go_to_household, relief="flat")
-
-
         self.ReferenceTableButton = tk.Button(self, image=self.ReferenceButton, borderwidth=0, highlightthickness=0, command=self.go_to_reference, relief="flat")
-        self.ReferenceTableButton.place(x=40.0, y=340.0, width=140, height=28.0)
-
-
         self.LogOutButton = tk.Button(self, image=self.logoutButton, borderwidth=0, highlightthickness=0, command= self.LogOut, relief="flat")
-        self.ApplicantTableButton.place(x=40.0, y=270.0, width=140, height=28.0)
-        self.HouseholdTableButton.place(x=40.0, y=305.0, width=140, height=28.0)
-        self.LogOutButton.place(x=40.0, y=375.0, width=140, height=28.0)
+        
+        self.ApplicantTableButton.place(x=40.0, y=250.0, width=140, height=28.0)
+        self.HouseholdTableButton.place(x=40.0, y=285.0, width=140, height=28.0)
+        self.ReferenceTableButton.place(x=40.0, y=320.0, width=140, height=28.0)
+        self.LogOutButton.place(x=23.0, y=365.0, width=140, height=28.0)
+
 
         
         self.TableCanva = tk.Canvas(self, bg="#FFFFFF", height=220, width=540, highlightthickness=0)
@@ -97,8 +109,15 @@ class AdminHomepage(tk.Canvas):
         self.HScroll.place(x=520, y=455, anchor="center", width=540,height=10)
         self.Tree.configure(xscrollcommand=self.HScroll.set)
 
+    def Easy1Columns(self):
+        self.ColumnsEasy = ("Applicant_ID", "Full_Name", "Age")
+
+
         
 
+    def CountApplicants(self):
+        count = self.database.count_applicant_details
+        self.TotalApplicants.set(count)
 
 
 
