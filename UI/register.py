@@ -388,7 +388,8 @@ class Register(tk.Canvas):
 
 
 # 2ND PAGE
-#LOAD THE IMAGES        
+
+        #LOAD THE IMAGES        
         self.add_Button = PhotoImage(file=resource_path("resources/register2/addButton.png"))
         self.back_Button = PhotoImage(file=resource_path("resources/register2/backButton.png"))
         self.delete_Button = PhotoImage(file=resource_path("resources/register2/deleteButton.png"))
@@ -410,7 +411,7 @@ class Register(tk.Canvas):
         # IMAGES
         self.backgroundImage2 = []
         self.backgroundImage2.append(self.create_image(405.0, 46.0, image=self.householdInfo, state = "hidden"))
-        self.backgroundImage2.append(self.create_image(405.0, 46.0, image=self.whiteBg, state = "hidden"))
+        self.backgroundImage2.append(self.create_image(405.0, 200.0, image=self.whiteBg, state = "hidden"))
 
         # ENTRY IMAGES
         self.entryImage2 = []
@@ -524,21 +525,25 @@ class Register(tk.Canvas):
 
             for text_id in self.textImage2:
                 self.itemconfigure(text_id, state="normal")
+            
             self.HSingle.place(x=40.0, y=245.5, width=60.0, height=15.0)
             self.HWidow.place(x=120.0, y=245.5, width=60.0, height=15.0)
             self.HMarried.place(x=40.0, y=265.5, width=60.0, height=15.0)
             self.HSeparated.place(x=123.0, y=265.5, width=70.0, height=15.0)
+
             self.HPost_Graduate.place(x=360.0, y=310.5, width=100.0, height=15.0)
             self.HHigh_School.place(x=470.0, y=310.5, width=100.0, height=15.0)
             self.HVocational.place(x=360.0, y=330.5, width=83.0, height=15.0)
             self.HElementary_School.place(x=470.0, y=330.5, width=95.0, height=15.0)
             self.HCollege.place(x=360.0, y=350.5, width=70.0, height=15.0)
             self.HNone.place(x=470.0, y=350.5, width=65.0, height=15.0)
+
             self.Hname.place(x=40.0, y=195.0, width=515.0, height=10.0)
             self.Hage.place(x=637.0, y=194.0, width=50.0, height=10.0)
             self.Hrelation.place(x=40.0, y=314.0, width=245.0, height=10.0)
             self.Hoccupation.place(x=40.0, y=410.0, width=200.0, height=10.0)
             self.Hmonthlyincome.place(x=319.0, y=410.0, width=160.0, height=10.0)
+            
             self.addButton.place(x=651.0, y=102.0, width=100.0, height=30.0)
             self.deleteButton.place(x=696.06, y=102.0, width=100.0, height=30.0)
             self.backButton.place(x=198.28, y=435.0, width=100.0, height=30.0)
@@ -609,10 +614,6 @@ class Register(tk.Canvas):
                 self.button_2.place_forget()
                 self.button_3.place_forget()
 
-            
-            
-
-    
     def commit_data(self):
         try:
             # Insert applicant details
