@@ -95,10 +95,8 @@ class AdminHomepage(tk.Canvas):
         
         self.TableCanva = tk.Canvas(self, bg="#FFFFFF", height=220, width=540, highlightthickness=0)
         self.TableCanva.place(x=250.0, y=230.0)
-        self.columns = (
-            "Reference_No", "Applicant_ID", "Date")
 
-        self.Tree = ttk.Treeview(self.TableCanva, columns=self.columns, show='headings', height=10)
+        self.Tree = ttk.Treeview(self.TableCanva,show='headings', height=10)
         self.Tree.pack_propagate(False) # Prevent the treeview from resizing with the window
         self.Tree.place(x=270,y=110, anchor="center", width=540, height=220)
         self.style = ttk.Style()
@@ -109,11 +107,97 @@ class AdminHomepage(tk.Canvas):
         self.HScroll.place(x=520, y=455, anchor="center", width=540,height=10)
         self.Tree.configure(xscrollcommand=self.HScroll.set)
 
+        self.ComboBoxEasy = ttk.Combobox(self, state="readonly")
+        self.ComboBoxEasy.place(x=350, y=210, anchor="center", width=200, height=20)
+        self.ComboBoxEasy["values"] = ("Easy 1", "Easy 2", "Easy 3")
+        self.ComboBoxEasy.bind("<<ComboboxSelected>>", self.update_treeview)
+        self.update_treeview()
+
     def Easy1Columns(self):
+        EasyRows1 = self.database.EasyTask1()
         self.ColumnsEasy = ("Applicant_ID", "Full_Name", "Age")
+        self.Tree["columns"] = self.ColumnsEasy
+    
+        for col in self.ColumnsEasy:
+            self.Tree.heading(col, text=col)
+            self.Tree.column(col, width=150, minwidth=150, anchor=tk.CENTER, stretch=tk.YES)            
+    
+        for row in self.Tree.get_children():
+            self.Tree.delete(row)# Clear the existing data in the treeview
+    
+        # Define alternating colors
+        color1 = "#FFFFFF"  # Light grey
+        color2 = "#CFCECE"  # Slightly darker grey
+        textcolor = "#000000"
+    
+        # Insert data with alternating colors
+        for index, row in enumerate(EasyRows1):
+            tag = f"color_{index % 2}"  # Alternating tag
+            color = color1 if index % 2 == 0 else color2
+            self.Tree.tag_configure(tag, background=color,foreground=textcolor)
+            self.Tree.insert('', 'end', values=row, tags=(tag,))
 
 
-        
+    def Easy2Columns(self):
+        self.EasyRows2 = self.database.EasyTask2()
+        self.ColumnsEasy = ("Applicant_ID", "Full_Name", "Montly_Income","Occupation")
+        self.Tree["columns"] = self.ColumnsEasy
+        for col in self.ColumnsEasy:
+            self.Tree.heading(col, text=col)
+            self.Tree.column(col, width=150, minwidth=150, anchor=tk.CENTER, stretch=tk.YES)            
+        for row in self.Tree.get_children():
+            self.Tree.delete(row)
+        color1 = "#FFFFFF"  # Light grey
+        color2 = "#CFCECE"  # Slightly darker grey
+        textcolor = "#000000"
+
+        for index, row in enumerate(self.EasyRows2):
+            tag = f"color_{index % 2}"
+            color = color1 if index % 2 == 0 else color2
+            self.Tree.tag_configure(tag, background=color,foreground=textcolor)
+            self.Tree.insert('', 'end', values=row, tags=(tag,))
+
+    def Easy3Columns(self):
+        self.EasyRows3 = self.database.EasyTask3()
+        self.ColumnsEasy = ("Applicant_ID", "Full_Name", "Address","Civil_Status","Birth_Date","Age","Sex","Nationality","Religion","Highest_Educational_Attainment","Occupation","Monthly Income","Membership","Other Source Of Income","Monthly Expenditures","Gross Monthly Income","Net Monthly Income")
+        self.Tree["columns"] = self.ColumnsEasy
+
+        for col in self.ColumnsEasy:
+            self.Tree.heading(col, text=col)
+            self.Tree.column(col, width=150, minwidth=150, anchor=tk.CENTER, stretch=tk.YES)            
+        for row in self.Tree.get_children():
+            self.Tree.delete(row)
+
+
+        color1 = "#FFFFFF"  # Light grey
+        color2 = "#CFCECE"  # Slightly darker grey
+        textcolor = "#000000"
+  
+  
+        for index, row in enumerate(self.EasyRows3):
+            tag = f"color_{index % 2}"
+            color = color1 if index % 2 == 0 else color2
+            tag = f"color_{index % 2}"  # Alternating tag
+            self.Tree.tag_configure(tag, background=color,foreground=textcolor)
+            self.Tree.insert('', 'end', values=row, tags=(tag,))
+
+
+    def update_treeview(self, event=None):
+        selected_value = self.ComboBoxEasy.get()
+        self.Tree.delete(*self.Tree.get_children())  # Clear current treeview items
+
+        for col in self.Tree["columns"]:
+            self.Tree.heading(col, text="")  # Clear current treeview headings
+
+        if selected_value == "Easy 1":
+            self.Easy1Columns()
+        elif selected_value == "Easy 2":
+            self.Easy2Columns()
+        elif selected_value == "Easy 3":
+            self.Easy3Columns()
+    
+
+
 
     def CountApplicants(self):
         count = self.database.count_applicant_details

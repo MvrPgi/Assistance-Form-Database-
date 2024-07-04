@@ -14,6 +14,7 @@ class AdminBench(tk.Toplevel):
         self.configure(bg="#FFFFFF")
         self.resizable(False, False)
         self.database = DatabaseConnection()
+        self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
         # Create the canvas in the upper frame
         self.canvas = tk.Canvas(self, bg="#FFFFFF")
@@ -76,11 +77,11 @@ class AdminBench(tk.Toplevel):
         # Set headings and column widths
         for col in self.columns:
             self.tree.heading(col, text=col.replace("_", " ").title())
-            self.tree.column(col, width=column_widths.get(col, 100), anchor=tk.CENTER)
+            self.tree.column(col, width=150, minwidth=150, anchor=tk.CENTER, stretch=tk.YES)            
 
         # Create the horizontal scrollbar
         self.HScroll = ttk.Scrollbar(self.canvas, orient=tk.HORIZONTAL, command=self.tree.xview)
-        self.HScroll.place(x=960.0, y=115, anchor="center", width=1900)
+        self.HScroll.place(x=955.0, y=115, anchor="center", width=1899)
 
         # Configure the tree view to use the scrollbar
         self.tree.configure(xscrollcommand=self.HScroll.set)
@@ -129,6 +130,8 @@ class AdminBench(tk.Toplevel):
             self.tree.tag_configure(tag, background=color)
             self.tree.insert('', 'end', values=row, tags=(tag,))
 
+
+
     def FemaleFetchApplicantData(self):
         rows = self.database.FetchFemaleApplicantDetails()
 
@@ -165,9 +168,6 @@ class AdminBench(tk.Toplevel):
         )
 
         self.edit_window.destroy()
-
-
-    
 
 
     def DeleteRow(self):

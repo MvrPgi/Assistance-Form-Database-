@@ -65,7 +65,7 @@ class AdminBenchReference(tk.Toplevel):
         # Set headings and column widths
         for col in self.columns:
             self.tree.heading(col, text=col.replace("_", " ").title())
-            self.tree.column(col, width=column_widths.get(col, 100), anchor=tk.CENTER)
+            self.tree.column(col, width=150, minwidth=150, anchor=tk.CENTER, stretch=tk.YES)            
 
         # Create the horizontal scrollbar
         self.HScroll = ttk.Scrollbar(self.canvas, orient=tk.HORIZONTAL, command=self.tree.xview)
