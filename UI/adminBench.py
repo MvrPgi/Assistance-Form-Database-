@@ -21,27 +21,42 @@ class AdminBench(tk.Toplevel):
         self.canvas.place(x=0, y=0, relwidth=1, relheight=1)
 
         self.Header = PhotoImage(file=resource_path("resources/adminbench/header.png"))
-        self.canvas.create_image(960.0, 30, image=self.Header)
+        self.canvas.create_image(955.0, 15, image=self.Header)
+        self.canvas.create_text(435.0, 90, text="Filter By :", font=("Nokora", 10), fill="#000000")
+        # self.canvas.create_line(15, 106, 1895, 106, fill="#000000")
+        # self.canvas.create_line(13, 106, 13, 680, fill="#000000")
+        # self.canvas.create_line(1896, 106, 1896, 680, fill="#000000")
 
-        self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male", "Female"], state="readonly", width=10)
-        self.ComboBoxSex.place(x=400, y=90, anchor="center")
+
+
+
+
+        self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male", "Female"], state="readonly", width=10, font=("Nokora", 10,))
+        self.ComboBoxSex.place(x=512, y=90, anchor="center")
         self.ComboBoxSex.bind("<<ComboboxSelected>>", self.GenderPicker)
 
+
+        self.DeleteBGPic = PhotoImage(file=resource_path("resources/adminbench/DeleteBG.png"))
+        self.canvas.create_image(80.0, 90, image=self.DeleteBGPic)
         self.DeleteButtonImage = PhotoImage(file=resource_path("resources/adminbench/deleteButton.png"))
-        self.deleteButton = tk.Button(self.canvas, image=self.DeleteButtonImage, command=self.DeleteRow)
-        self.deleteButton.place(x=100.0, y=90, anchor="center", width=95, height=20)
+        self.deleteButton = tk.Button(self.canvas, image=self.DeleteButtonImage, command=self.DeleteRow, borderwidth=0, highlightthickness=0)
+        self.deleteButton.place(x=80.0, y=90, anchor="center", width=95, height=20)
 
+        self.EditBGPic = PhotoImage(file=resource_path("resources/adminbench/UpdateBG.png"))
+        self.canvas.create_image(210.0, 90, image=self.EditBGPic)
         self.UpdateButtonImage = PhotoImage(file=resource_path("resources/adminbench/updateButton.png"))
-        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command= self.EditButton)
-        self.updateButton.place(x=200.0, y=90, anchor="center", width=95, height=20)
+        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command= self.EditButton, borderwidth=0, highlightthickness=0)
+        self.updateButton.place(x=210.0, y=90, anchor="center", width=95, height=20)
 
+        self.RefreshBGPic = PhotoImage(file=resource_path("resources/adminbench/updateBG.png"))
+        self.canvas.create_image(340.0, 90, image=self.RefreshBGPic)
         self.RefreshButtonImage = PhotoImage(file=resource_path("resources/adminbench/refreshButton.png"))
-        self.refreshButton = tk.Button(self.canvas, image=self.RefreshButtonImage, command=self.FetchReferenceApplicantData)
-        self.refreshButton.place(x=300.0, y=90, anchor="center", width=95, height=20)
+        self.refreshButton = tk.Button(self.canvas, image=self.RefreshButtonImage, command=self.FetchReferenceApplicantData, borderwidth=0, highlightthickness=0)
+        self.refreshButton.place(x=340.0, y=92, anchor="center", width=95, height=18)
 
-
-        self.backButton = tk.Button(self.canvas, text="Back", command=self.back_to_admin_homepage)
-        self.backButton.place(x=500.0, y=90, anchor="center", width=95, height=20)
+        self.backButtonImage = PhotoImage(file=resource_path("resources/adminbench/homeButton.png"))
+        self.backButton = tk.Button(self.canvas,image=self.backButtonImage, command=self.back_to_admin_homepage,borderwidth=0, highlightthickness=0)
+        self.backButton.place(x=25.0, y=25, anchor="center", width=30, height=20)
 
         self.columns = (
             "Reference_No", "Applicant_ID", "Date", "Applicant_Status", "Full_Name", "Address", "Civil_Status", 
@@ -54,7 +69,7 @@ class AdminBench(tk.Toplevel):
         # Create the Treeview widget
         self.tree = ttk.Treeview(self.canvas, columns=self.columns, show='headings', height=20)
         self.tree.pack_propagate(False) # Prevent the treeview from resizing with the window
-        self.tree.place(x=955.0, y=400, anchor="center", width=1900, height=550)
+        self.tree.place(x=955.0, y=400, anchor="center", width=1880, height=560)
 
         # Style configuration
         self.style = ttk.Style()
@@ -63,16 +78,7 @@ class AdminBench(tk.Toplevel):
 
 
 
-        # Column widths configuration
-        column_widths = {
-            "Reference_No": 100, "Applicant_ID": 100, "Date": 100, "Applicant_Status": 150, "Full_Name": 150, 
-            "Address": 300, "Civil_Status": 75, "Birth_Date": 100, "Age": 50, "Sex": 50, "Nationality": 100, 
-            "Religion": 100, "Highest Educational Attainment": 250, "Occupation": 150, "Monthly_Income": 150, 
-            "Membership": 100, "OtherSourceOfIncome": 150, "Monthly_Expenditures": 175, "GrossMonthlyIncome": 150, 
-            "NetMonthlyIncome": 150, "Household_ID": 100, "Family Full Name": 150, "Family Age": 50,
-            "Family Civil Status": 150, "Relationship": 100, "Family Highest Educational Attainment": 240,
-            "Family Occupation": 150, "Family Income": 150
-        }
+ 
 
         # Set headings and column widths
         for col in self.columns:
@@ -81,7 +87,7 @@ class AdminBench(tk.Toplevel):
 
         # Create the horizontal scrollbar
         self.HScroll = ttk.Scrollbar(self.canvas, orient=tk.HORIZONTAL, command=self.tree.xview)
-        self.HScroll.place(x=955.0, y=115, anchor="center", width=1899)
+        self.HScroll.place(x=955.0, y=115, anchor="center", width=1880)
 
         # Configure the tree view to use the scrollbar
         self.tree.configure(xscrollcommand=self.HScroll.set)
@@ -94,6 +100,7 @@ class AdminBench(tk.Toplevel):
         self.FetchReferenceApplicantData()
 
     def FetchReferenceApplicantData(self):
+        self.ComboBoxSex.set('') # Clear the combobox selection
         rows = self.database.FetchRefApplincatHouseDetails()
 
         for row in self.tree.get_children():

@@ -1,7 +1,6 @@
 
 import tkinter as tk
 from tkinter import ttk
-from UI.register import Register
 from tkinter import PhotoImage, Entry, messagebox, StringVar
 from mysql_connection import DatabaseConnection
 import mysql.connector
@@ -30,6 +29,7 @@ class AdminHomepage(tk.Canvas):
         self.logoutButton = PhotoImage(file=resource_path("resources/adminhome/LogoutButton.png"))
 
 
+
         self.create_image(410.0, 250.0, image = self.gradiantBG) 
         #self.create_image(100.0, 250.0, image = self.dashboardBG)
         self.create_image(100.0, 250.0, image = self.dashboardBG)
@@ -50,8 +50,6 @@ class AdminHomepage(tk.Canvas):
         self.create_text(455.0, 50.0, anchor = "nw", text = "Average Monthly Salary", fill="#000000", font=("Nokora", 12 * -1,"bold"))
         self.create_text(680.0, 50.0, anchor = "nw", text = "Dependent", fill="#000000", font=("Nokora", 12 * -1,"bold"))
 
-
-  
 
 
         self.TotalApplicants = StringVar(value="0")
@@ -126,8 +124,9 @@ class AdminHomepage(tk.Canvas):
             self.Tree.delete(row)# Clear the existing data in the treeview
     
         # Define alternating colors
-        color1 = "#FFFFFF"  # Light grey
-        color2 = "#CFCECE"  # Slightly darker grey
+        color1 = "#1B4B77"  # Light grey
+        color2 = "#FFFBFB"  # Slightly darker grey
+        textcolor = "#FFFFFF"
         textcolor = "#000000"
     
         # Insert data with alternating colors
@@ -147,8 +146,8 @@ class AdminHomepage(tk.Canvas):
             self.Tree.column(col, width=150, minwidth=150, anchor=tk.CENTER, stretch=tk.YES)            
         for row in self.Tree.get_children():
             self.Tree.delete(row)
-        color1 = "#FFFFFF"  # Light grey
-        color2 = "#CFCECE"  # Slightly darker grey
+        color1 = "#1B4B77"  # Light grey
+        color2 = "#FFFBFB"  # Slightly darker grey
         textcolor = "#000000"
 
         for index, row in enumerate(self.EasyRows2):
@@ -169,8 +168,8 @@ class AdminHomepage(tk.Canvas):
             self.Tree.delete(row)
 
 
-        color1 = "#FFFFFF"  # Light grey
-        color2 = "#CFCECE"  # Slightly darker grey
+        color1 = "#1B4B77"  # Light grey
+        color2 = "#FFFBFB"  # Slightly darker grey
         textcolor = "#000000"
   
   

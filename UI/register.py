@@ -247,6 +247,7 @@ class Register(tk.Canvas):
                 self.itemconfigure(image_id, state="hidden")
             for text_id in self.pageText1_id:
                 self.itemconfigure(text_id, state="hidden")
+    
                 self.New_Status.place_forget()
                 self.Old_Status.place_forget()
                 self.Single.place_forget()
@@ -374,10 +375,11 @@ class Register(tk.Canvas):
                 self.button_3.place_forget()
 
             
-            
+    
 
     
     def commit_data(self):
+        
         try:
             # Insert applicant details
             self.applicant_details.insert_applicant_details(
@@ -446,7 +448,7 @@ class Register(tk.Canvas):
         print("Back to Home")
         if self.switch_frame:
             print("Switching to Home")
-            self.switch_frame('applicantadmin')
+            self.switch_frame('applicanthomepage')
         else:
             print("Switch frame not none")
 
