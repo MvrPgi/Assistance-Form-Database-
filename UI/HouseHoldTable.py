@@ -14,6 +14,9 @@ class AdminBenchHousehold(tk.Toplevel):
         self.configure(bg="#FFFFFF")
         self.resizable(False, False)
         self.database = DatabaseConnection()
+        self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
+
+
 
         # Create the canvas in the upper frame
         self.canvas = tk.Canvas(self, bg="#FFFFFF")
@@ -70,7 +73,7 @@ class AdminBenchHousehold(tk.Toplevel):
 
         # Create the horizontal scrollbar
         self.HScroll = ttk.Scrollbar(self.canvas, orient=tk.HORIZONTAL, command=self.tree.xview)
-        self.HScroll.place(x=960.0, y=115, anchor="center", width=1900)
+        self.HScroll.place(x=955.0, y=115, anchor="center", width=1899)
 
         # Configure the tree view to use the scrollbar
         self.tree.configure(xscrollcommand=self.HScroll.set)

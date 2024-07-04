@@ -14,6 +14,7 @@ class AdminBenchHousehold(tk.Toplevel):
         self.configure(bg="#FFFFFF")
         self.resizable(False, False)
         self.database = DatabaseConnection()
+        self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
         # Create the canvas in the upper frame
         self.canvas = tk.Canvas(self, bg="#FFFFFF")

@@ -1,6 +1,7 @@
 import tkinter as tk
 from UI.applicantadmin import ApplicantAdmin
 from UI.adminBench import AdminBench
+from UI.applicantHomepage import ApplicantHomepage
 from UI.login import Login
 from UI.register import Register
 from UI.signup import Signup
@@ -65,6 +66,8 @@ class App(tk.Tk):
             self.withdraw()
             admin_bench_window = AdminBenchReference(master=self)
             admin_bench_window.mainloop()
+        elif frame_name =='applicanthomepage':
+            self.current_frame = ApplicantHomepage(master=self.main_frame, switch_frame=self.switch_frame)
         elif frame_name == 'register':
             self.current_frame = Register(master=self.main_frame, switch_frame=self.switch_frame)
         elif frame_name == 'login':
@@ -84,3 +87,6 @@ class App(tk.Tk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+
+
+
