@@ -29,7 +29,7 @@ class AdminHomepage(tk.Canvas):
 
 
         self.create_image(410.0, 250.0, image = self.gradiantBG) 
-        self.create_image(100.0, 250.0, image = self.dashboardBG)
+        #self.create_image(100.0, 250.0, image = self.dashboardBG)
         self.create_image(100.0, 250.0, image = self.dashboardBG)
         self.create_image(50.0, 60.0, image = self.dashboardLogo)
         self.create_image(330.0, 100.0, image = self.ShapeBg)

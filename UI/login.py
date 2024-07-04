@@ -11,7 +11,7 @@ class Login(tk.Canvas):
     def __init__(self, master = None,switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
-        self.database = DatabaseConnection()
+        # self.database = DatabaseConnection()
 
 
         self.GradiantBg = PhotoImage(file=resource_path("resources/login/landingPagebg.png"))
@@ -34,7 +34,7 @@ class Login(tk.Canvas):
         self.create_image(603.0, 240.0, image=self.TextBoxBG)
         self.create_image(603.0, 285.0, image=self.loginButtonBG)
 
-        self.LoginButton = tk.Button(self, image=self.loginButtonPic, command=self.go_to_register,borderwidth=0, highlightthickness=0)
+        self.LoginButton = tk.Button(self, image=self.loginButtonPic, command=self.gotoApplicantHome,borderwidth=0, highlightthickness=0)
         self.LoginButton.place(x=480.0, y=270.0, width=250.0, height=31.0)
 
         self.create_line(470.0, 320.5, 735.0, 320.5, fill="#000000")
@@ -97,9 +97,9 @@ class Login(tk.Canvas):
     #         messagebox.showerror("Login", "Invalid username or email.")
 
 
-    def go_to_register(self):
+    def gotoApplicantHome(self):
         if self.switch_frame:
-            self.switch_frame('register')
+            self.switch_frame('applicanthomepage')
 
     def go_to_signup(self):
         if self.switch_frame:
