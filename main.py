@@ -8,8 +8,10 @@ from UI.signup import Signup
 from UI.adminlogin import AdminLogin
 from UI.adminHomepage import AdminHomepage
 from UI.HouseHoldTable import AdminBenchHousehold
-from UI.ApplicantTable import AdminBenchHousehold
+from UI.ApplicantTable import ApplicantTable
 from UI.referenceTable import AdminBenchReference
+from mysql_connection import DatabaseConnection
+
 
 import tkinter as tk
 from tkinter import ttk
@@ -60,7 +62,7 @@ class App(tk.Tk):
             admin_bench_window.mainloop()
         elif frame_name == 'applicant':
             self.withdraw()  # Hide the main window
-            admin_bench_window = AdminBenchHousehold(master=self)
+            admin_bench_window = ApplicantTable(master=self)
             admin_bench_window.mainloop()
         elif frame_name == 'reference':
             self.withdraw()
@@ -84,9 +86,12 @@ class App(tk.Tk):
             self.current_frame.pack(fill=tk.BOTH, expand=True)
 
 
+
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+    # db = DatabaseConnection()
+    # db.close_connection()  # Explicitly close the connection
 
 
 

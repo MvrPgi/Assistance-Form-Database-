@@ -6,7 +6,7 @@ from mysql_config import dbConfig
 from mysql_connection import DatabaseConnection
 from resources.FileTracker.tracker import resource_path
 
-class AdminBenchHousehold(tk.Toplevel):
+class ApplicantTable(tk.Toplevel):
         
     def __init__(self, master = None,switch_frame=None):
         super().__init__()
@@ -19,26 +19,28 @@ class AdminBenchHousehold(tk.Toplevel):
         # Create the canvas in the upper frame
         self.canvas = tk.Canvas(self, bg="#FFFFFF")
         self.canvas.place(x=0, y=0, relwidth=1, relheight=1)
-
         self.Header = PhotoImage(file=resource_path("resources/adminbench/header.png"))
-        self.canvas.create_image(960.0, 30, image=self.Header)
+        self.canvas.create_image(955.0, 15, image=self.Header)
+     
 
 
-        self.DeleteButtonImage = PhotoImage(file=resource_path("resources/adminbench/deleteButton.png"))
-        self.deleteButton = tk.Button(self.canvas, image=self.DeleteButtonImage, command= print("Delete"))
-        self.deleteButton.place(x=100.0, y=90, anchor="center", width=95, height=20)
-
+        self.EditBGPic = PhotoImage(file=resource_path("resources/adminbench/UpdateBG.png"))
+        self.canvas.create_image(80.0, 90, image=self.EditBGPic)
         self.UpdateButtonImage = PhotoImage(file=resource_path("resources/adminbench/updateButton.png"))
-        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command= print("Update"))
-        self.updateButton.place(x=200.0, y=90, anchor="center", width=95, height=20)
+        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command=lambda:print("ButtonClicked"), borderwidth=0, highlightthickness=0)
+        self.updateButton.place(x=80.0, y=90,anchor="center", width=95, height=20)
 
+
+        self.RefreshBGPic = PhotoImage(file=resource_path("resources/adminbench/updateBG.png"))
+        self.canvas.create_image(210.0, 90, image=self.RefreshBGPic)
         self.RefreshButtonImage = PhotoImage(file=resource_path("resources/adminbench/refreshButton.png"))
-        self.refreshButton = tk.Button(self.canvas, image=self.RefreshButtonImage, command=self.FetchApplicantData)
-        self.refreshButton.place(x=300.0, y=90, anchor="center", width=95, height=20)
+        self.refreshButton = tk.Button(self.canvas, image=self.RefreshButtonImage, command=self.FetchApplicantData, borderwidth=0, highlightthickness=0)
+        self.refreshButton.place(x=210.0, y=92, anchor="center", width=95, height=20)
 
+        self.backButtonImage = PhotoImage(file=resource_path("resources/adminbench/homeButton.png"))
+        self.backButton = tk.Button(self.canvas,image=self.backButtonImage, command=self.back_to_admin_homepage,borderwidth=0, highlightthickness=0)
+        self.backButton.place(x=25.0, y=25, anchor="center", width=30, height=20)
 
-        self.backButton = tk.Button(self.canvas, text="Back", command=self.back_to_admin_homepage)
-        self.backButton.place(x=500.0, y=90, anchor="center", width=95, height=20)
 
         self.columns = (
             "Applicant_ID", "Full Name","Address", "Civil Status",  
@@ -50,31 +52,23 @@ class AdminBenchHousehold(tk.Toplevel):
         # Create the Treeview widget
         self.tree = ttk.Treeview(self.canvas, columns=self.columns, show='headings', height=20)
         self.tree.pack_propagate(False) # Prevent the treeview from resizing with the window
-        self.tree.place(x=955.0, y=400, anchor="center", width=1900, height=550)
+        self.tree.place(x=955.0, y=400, anchor="center", width=1880, height=560)
 
-        # Style configuration
+
         self.style = ttk.Style()
-        self.style.configure("Treeview.Heading", background="#FFFFF", foreground="#000000", font=("Helvetica", 10))
+        self.style.configure("Treeview.Heading", background="#FFFFF", foreground="#000000", font=("Nokora", 10))
         self.style.configure("Treeview", rowheight=25)
-
-
-
-        # Column widths configuration
-
-        # Column widths configuration
-        column_widths = {
-            "Applicant_ID": 100, "Full Name": 200,"Address": 300,"Civil_Status": 75, "Birth_Date": 100, "Age": 50, "Sex": 50, "Nationality": 100, "Religion": 100, "Highest Educational Attainment": 250, "Occupation": 150, "Monthly_Income": 150, "Membership": 100, "OtherSourceOfIncome": 150, "Monthly_Expenditures": 175, "GrossMonthlyIncome": 150, "NetMonthlyIncome": 150
-        }
 
 
         # Set headings and column widths
         for col in self.columns:
             self.tree.heading(col, text=col.replace("_", " ").title())
             self.tree.column(col, width=150, minwidth=150, anchor=tk.CENTER, stretch=tk.YES)            
+      
 
         # Create the horizontal scrollbar
         self.HScroll = ttk.Scrollbar(self.canvas, orient=tk.HORIZONTAL, command=self.tree.xview)
-        self.HScroll.place(x=960.0, y=115, anchor="center", width=1900)
+        self.HScroll.place(x=955.0, y=115, anchor="center", width=1880)
 
         # Configure the tree view to use the scrollbar
         self.tree.configure(xscrollcommand=self.HScroll.set)

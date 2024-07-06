@@ -73,10 +73,8 @@ class AdminBench(tk.Toplevel):
 
         # Style configuration
         self.style = ttk.Style()
-        self.style.configure("Treeview.Heading", background="#FFFFF", foreground="#000000", font=("Helvetica", 10))
+        self.style.configure("Treeview.Heading", background="#FFFFF", foreground="#000000", font=("Nokora", 10))
         self.style.configure("Treeview", rowheight=25)
-
-
 
  
 
@@ -95,12 +93,112 @@ class AdminBench(tk.Toplevel):
 
         # Destroy the window when the close button is clicked
         self.protocol("WM_DELETE_WINDOW", self.on_close)
-
-
         self.FetchReferenceApplicantData()
 
+
+
+
+    def DeleteRow(self):
+        selected_items = self.tree.selection()
+        if selected_items:
+            item = selected_items[0]  # Get the first selected item
+            values = self.tree.item(item, "values")  # Get the values of the selected item
+            
+            # Assuming the second value in the row is the primary key for deletion
+            primary_key = values[0]  # Adjust index based on your primary key column
+            
+            try:
+                self.database.delete_applicant_details(primary_key)
+                self.tree.delete(item)
+                print(f"Deleted item with primary key {primary_key}.")
+            except Exception as e:
+                print(f"Error deleting from database: {e}")
+        else:
+            print("No item selected.")
+
+    def SelectDeleteRow(self, event):
+        selected_items = self.tree.selection()
+        if selected_items:
+            item = selected_items[0]  # Get the first selected item
+            values = self.tree.item(item, "values")  # Get the values of the selected item
+            print(values)
+        else:
+            print("No item selected.")
+
+
+
+
+    def UpdateRefAppHouseDetails(self, item):
+        new_values = [self.entries[col].get() for col in self.columns]
+        self.tree.item(item, values=new_values)
+
+        # Update the database with the new values
+        self.database.UpdateRefAppHouseDetails(
+            new_values[0], new_values[1], new_values[2], new_values[3], new_values[4], new_values[5], new_values[6],  # Update the database with the new values
+            new_values[7], new_values[8], new_values[9], new_values[10], new_values[11], new_values[12], 
+            new_values[13], new_values[14], new_values[15], new_values[16], new_values[17], new_values[18], new_values[19], new_values[20], new_values[21],new_values[22],new_values[23],new_values[24],new_values[25],new_values[26],new_values[27]
+        )
+        self.edit_window.destroy()
+
+
+    def EditButton(self):
+        item = self.tree.selection()[0] # Get the selected item
+        values = self.tree.item(item, "values") # Get the values of the selected item
+
+        self.edit_window = tk.Toplevel(self)
+        self.edit_window.geometry("450x720")
+        self.edit_window.wm_resizable(False, False)
+
+        self.edit_window.title("Edit") 
+
+        self.RadioButtonVariable = tk.BooleanVar(value=False)
+        self.RadioButton = tk.Radiobutton(self.edit_window,variable=self.RadioButtonVariable,value=True ,text="Enable",command=self.toggle_entries)
+        self.RadioButton.grid(row=0, column=0)
+        self.RadioButton = tk.Radiobutton(self.edit_window, text="Disable",variable=self.RadioButtonVariable,value=False,command=self.toggle_entries)
+        self.RadioButton.grid(row=0, column=1)
+
+        self.LowerFrameEdit = tk.Frame(self.edit_window)
+        self.LowerFrameEdit.grid(row=1, column=0, columnspan=2)
+        self.EditWindow = tk.Frame(self.edit_window).grid(row=0, column=0, columnspan=2)
+        self.entries = {} # Store the entry widgets
+        for i, col in enumerate(self.columns): # Create the entry widgets
+            tk.Label(self.LowerFrameEdit, text=col).grid(row=i, column=0) # Create a label
+            entry = tk.Entry(self.LowerFrameEdit,width=30, justify="center")# Create an entry widget
+            entry.grid(row=i, column=1,padx=5,pady =2)# Place the entry widget
+            entry.insert(0, values[i]) # Insert the value of the selected item into the entry widget
+            self.entries[col] = entry # Store the entry widget
+
+        for entry in self.entries.values():
+            entry.config(state="readonly")        
+        for i in range(3):
+            self.entries[self.columns[i]].config(state="readonly")
+        self.entries[self.columns[20]].config(state="readonly")      
+
+
+
+        self.saveButton = tk.Button(self.edit_window, text="Save",state='disabled', command=lambda: self.UpdateRefAppHouseDetails(item))
+        self.saveButton.grid(row=17, column=0, columnspan=2,pady=7)
+
+    def toggle_entries(self):
+        if self.RadioButtonVariable.get() == True:
+            self.saveButton.config(state="normal")
+            for entry in self.entries.values():
+                entry.config(state="normal")
+            for i in range(3):
+                self.entries[self.columns[i]].config(state="readonly")
+            self.entries[self.columns[20]].config(state="readonly")      
+                
+
+        elif self.RadioButtonVariable.get() == False:
+            self.saveButton.config(state="disabled")
+            for entry in self.entries.values():
+                entry.config(state="readonly")
+            for i in range(3):
+                self.entries[self.columns[i]].config(state="readonly")
+
+
     def FetchReferenceApplicantData(self):
-        self.ComboBoxSex.set('') # Clear the combobox selection
+        self.ComboBoxSex.set("") # Clear the combobox selection
         rows = self.database.FetchRefApplincatHouseDetails()
 
         for row in self.tree.get_children():
@@ -161,105 +259,6 @@ class AdminBench(tk.Toplevel):
         if self.ComboBoxSex.get() =='Female':
             self.FemaleFetchApplicantData()
 
-
-
-    def UpdateRefAppHouseDetails(self, item):
-        new_values = [self.entries[col].get() for col in self.columns]
-        self.tree.item(item, values=new_values)
-
-        # Update the database with the new values
-        self.database.UpdateRefAppHouseDetails(
-            new_values[0], new_values[1], new_values[2], new_values[3], new_values[4], new_values[5], new_values[6],  # Update the database with the new values
-            new_values[7], new_values[8], new_values[9], new_values[10], new_values[11], new_values[12], 
-            new_values[13], new_values[14], new_values[15], new_values[16], new_values[17], new_values[18], new_values[19], new_values[20], new_values[21],new_values[22],new_values[23],new_values[24],new_values[25],new_values[26],new_values[27]
-        )
-
-        self.edit_window.destroy()
-
-
-    def DeleteRow(self):
-        selected_items = self.tree.selection()
-        if selected_items:
-            item = selected_items[0]  # Get the first selected item
-            values = self.tree.item(item, "values")  # Get the values of the selected item
-            
-            # Assuming the second value in the row is the primary key for deletion
-            primary_key = values[0]  # Adjust index based on your primary key column
-            
-            try:
-                self.database.delete_applicant_details(primary_key)
-                self.tree.delete(item)
-                print(f"Deleted item with primary key {primary_key}.")
-            except Exception as e:
-                print(f"Error deleting from database: {e}")
-        else:
-            print("No item selected.")
-
-    def SelectDeleteRow(self, event):
-        selected_items = self.tree.selection()
-        if selected_items:
-            item = selected_items[0]  # Get the first selected item
-            values = self.tree.item(item, "values")  # Get the values of the selected item
-            print(values)
-        else:
-            print("No item selected.")
-
-
-
-    def EditButton(self):
-        item = self.tree.selection()[0] # Get the selected item
-        values = self.tree.item(item, "values") # Get the values of the selected item
-
-        self.edit_window = tk.Toplevel(self)
-        self.edit_window.geometry("450x720")
-        self.edit_window.wm_resizable(False, False)
-
-        self.edit_window.title("Edit") 
-
-        self.RadioButtonVariable = tk.BooleanVar(value=False)
-        self.RadioButton = tk.Radiobutton(self.edit_window,variable=self.RadioButtonVariable,value=True ,text="Enable",command=self.toggle_entries)
-        self.RadioButton.grid(row=0, column=0)
-        self.RadioButton = tk.Radiobutton(self.edit_window, text="Disable",variable=self.RadioButtonVariable,value=False,command=self.toggle_entries)
-        self.RadioButton.grid(row=0, column=1)
-
-        self.LowerFrameEdit = tk.Frame(self.edit_window)
-        self.LowerFrameEdit.grid(row=1, column=0, columnspan=2)
-        self.EditWindow = tk.Frame(self.edit_window).grid(row=0, column=0, columnspan=2)
-        self.entries = {} # Store the entry widgets
-        for i, col in enumerate(self.columns): # Create the entry widgets
-            tk.Label(self.LowerFrameEdit, text=col).grid(row=i, column=0) # Create a label
-            entry = tk.Entry(self.LowerFrameEdit,width=30, justify="center")# Create an entry widget
-            entry.grid(row=i, column=1,padx=5,pady =2)# Place the entry widget
-            entry.insert(0, values[i]) # Insert the value of the selected item into the entry widget
-            self.entries[col] = entry # Store the entry widget
-
-        for entry in self.entries.values():
-            entry.config(state="readonly")        
-        for i in range(3):
-            self.entries[self.columns[i]].config(state="readonly")
-        self.entries[self.columns[20]].config(state="readonly")      
-
-
-
-        self.saveButton = tk.Button(self.edit_window, text="Save",state='disabled', command=lambda: self.UpdateRefAppHouseDetails(item))
-        self.saveButton.grid(row=17, column=0, columnspan=2,pady=7)
-
-    def toggle_entries(self):
-        if self.RadioButtonVariable.get() == True:
-            self.saveButton.config(state="normal")
-            for entry in self.entries.values():
-                entry.config(state="normal")
-            for i in range(3):
-                self.entries[self.columns[i]].config(state="readonly")
-            self.entries[self.columns[20]].config(state="readonly")      
-                
-
-        elif self.RadioButtonVariable.get() == False:
-            self.saveButton.config(state="disabled")
-            for entry in self.entries.values():
-                entry.config(state="readonly")
-            for i in range(3):
-                self.entries[self.columns[i]].config(state="readonly")
             
 
     def on_close(self):

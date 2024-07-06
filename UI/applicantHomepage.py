@@ -32,9 +32,6 @@ class ApplicantHomepage(tk.Canvas):
         self.create_image(50.0, 60.0, image = self.dashboardLogo)
         self.create_image(520.0, 250.0, image = self.HomeText)
         self.create_image(520.0, 380.0, image = self.GetStartedButtonBG)
-
-
-
         self.create_text(100.0, 40.0, anchor = "nw", text = "USER", fill="#FFFFFF", font=("Nokora", 17 * -1,"bold"))
         self.create_text(20.0, 110.0, anchor = "nw", text = "NAVIGATION", fill="#FFFFFF", font=("Nokora", 11 * -1,"bold"))
         self.create_line(20.0, 100.0, 200.0, 100.0, fill="#FFFFFF")
