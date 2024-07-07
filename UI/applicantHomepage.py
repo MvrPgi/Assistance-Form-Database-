@@ -11,6 +11,7 @@ class ApplicantHomepage(tk.Canvas):
     def __init__(self, master = None,switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
+        self.database = DatabaseConnection()
 
 
 
@@ -23,6 +24,8 @@ class ApplicantHomepage(tk.Canvas):
         self.HomeText = PhotoImage(file=resource_path("resources/applicanthome/Welcome.png"))
         self.GetStartedButtonPic = PhotoImage(file=resource_path("resources/applicanthome/GetStartedButton.png"))
         self.GetStartedButtonBG = PhotoImage(file=resource_path("resources/applicanthome/GetStartedButtonBG.png"))
+        self.UserImageText = PhotoImage(file=resource_path("resources/applicanthome/UserProfileImage.png"))
+        self.UserProfileLogo = PhotoImage(file=resource_path("resources/applicanthome/UserProfileLogo.png"))
 
 
 
@@ -30,9 +33,11 @@ class ApplicantHomepage(tk.Canvas):
         self.create_image(410.0, 250.0, image = self.gradiantBG) 
         self.create_image(100.0, 250.0, image = self.dashboardBG)
         self.create_image(50.0, 60.0, image = self.dashboardLogo)
-        self.create_image(520.0, 250.0, image = self.HomeText)
-        self.create_image(520.0, 380.0, image = self.GetStartedButtonBG)
-        self.create_text(100.0, 40.0, anchor = "nw", text = "USER", fill="#FFFFFF", font=("Nokora", 17 * -1,"bold"))
+
+        self.text_item = self.create_text(100.0, 40.0, anchor="nw", text="", fill="#FFFFFF", font=("Nokora", 17 * -1, "bold"))
+        self.UpdateUserName()
+
+
         self.create_text(20.0, 110.0, anchor = "nw", text = "NAVIGATION", fill="#FFFFFF", font=("Nokora", 11 * -1,"bold"))
         self.create_line(20.0, 100.0, 200.0, 100.0, fill="#FFFFFF")
 
@@ -45,7 +50,7 @@ class ApplicantHomepage(tk.Canvas):
 
 
         self.create_image(100.0, 165.0, image = self.ButtonBG)
-        self.DashBoardButton = tk.Button(self, image=self.DashBoardButtonPic, borderwidth=0, highlightthickness=0, command=lambda:print("DashBoard"), relief="flat")
+        self.DashBoardButton = tk.Button(self, image=self.DashBoardButtonPic, borderwidth=0, highlightthickness=0, command=self.GetStarted, relief="flat")
         self.DashBoardButton.place(x=20.0, y=150.0, width=160.0, height=28.0)
 
         self.create_image(100.0, 215.0, image = self.ButtonBG)
@@ -53,7 +58,7 @@ class ApplicantHomepage(tk.Canvas):
         self.RegisterButton.place(x=20.0, y=200.0, width=160.0, height=28.0)
 
         self.create_image(100.0, 265.0, image = self.ButtonBG)
-        self.ProfileButton = tk.Button(self, image=self.ProfileButtonPic, borderwidth=0, highlightthickness=0, command=lambda:print("Profile"), relief="flat")
+        self.ProfileButton = tk.Button(self, image=self.ProfileButtonPic, borderwidth=0, highlightthickness=0, command=self.ApplicantAccount, relief="flat")
         self.ProfileButton.place(x=20.0, y=250.0, width=160.0, height=28.0)
 
 
@@ -65,9 +70,88 @@ class ApplicantHomepage(tk.Canvas):
         self.create_image(100.0, 365.0, image = self.ButtonBG)
         self.LogoutButton = tk.Button(self, image=self.LogoutButtonPic, borderwidth=0, highlightthickness=0, command=self.LogOut, relief="flat")
         self.LogoutButton.place(x=20.0, y=350.0, width=160.0, height=28.0)
+        
 
+
+
+
+
+        self.ApplicantAccountID =[]
+        self.ApplicantAccountID.append(self.create_image(350.0, 50.0, image = self.UserImageText, state ="hidden"))
+        self.ApplicantAccountID.append(self.create_text(260.0, 100.0, anchor = "nw", text = "Applicant ID", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
+        self.ApplicantID = Entry(self, font=("Nokora", 17 * -1,"bold"),state='readonly')
+
+        self.ApplicantAccountID.append(self.create_text(260.0, 160.0, anchor = "nw", text = "User Name", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
+        self.UserName = Entry(self, font=("Nokora", 17 * -1,"bold"),state='readonly')
+        self.ApplicantAccountID.append(self.create_text(260.0, 220.0, anchor = "nw", text = "Full Name", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
+        self.FullName = Entry(self, font=("Nokora", 17 * -1,"bold"),state='readonly')
+        self.ApplicantAccountID.append(self.create_text(260.0, 280.0, anchor = "nw", text = "Password", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
+        self.Password = Entry(self, font=("Nokora", 17 * -1,"bold"),state='readonly')
+
+
+        self.GetStartedID = []
+        self.GetStartedID.append(self.create_image(520.0, 250.0, image = self.HomeText, state ="hidden"))
+        self.GetStartedID.append(self.create_image(520.0, 380.0, image = self.GetStartedButtonBG,state ="hidden"))
         self.GetStartedButton = tk.Button(self, image=self.GetStartedButtonPic, borderwidth=0, highlightthickness=0, command=lambda:print("Get Started"), relief="flat")
+
+    
+        self.GetStarted()
+
+    def GetStarted(self):
+        for getstarted in self.GetStartedID:
+            self.itemconfigure(getstarted, state="normal")
+
+
+        for account in self.ApplicantAccountID:
+            self.itemconfigure(account, state="hidden")
+
         self.GetStartedButton.place(x=320.0, y=361.0, width=400.0, height=30.0)
+        self.ApplicantID.place(x=260.0, y=120.0, width=400.0, height=30.0)
+        self.FullName.place(x=260.0, y=240.0, width=400.0, height=30.0)
+        self.UserName.place(x=260.0, y=180.0, width=400.0, height=30.0)
+        self.Password.place(x=260.0, y=300.0, width=400.0, height=30.0)
+
+        self.FullName.place_forget()
+        self.UserName.place_forget()
+        self.Password.place_forget()
+        self.ApplicantID.place_forget()
+
+    def ApplicantAccount(self):
+
+        for getstarted in self.GetStartedID:
+            self.itemconfigure(getstarted, state="hidden")
+
+
+        for account in self.ApplicantAccountID:
+            self.itemconfigure(account, state="normal")
+        self.ApplicantID.place(x=260.0, y=120.0, width=400.0, height=30.0)
+        self.FullName.place(x=260.0, y=240.0, width=400.0, height=30.0)
+        self.UserName.place(x=260.0, y=180.0, width=400.0, height=30.0)
+        self.Password.place(x=260.0, y=300.0, width=400.0, height=30.0)
+        self.GetStartedButton.place(x=320.0, y=361.0, width=400.0, height=30.0)
+        self.GetStartedButton.place_forget()
+
+        rows = self.database.GetApplicantLoginDetails()
+        try:
+            self.UserName.config(state='normal')
+            self.FullName.config(state='normal')
+            self.Password.config(state='normal')        
+            self.UserName.delete(0, tk.END)
+            self.FullName.delete(0, tk.END)
+            self.Password.delete(0, tk.END)
+            self.UserName.insert(0, rows[0][1])
+            self.FullName.insert(0, rows[0][0])
+            self.Password.insert(0, rows[0][2])
+            self.UserName.config(state='disabled')
+            self.FullName.config(state='disabled')
+            self.Password.config(state='disabled')
+            self.ApplicantID.config(state='normal')
+            self.ApplicantID.delete(0, tk.END)
+            self.ApplicantID.insert(0, rows[0][3])
+            self.ApplicantID.config(state='disabled')
+        except:
+            print("Applicant ID not found")
+
 
 
 
@@ -87,3 +171,15 @@ class ApplicantHomepage(tk.Canvas):
         print("Register")
         if self.switch_frame:
             self.switch_frame('register')
+
+
+    def UpdateUserName(self):
+        username = self.GetUserName()
+        if username:
+            self.itemconfig(self.text_item, text=username)
+
+    def GetUserName(self):
+        username = self.database.GetLastApplicantEntry()
+        print(username)
+        return username
+

@@ -2,12 +2,14 @@ import sys
 import os
 import tkinter as tk
 from tkinter import PhotoImage, Entry
+from mysql_connection import DatabaseConnection
 from resources.FileTracker.tracker import resource_path
 
 class Signup(tk.Canvas):
     def __init__ (self, master = None,switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
+        self.database = DatabaseConnection()
 
         self.GradiantBg = PhotoImage(file=resource_path("resources/signup/landingPagebg.png"))
         self.welcomText = PhotoImage(file=resource_path("resources/signup/WelcomeText.png"))
@@ -28,7 +30,7 @@ class Signup(tk.Canvas):
         self.create_image(603.0, 250.0, image=self.entryBg)
         self.create_image(603.0, 300.0, image=self.signUpBG)
 
-        self.signUPButton = tk.Button(self, image=self.signUPButtonPic, command=self.go_to_login,borderwidth=0, highlightthickness=0,)
+        self.signUPButton = tk.Button(self, image=self.signUPButtonPic, command=self.signup,borderwidth=0, highlightthickness=0,)
         self.signUPButton.place(x=603.0, y=300.0, anchor="center", width=220, height=25)
 
         self.create_line(470.0, 337.5, 735.0, 337.5, fill="#000000")
@@ -81,6 +83,28 @@ class Signup(tk.Canvas):
             self.fullname_placeholder.place(x=485.0, y=200.0)
         if not self.Password.get():
             self.password_placeholder.place(x=485.0, y=240.0)
+
+    def signup(self):
+        print("Signup button clicked")
+        username = self.Username.get()
+        fullname = self.Fullname.get()
+        password = self.Password.get()
+
+        if not username or not fullname or not password:
+            print("Please fill in all fields.")
+            return
+
+        # Check if username already exists
+        if self.database.check_username_exists(username):
+            print("Username already exists.")
+            return
+
+        # Insert new user into database
+        self.database.signup(fullname,username, password)
+        print("User inserted into database.")
+        self.go_to_login()
+
+
  
 
 

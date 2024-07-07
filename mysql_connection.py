@@ -2,7 +2,7 @@ from mysql_config import dbConfig
 import mysql.connector as mysql
 from tkinter import messagebox
 from mysql.connector import Error
-
+import csv
 
 
 class DatabaseConnection:
@@ -24,6 +24,142 @@ class DatabaseConnection:
                 self.con.close()  # Close the connection
                 self.cursor.close()
                 print("You have disconnected from the database")  # Print a message to indicate that the connection was closed
+
+
+# ---------------------------------------------------------------USER LOGIN/SIGNUP----------------------------------------------------------------------------
+
+    def check_username_exists(self, username):
+        self.open_connection()
+        try:
+            query = "SELECT * FROM user WHERE Username = %s"
+            self.cursor.execute(query, (username,))
+            result = self.cursor.fetchone()
+            return result is not None
+        except Error as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
+
+
+    def signup(self,fullname,username,password):
+        self.open_connection()
+        try:
+            query = "INSERT INTO user (FullName, Username, _Password) VALUES (%(Full_Name)s, %(Username)s, %(Password)s)"
+            data = {
+                "Full_Name": fullname,
+                "Username": username,
+                "Password": password
+            }
+            self.cursor.execute(query, data)
+            self.con.commit()
+            messagebox.showinfo(title="Account Creation",message="New Account Created")
+        except Error as e:
+            print(f"Error: {e}")
+            messagebox.showerror("Database Query Error", f"An error occurred while creating account: {e}")
+
+    
+
+    def loginApplicantData(self, username, password):
+        self.open_connection()
+        try:
+            query = "SELECT * FROM user WHERE Username = %s AND _Password = %s"
+            self.cursor.execute(query, (username, password))
+            result = self.cursor.fetchone()
+            
+            if result:
+                # Successful login; append the username to the CSV file
+                self.appendtocsvApplicant(username)
+                return True
+            else:
+                # Unsuccessful login
+                return False
+        except Error as e:
+            print(f"Error: {e}")
+            return False
+        finally:
+            self.close_connection()
+
+    def appendtocsvApplicant(self, username):
+        with open('successful_loginsApplicant.csv', mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([username])
+
+    def GetLastApplicantEntry(self):
+        try:
+            with open('successful_loginsApplicant.csv', mode='r') as file:
+                reader = csv.reader(file)
+                last_row = None
+                for row in reader:
+                    last_row = row
+                return last_row
+        except FileNotFoundError:
+            print("The file does not exist.")
+            return None
+        
+    def GetApplicantLoginDetails(self):
+        self.open_connection()
+        username = self.GetLastApplicantEntry()
+        if not username:
+            print("No username found.")
+            return None
+
+        try:
+            query = """
+                SELECT U.FullName, U.Username,U._Password,A.Applicant_ID
+                FROM user as U, applicant_details as A
+                WHERE A.Applicant_ID = U.Applicant_ID AND U.Username = %s 
+            """
+            self.cursor.execute(query,username,)
+            rows = self.cursor.fetchall()
+            return rows
+        except Error as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
+
+
+# ---------------------------------------------------------------ADMIN LOGIN-----------------------------------------------------------------------------
+
+    def loginAdminData(self, username, password):
+        self.open_connection()
+        try:
+            query = "SELECT * FROM admin WHERE Username = %s AND _Password = %s"
+            self.cursor.execute(query, (username, password))
+            result = self.cursor.fetchone()
+            
+            if result:
+                # Successful login; append the username to the CSV file
+                self.appendtocsvAdmin(username)
+                return True
+            else:
+                # Unsuccessful login
+                return False
+        except Error as e:
+            print(f"Error: {e}")
+            return False
+        finally:
+            self.close_connection()
+
+        
+    def appendtocsvAdmin(self, username):
+        with open('successful_loginsAdmin.csv', mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([username])
+
+    def GetLastAdminEntry(self):
+        try:
+            with open('successful_loginsAdmin.csv', mode='r') as file:
+                reader = csv.reader(file)
+                last_row = None
+                for row in reader:
+                    last_row = row
+                return last_row
+        except FileNotFoundError:
+            print("The file does not exist.")
+            return None
+
+
+
 
 # -------------------------------------------------------GET LAST REFERENCE ID----------------------------------------------------------------------------
 
@@ -49,7 +185,6 @@ class DatabaseConnection:
 
 
     # -------------------------------------------------------GET LAST APPLICANT ID----------------------------------------------------------------------------
-
 
     
     def get_last_applicant_id(self):
@@ -315,8 +450,8 @@ class DatabaseConnection:
                     SELECT R.Reference_No, R.Applicant_ID, R.Date, R.Applicant_Status, A.Full_Name, A.Address, A.Civil_Status, A.Birth_Date, A.Age, A.Sex, A.Nationality, A.Religion, A.Highest_Educ_Attainment, A.Occupation, A.Monthly_Income, A.Membership, A.OtherSourceOfIncome, A.Monthly_Expenditures, A.GrossMonthlyIncome, A.NetMonthlyIncome, H.Household_ID, H.Hhold_Fam_Name, H.Hhold_Fam_Age, H.Hhold_Fam_CivilStatus, H.Hhold_Fam_RSWithPatient, H.Hhold_Fam_HighestEducAttain, H.Hhold_Fam_Occupation, H.Hhold_Fam_MonthlyIncome
                     FROM Reference AS R
                     JOIN Applicant_Details AS A ON R.Applicant_ID = A.Applicant_ID
-                    LEFT JOIN Household_Details AS H ON A.Applicant_ID = H.Applicant_ID;
-                """
+                    LEFT JOIN Household_Details AS H ON A.Applicant_ID = H.Applicant_ID; 
+                """# Query to fetch all details from the Reference, Applicant_Details, and Household_Details tables
                 self.cursor.execute(query)
                 rows = self.cursor.fetchall()
                 return rows

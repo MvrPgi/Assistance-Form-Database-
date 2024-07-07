@@ -42,7 +42,10 @@ class AdminHomepage(tk.Canvas):
         self.create_image(100.0, 380.0, image = self.ButtonBG)
         
 
-        self.create_text(100.0, 40.0, anchor = "nw", text = "ADMIN", fill="#FFFFFF", font=("Nokora", 17 * -1,"bold"))
+        self.text_item = self.create_text(100.0, 40.0, anchor="nw", text="", fill="#FFFFFF", font=("Nokora", 17 * -1, "bold"))
+        self.UpdateAdminName()
+
+
         self.create_text(20.0, 110.0, anchor = "nw", text = "NAVIGATION", fill="#FFFFFF", font=("Nokora", 11 * -1,"bold"))
         self.create_line(20.0, 100.0, 200.0, 100.0, fill="#FFFFFF")
 
@@ -244,8 +247,16 @@ class AdminHomepage(tk.Canvas):
         elif selected_value == "Easy 3":
             self.Easy3Columns()
 
-    
-    
 
+ 
+    def UpdateAdminName(self):
+        username = self.GetUserAdminName()
+        if username:
+            self.itemconfig(self.text_item, text=username)
+
+    def GetUserAdminName(self):
+        username = self.database.GetLastAdminEntry()
+        print(username)
+        return username
 
 

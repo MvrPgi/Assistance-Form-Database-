@@ -1,12 +1,15 @@
 
 import tkinter as tk
-from tkinter import PhotoImage, Entry
+from tkinter import PhotoImage, Entry, messagebox
 from resources.FileTracker.tracker import resource_path
+from mysql_connection import DatabaseConnection
+
 
 class AdminLogin(tk.Canvas,):
     def __init__ (self, master = None, switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
+        self.database = DatabaseConnection()
         
 
         self.GradiantBg = PhotoImage(file=resource_path("resources/adminlogin/landingPagebg.png"))
@@ -34,13 +37,13 @@ class AdminLogin(tk.Canvas,):
         self.CheckButton = tk.Checkbutton(self, bg="#FFFFFF", activebackground="#FFFFFF", selectcolor="#FFFFFF")
         self.CheckButton.place(x=560.0, y=263.0, width=20.0, height=20.0)
 
-        self.LoginButton = tk.Button(self, image=self.loginButtonPic, command=self.GoAdminPage,borderwidth=0, highlightthickness=0)
+        self.LoginButton = tk.Button(self, image=self.loginButtonPic, command=self.loginAdmin,borderwidth=0, highlightthickness=0)
         self.LoginButton.place(x=480.0, y=290.0, width=250.0, height=31.0)
 
 
         self.UserName = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0)
         self.UserName.place(x=480.0, y=183.0, width=240.0, height=25.0)
-        self.Password = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0)
+        self.Password = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0,show="•")
         self.Password.place(x=480.0, y=229.0, width=240.0, height=25.0)
 
 
@@ -71,11 +74,20 @@ class AdminLogin(tk.Canvas,):
         if not self.Password.get():
             self.password_placeholder.place(x=485.0, y=230.0)
 
+    def loginAdmin(self):
+        username = self.UserName.get()
+        print(username)
+        password = self.Password.get()
+        print(password)
+        if self.database.loginAdminData(username, password):
+            print("Login successful!")
+            self.GoAdminPage()
+
+        else:
+            messagebox.showerror("Login Error", "Invalid username or password")
 
 
 
-
-        
 
 
 

@@ -11,7 +11,7 @@ class Login(tk.Canvas):
     def __init__(self, master = None,switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
-        # self.database = DatabaseConnection()
+        self.database = DatabaseConnection()
 
 
         self.GradiantBg = PhotoImage(file=resource_path("resources/login/landingPagebg.png"))
@@ -34,7 +34,7 @@ class Login(tk.Canvas):
         self.create_image(603.0, 240.0, image=self.TextBoxBG)
         self.create_image(603.0, 285.0, image=self.loginButtonBG)
 
-        self.LoginButton = tk.Button(self, image=self.loginButtonPic, command=self.gotoApplicantHome,borderwidth=0, highlightthickness=0)
+        self.LoginButton = tk.Button(self, image=self.loginButtonPic, command=self.loginApplicant,borderwidth=0, highlightthickness=0)
         self.LoginButton.place(x=480.0, y=270.0, width=250.0, height=31.0)
 
         self.create_line(470.0, 320.5, 735.0, 320.5, fill="#000000")
@@ -45,7 +45,7 @@ class Login(tk.Canvas):
 
         self.Username = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0)
         self.Username.place(x=480.0, y=183.0, width=240.0, height=25.0)
-        self.Password = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0)
+        self.Password = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0,show="•")
         self.Password.place(x=480.0, y=229.0, width=240.0, height=25.0)
 
 
@@ -79,22 +79,17 @@ class Login(tk.Canvas):
 
 
     
-    # def login_button(self):
-    #     mysqldb = mysql.connector.connect(host = "localhost", user = "root", password = "1234", database = "practice")
-    #     mycursor = mysqldb.cursor()
+    def loginApplicant(self):
+        username = self.Username.get()
+        print(username)
+        password = self.Password.get()
+        print(password)
+        if self.database.loginApplicantData(username, password):
+            print("Login successful!")
+            self.gotoApplicantHome()
 
-    #     username = self.Username.get()
-    #     password = self.Password.get()
-
-    #     mycursor.execute("SELECT username, _password FROM user")
-    #     results = mycursor.fetchall()
-
-    #     for x in results:
-    #         if username == x[0] and password == x[1]:
-    #             messagebox.showinfo("Login", "Login Successfully.")
-    #             break
-    #     else:
-    #         messagebox.showerror("Login", "Invalid username or email.")
+        else:
+            messagebox.showerror("Login Error", "Invalid username or password")
 
 
     def gotoApplicantHome(self):
