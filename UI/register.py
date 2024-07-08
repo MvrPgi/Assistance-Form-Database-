@@ -11,8 +11,7 @@ from datetime import datetime, date
 class Register(tk.Canvas):
     def __init__(self, master=None, switch_frame=None):
         super().__init__(master, height=500, width=820, bg="#FFFFFF", highlightthickness=0)
-        self.applicant_details = DatabaseConnection() # Create an instance of the Applicant_Details class
-        self.ReferenceHandle = DatabaseConnection()
+        self.database = DatabaseConnection()
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
         
         
@@ -99,8 +98,13 @@ class Register(tk.Canvas):
 
         
         # CREATE ENTRY
-        self.ReferenceNo = Entry(self, bd=0, bg="#EAEAEA", fg="#000716", highlightthickness=0)
-        self.Date = Entry(self, bd=0, bg="#EAEAEA", fg="#000716", highlightthickness=0)
+        self.ReferenceNo = Entry(self, bd=0, bg="#EAEAEA", fg="#000716", highlightthickness=0,state="normal")
+        initial_reference_id = self.database.get_last_reference_id()
+        self.ReferenceNo = Entry(self,bd=0,bg="#FFFFFF", fg="#000716", highlightthickness=0)
+        self.ReferenceNo.insert(0, initial_reference_id)
+        self.ReferenceNo.config(state='readonly')
+
+        self.Date = Entry(self, bd=0, bg="#EAEAEA", fg="#000716", highlightthickness=0,state="normal")
         self.FullName = Entry(self, bd=0, bg="#EAEAEA", fg="#000716", highlightthickness=0)
         self.PermanentAddress = Entry(self, bd=0, bg="#EAEAEA", fg="#000716", highlightthickness=0)
         self.Birthdate = Entry(self, bd=0, bg="#EAEAEA", fg="#000716", highlightthickness=0)
@@ -134,6 +138,7 @@ class Register(tk.Canvas):
         
         applicationDate = datetime.now().strftime('%Y-%m-%d')
         self.Date.insert(0, applicationDate)
+        self.Date.config(state='readonly')
 
         # ENTRY IMAGES
         self.entryImage = []
@@ -175,11 +180,11 @@ class Register(tk.Canvas):
         self.Member = Radiobutton(self, text="Member", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Member", variable = self.Membership, font=self.radiobuttonFont)
         self.NonMember = Radiobutton(self, text="Non-Member", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Non-Member", variable = self.Membership, font=self.radiobuttonFont)
         self.Dependent = Radiobutton(self, text="Dependent", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Dependent", variable = self.Membership, font=self.radiobuttonFont)
-        self.Single = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Single", variable=self.CivilStatus, font=self.radiobuttonFont)
-        self.Married = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Married", variable=self.CivilStatus, font=self.radiobuttonFont)
-        self.Widow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Widow", variable=self.CivilStatus, font=self.radiobuttonFont) 
-        self.Separated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Separated", variable=self.CivilStatus, font=self.radiobuttonFont)
-        self.WithPartner = Radiobutton(self, text="With Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="With Common Law Partner", variable=self.CivilStatus, font=self.radiobuttonFont)
+        self.Single = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="S", variable=self.CivilStatus, font=self.radiobuttonFont)
+        self.Married = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.CivilStatus, font=self.radiobuttonFont)
+        self.Widow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="W", variable=self.CivilStatus, font=self.radiobuttonFont) 
+        self.Separated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="SE", variable=self.CivilStatus, font=self.radiobuttonFont)
+        self.WithPartner = Radiobutton(self, text="With Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="C", variable=self.CivilStatus, font=self.radiobuttonFont)
         self.PostGraduate = Radiobutton(self, text="Post Graduate", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Post Graduate", variable=self.EducationalAttainment, font=self.radiobuttonFont)
         self.College = Radiobutton(self, text="College", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="College", variable=self.EducationalAttainment, font=self.radiobuttonFont)
         self.Elementary = Radiobutton(self, text="Elementary", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Elementary", variable=self.EducationalAttainment, font=self.radiobuttonFont)
@@ -306,11 +311,11 @@ class Register(tk.Canvas):
         self.Member1_HEducationalAttainment.set(None)
 
         # MEMBER 1
-        self.Member1_HSingle = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Single", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
-        self.Member1_HWidow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Widow", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
-        self.Member1_HMarried = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Married", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
-        self.Member1_HSeparated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Separated", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
-        self.Member1_HWithPartner = Radiobutton(self, text="w/ Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="With Common Law Partner", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
+        self.Member1_HSingle = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="S", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
+        self.Member1_HWidow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="W", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
+        self.Member1_HMarried = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
+        self.Member1_HSeparated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="SE", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
+        self.Member1_HWithPartner = Radiobutton(self, text="w/ Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="C", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
 
         self.Member1_HPost_Graduate = Radiobutton(self, text="Post Graduate", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Post Graduate", variable=self.Member1_HEducationalAttainment, font=self.radiobuttonFont)
         self.Member1_HCollege = Radiobutton(self, text="College", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="College", variable=self.Member1_HEducationalAttainment, font=self.radiobuttonFont)
@@ -325,11 +330,11 @@ class Register(tk.Canvas):
         self.Member2_HEducationalAttainment = tk.StringVar()
         self.Member2_HEducationalAttainment.set(None)
 
-        self.Member2_HSingle = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Single", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
-        self.Member2_HWidow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Widow", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
-        self.Member2_HMarried = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Married", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
-        self.Member2_HSeparated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Separated", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
-        self.Member2_HWithPartner = Radiobutton(self, text="w/ Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="With Common Law Partner", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
+        self.Member2_HSingle = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="S", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
+        self.Member2_HWidow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="W", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
+        self.Member2_HMarried = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
+        self.Member2_HSeparated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="SE", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
+        self.Member2_HWithPartner = Radiobutton(self, text="w/ Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="C", variable=self.Member2_HCivilStatus, font = self.radiobuttonFont)
 
         self.Member2_HPost_Graduate = Radiobutton(self, text="Post Graduate", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Post Graduate", variable=self.Member2_HEducationalAttainment, font=self.radiobuttonFont)
         self.Member2_HCollege = Radiobutton(self, text="College", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="College", variable=self.Member2_HEducationalAttainment, font=self.radiobuttonFont)
@@ -516,83 +521,83 @@ class Register(tk.Canvas):
             return
 
 
-    def check_date(self):
-        date_str = self.Birthdate.get()
-        date_format = '%Y-%m-%d'
+    # def check_date(self):
+    #     date_str = self.Birthdate.get()
+    #     date_format = '%Y-%m-%d'
         
-        if not date_str:
-            messagebox.showerror("Invalid Input", "Please fill out the birthdate.")
-            return False
+    #     if not date_str:
+    #         messagebox.showerror("Invalid Input", "Please fill out the birthdate.")
+    #         return False
 
-        try:
-            # Check if date is in 'YYYY/MM/DD' format
-            datetime.strptime(date_str, date_format)
-            return True
-        except ValueError:
-            messagebox.showerror("Invalid Input", "Please enter the date in YYYY/MM/DD format.")
-            return False
+    #     try:
+    #         # Check if date is in 'YYYY/MM/DD' format
+    #         datetime.strptime(date_str, date_format)
+    #         return True
+    #     except ValueError:
+    #         messagebox.showerror("Invalid Input", "Please enter the date in YYYY/MM/DD format.")
+    #         return False
 
-    def validate_entries(self):
-        if self.FullName.get() == "" or self.PermanentAddress.get() == "" or self.Age.get() == "" or self.Nationality.get() == "" or self.Religion.get() == "" or self.Occupation.get() == "" or self.MonthlyIncome.get() == "" or self.OtherSourceOfIncome.get() == "" or self.MonthlyExpenditure.get() == "" or self.GrossMonthlyIncome.get() == "" or self.NetMonthlyIncome.get() == "":
-            messagebox.showerror("Invalid Input", "Please fill out all the fields.")
-            return False
-        if self.ApplicantStatus.get() == "None" or self.ApplicantStatus.get() == "":
-            messagebox.showerror("Invalid Input", "Please select an Applicant Status.")
-            return False
-        if self.FullName.get() == "" or not self.FullName.get().replace(" ", "").isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Full Name.")
-            return False
-        if self.PermanentAddress.get() == "":
-            messagebox.showerror("Invalid Input", "Please enter your Permanent Address.")
-            return False
-        if self.Age.get() == "" or not self.Age.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Age.")
-            return False
-        if self.Nationality.get() == "" or not self.Nationality.get().isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Nationality")
-            return False
-        if self.Religion.get() == "" or not self.Religion.get().isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Religion.")
-            return False
-        if self.Occupation.get() == "" or not self.Occupation.get().isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Occupation.")
-            return False
-        if self.MonthlyIncome.get() == "" or not self.MonthlyIncome.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Monthly Income.")
-            return False
-        if self.OtherSourceOfIncome.get() == "" or not self.OtherSourceOfIncome.get().isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Other Source of Income.")
-            return False
-        if self.MonthlyExpenditure.get() == "" or not self.MonthlyExpenditure.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Monthly Expenditure.")
-            return False
-        if self.GrossMonthlyIncome.get() == "" or not self.GrossMonthlyIncome.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Gross Monthly Income.")
-            return False
-        if self.NetMonthlyIncome.get() == "" or not self.NetMonthlyIncome.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Net Monthly Income.")
-            return False
-        if self.Sex.get() == "None" or self.Sex.get() == "":
-            messagebox.showerror("Invalid Input", "Please select a Sex.")
-            return False
-        if self.Membership.get() == "None" or self.Membership.get() == "":
-            messagebox.showerror("Invalid Input", "Please select a Membership.")
-            return False
-        if self.CivilStatus.get() == "None" or self.CivilStatus.get() == "":
-            messagebox.showerror("Invalid Input", "Please select a Civil Status.")
-            return False
-        if self.EducationalAttainment.get() == "None" or self.EducationalAttainment.get() == "":
-            messagebox.showerror("Invalid Input", "Please select an Educational Attainment.")
-            return False
+    # def validate_entries(self):
+    #     if self.FullName.get() == "" or self.PermanentAddress.get() == "" or self.Age.get() == "" or self.Nationality.get() == "" or self.Religion.get() == "" or self.Occupation.get() == "" or self.MonthlyIncome.get() == "" or self.OtherSourceOfIncome.get() == "" or self.MonthlyExpenditure.get() == "" or self.GrossMonthlyIncome.get() == "" or self.NetMonthlyIncome.get() == "":
+    #         messagebox.showerror("Invalid Input", "Please fill out all the fields.")
+    #         return False
+    #     if self.ApplicantStatus.get() == "None" or self.ApplicantStatus.get() == "":
+    #         messagebox.showerror("Invalid Input", "Please select an Applicant Status.")
+    #         return False
+    #     if self.FullName.get() == "" or not self.FullName.get().replace(" ", "").isalpha():
+    #         messagebox.showerror("Invalid Input", "Please enter your Full Name.")
+    #         return False
+    #     if self.PermanentAddress.get() == "":
+    #         messagebox.showerror("Invalid Input", "Please enter your Permanent Address.")
+    #         return False
+    #     if self.Age.get() == "" or not self.Age.get().isdigit():
+    #         messagebox.showerror("Invalid Input", "Please enter your Age.")
+    #         return False
+    #     if self.Nationality.get() == "" or not self.Nationality.get().isalpha():
+    #         messagebox.showerror("Invalid Input", "Please enter your Nationality")
+    #         return False
+    #     if self.Religion.get() == "" or not self.Religion.get().isalpha():
+    #         messagebox.showerror("Invalid Input", "Please enter your Religion.")
+    #         return False
+    #     if self.Occupation.get() == "" or not self.Occupation.get().isalpha():
+    #         messagebox.showerror("Invalid Input", "Please enter your Occupation.")
+    #         return False
+    #     if self.MonthlyIncome.get() == "" or not self.MonthlyIncome.get().isdigit():
+    #         messagebox.showerror("Invalid Input", "Please enter your Monthly Income.")
+    #         return False
+    #     if self.OtherSourceOfIncome.get() == "" or not self.OtherSourceOfIncome.get().isalpha():
+    #         messagebox.showerror("Invalid Input", "Please enter your Other Source of Income.")
+    #         return False
+    #     if self.MonthlyExpenditure.get() == "" or not self.MonthlyExpenditure.get().isdigit():
+    #         messagebox.showerror("Invalid Input", "Please enter your Monthly Expenditure.")
+    #         return False
+    #     if self.GrossMonthlyIncome.get() == "" or not self.GrossMonthlyIncome.get().isdigit():
+    #         messagebox.showerror("Invalid Input", "Please enter your Gross Monthly Income.")
+    #         return False
+    #     if self.NetMonthlyIncome.get() == "" or not self.NetMonthlyIncome.get().isdigit():
+    #         messagebox.showerror("Invalid Input", "Please enter your Net Monthly Income.")
+    #         return False
+    #     if self.Sex.get() == "None" or self.Sex.get() == "":
+    #         messagebox.showerror("Invalid Input", "Please select a Sex.")
+    #         return False
+    #     if self.Membership.get() == "None" or self.Membership.get() == "":
+    #         messagebox.showerror("Invalid Input", "Please select a Membership.")
+    #         return False
+    #     if self.CivilStatus.get() == "None" or self.CivilStatus.get() == "":
+    #         messagebox.showerror("Invalid Input", "Please select a Civil Status.")
+    #         return False
+    #     if self.EducationalAttainment.get() == "None" or self.EducationalAttainment.get() == "":
+    #         messagebox.showerror("Invalid Input", "Please select an Educational Attainment.")
+    #         return False
         
-        return True
+    #     return True
 
     def next_page(self):
-        if not self.check_date():
-            return
+        # if not self.check_date():
+        #     return
         
-        if not self.validate_entries():
-            return
+        # if not self.validate_entries():
+        #     return
         
 
         # HIDE THE WIDGETS PAGE 1
@@ -772,10 +777,9 @@ class Register(tk.Canvas):
         self.nextButton.place(x=645.0, y=451.0, width=125.0, height=26.515151977539062)
 
     def commit_data(self):
-        
         try:
-            # Insert applicant details
-            self.applicant_details.insert_applicant_details(
+            # Insert applicant and reference details
+            self.database.insert_applicant_and_reference_details(
                 self.FullName.get(),
                 self.PermanentAddress.get(),
                 self.CivilStatus.get(),
@@ -791,35 +795,31 @@ class Register(tk.Canvas):
                 self.OtherSourceOfIncome.get(),
                 self.MonthlyExpenditure.get(),
                 self.GrossMonthlyIncome.get(),
-                self.NetMonthlyIncome.get()
-            )
-
-            # Insert household details
-            self.applicant_details.insert_household_details(
-                self.HName.get(),
-                self.HAge.get(),
-                self.HCivilStatus.get(),
-                self.HRelation.get(),
-                self.HEducationalAttainment.get(),
-                self.HOccupation.get(),
-                self.HMonthlyincome.get()
-            )
-            # )
-            # self.applicant_details.insert_household_details(
-            #     "John Doe",  # Hname
-            #     42,  # Hage
-            #     "M",  # HCivilStatus
-            #     "Spouse",  # Hrelation
-            #     "College Graduate",  # HHighestEducationalAttainment
-            #     "Software Engineer",  # Hoccupation
-            #     7500  # Hmonthlyincome
-            # )           
-
-            # Insert reference details
-            self.applicant_details.insert_reference_details(
+                self.NetMonthlyIncome.get(),
                 self.ReferenceNo.get(),
                 self.Date.get(),
                 self.ApplicantStatus.get()
+            )
+
+            # Insert household details
+            self.database.insert_household_details(
+                self.Member1_HName.get(),  # Hname
+                self.Member1_HAge.get(),  # Hage
+                self.Member1_HCivilStatus.get(),  # HCivilStatus
+                self.Member1_HRelation.get(),  # Hrelation
+                self.Member1_HEducationalAttainment.get(),  # HHighestEducationalAttainment
+                self.Member1_HOccupation.get(),  # Hoccupation
+                self.Member1_HMonthlyincome.get()  # Hmonthlyincome
+            )
+
+            self.database.insert_household_details(
+                self.Member2_HName.get(),  # Hname
+                self.Member2_HAge.get(),  # Hage
+                self.Member2_HCivilStatus.get(),  # HCivilStatus
+                self.Member2_HRelation.get(),  # Hrelation
+                self.Member2_HEducationalAttainment.get(),  # HHighestEducationalAttainment
+                self.Member2_HOccupation.get(),  # Hoccupation
+                self.Member2_HMonthlyincome.get()  # Hmonthlyincome
             )
 
         except mysql.Error as err:
@@ -831,7 +831,7 @@ class Register(tk.Canvas):
 
     def get_reference_id(self):
         # Call get_last_reference_id from DatabaseHandler instance
-        reference_id = self.ReferenceHandle.get_last_reference_id()
+        reference_id = self.database.get_last_reference_id()
         self.ReferenceNo.delete(0, 'end')  # Clear previous content if any
         self.ReferenceNo.insert(0, reference_id)
         print(f"Fetched Reference ID: {reference_id}")

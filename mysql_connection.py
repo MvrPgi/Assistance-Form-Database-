@@ -189,45 +189,6 @@ class DatabaseConnection:
 
 
 
-# -------------------------------------------------------GET LAST REFERENCE ID----------------------------------------------------------------------------
-
-
-    def get_last_reference_id(self):
-            self.open_connection()
-            try:
-                last_reference_id_query = "SELECT reference_No FROM reference ORDER BY reference_No DESC LIMIT 1"
-                self.cursor.execute(last_reference_id_query)
-                result = self.cursor.fetchone()
-                if result is None:
-                    new_reference_id = "XY0001"
-                else:
-                    last_reference_id = result[0]
-                    numeric_part = int(last_reference_id[2:])
-                    new_numeric_part = numeric_part + 1
-                    new_reference_id = f"XY{new_numeric_part:04d}"
-                return new_reference_id
-            except Error as e:
-                print(f"Error: {e}")
-            finally:
-                self.close_connection()
-
-
-    # -------------------------------------------------------GET LAST APPLICANT ID----------------------------------------------------------------------------
-
-    
-    def get_last_applicant_id(self):
-            self.open_connection()
-            try:
-                last_applicant_id_query = "SELECT LAST_INSERT_ID()"
-                self.cursor.execute(last_applicant_id_query)
-                last_applicant_id = self.cursor.fetchone()
-                return last_applicant_id[0]
-            except Error as e:
-                print(f"Error: {e}")
-            finally:
-                self.close_connection()
-
-
     # -------------------------------------------------------UPDATE REFERENCE TABLE---------------------------------------------------------------------------
 
     def UpdateReferenceDetails(self, Reference_No, Applicant_ID, Date, Applicant_Status):
@@ -365,10 +326,100 @@ class DatabaseConnection:
 
 
 
+# -------------------------------------------------------GET LAST REFERENCE ID----------------------------------------------------------------------------
+
+
+    def get_last_reference_id(self):
+
+            try:
+                last_reference_id_query = "SELECT reference_No FROM reference ORDER BY reference_No DESC LIMIT 1"
+                self.cursor.execute(last_reference_id_query)
+                result = self.cursor.fetchone()
+                if result is None:
+                    new_reference_id = "XY0001"
+                else:
+                    last_reference_id = result[0]
+                    numeric_part = int(last_reference_id[2:])
+                    new_numeric_part = numeric_part + 1
+                    new_reference_id = f"XY{new_numeric_part:04d}"
+                return new_reference_id
+            except Error as e:
+                print(f"Error: {e}")
+
+
+
+    # -------------------------------------------------------GET LAST APPLICANT ID----------------------------------------------------------------------------
+
+    
+    def get_last_applicant_id(self):
+
+            try:
+                last_applicant_id_query = "SELECT LAST_INSERT_ID()"
+                self.cursor.execute(last_applicant_id_query)
+                last_applicant_id = self.cursor.fetchone()
+                return last_applicant_id[0]
+            except Error as e:
+                print(f"Error: {e}")
+
+    def insert_applicant_and_reference_details(self, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome, Reference_No, Date, Applicant_Status):
+
+        try:
+            # Insert applicant details
+            applicant_query = """
+            INSERT INTO applicant_details (Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome) 
+            VALUES (%(Full_Name)s, %(Address)s, %(Civil_Status)s, %(Birth_Date)s, %(Age)s, %(Sex)s, %(Nationality)s, %(Religion)s, %(Highest_Educ_Attainment)s, %(Occupation)s, %(Monthly_Income)s, %(Membership)s, %(OtherSourceOfIncome)s, %(Monthly_Expenditures)s, %(GrossMonthlyIncome)s, %(NetMonthlyIncome)s)
+            """
+            applicant_data = {
+                "Full_Name": Full_Name,
+                "Address": Address,
+                "Civil_Status": Civil_Status,
+                "Birth_Date": Birth_Date,
+                "Age": Age,
+                "Sex": Sex,
+                "Nationality": Nationality,
+                "Religion": Religion,
+                "Highest_Educ_Attainment": Highest_Educ_Attainment,
+                "Occupation": Occupation,
+                "Monthly_Income": Monthly_Income,
+                "Membership": Membership,
+                "OtherSourceOfIncome": OtherSourceOfIncome,
+                "Monthly_Expenditures": Monthly_Expenditures,
+                "GrossMonthlyIncome": GrossMonthlyIncome,
+                "NetMonthlyIncome": NetMonthlyIncome
+            }
+            self.cursor.execute(applicant_query, applicant_data)
+            self.con.commit()
+
+            # Retrieve the last inserted applicant ID
+            last_applicant_id = self.get_last_applicant_id()
+
+            # Insert reference details
+            reference_query = """
+            INSERT INTO Reference (Reference_No, Applicant_ID, Date, Applicant_Status) 
+            VALUES (%(Reference_No)s, %(Applicant_ID)s, %(Date)s, %(Applicant_Status)s)
+            """
+            reference_data = {
+                "Reference_No": Reference_No,
+                "Applicant_ID": last_applicant_id,
+                "Date": Date,
+                "Applicant_Status": Applicant_Status
+            }
+            self.cursor.execute(reference_query, reference_data)
+            self.con.commit()
+
+            messagebox.showinfo(title="PCSCO TABLE", message="NEW RECORD AND REFERENCE ADDED SUCCESSFULLY")
+
+        except Error as e:
+            print(f"Error: {e}")
+
+
+
+
+
+
     # -------------------------------------------------------APPLICANT DETAILS INSERT--------------------------------------------------------------------------------
 
     def insert_applicant_details(self, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
-        self.open_connection()
         try:
             query = "INSERT INTO applicant_details (Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome) VALUES (%(Full_Name)s, %(Address)s, %(Civil_Status)s, %(Birth_Date)s, %(Age)s, %(Sex)s, %(Nationality)s, %(Religion)s, %(Highest_Educ_Attainment)s, %(Occupation)s, %(Monthly_Income)s, %(Membership)s, %(OtherSourceOfIncome)s, %(Monthly_Expenditures)s, %(GrossMonthlyIncome)s, %(NetMonthlyIncome)s)"
             data = {
@@ -391,23 +442,21 @@ class DatabaseConnection:
             }
             self.cursor.execute(query, data)
             self.con.commit()
-            messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")
+            messagebox.showinfo(title="PCSCO TABLE", message="NEW RECORD ADDED SUCCESSFULLY")
         except Error as e:
             print(f"Error: {e}")
-        finally:
-            self.close_connection()
 
 
     #-------------------------------------------------------HOUSEHOLD DETAILS INSERT --------------------------------------------------------------------------------
 
-    def insert_household_details(self,Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome):
 
-        self.open_connection()
+    def insert_household_details(self, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome):
+
         try:
             household_query = "INSERT INTO household_details (Applicant_ID, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome) VALUES (%(Applicant_ID)s, %(Hhold_Fam_Name)s, %(Hhold_Fam_Age)s, %(Hhold_Fam_CivilStatus)s, %(Hhold_Fam_RSWithPatient)s, %(Hhold_Fam_HighestEducAttain)s, %(Hhold_Fam_Occupation)s, %(Hhold_Fam_MonthlyIncome)s)"
-            last_applicant_id = self.get_last_applicant_id() # Get the last applicant ID
+            last_applicant_id = self.get_last_applicant_id()  # Ensure this method works correctly
             household_data = {
-                "Applicant_ID": last_applicant_id, # Data to be inserted
+                "Applicant_ID": last_applicant_id,
                 "Hhold_Fam_Name": Hhold_Fam_Name,
                 "Hhold_Fam_Age": Hhold_Fam_Age,
                 "Hhold_Fam_CivilStatus": Hhold_Fam_CivilStatus,
@@ -418,44 +467,20 @@ class DatabaseConnection:
             }
             self.cursor.execute(household_query, household_data)
             self.con.commit()
-            messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")
+            messagebox.showinfo(title="PCSCO TABLE", message="NEW RECORD ADDED SUCCESSFULLY")
         except Error as e:
-                print(f"Error: {e}")
-        finally:
-                self.close_connection() 
-
-
-
-
+            print(f"Error: {e}")
 
     
     #-------------------------------------------------------REFERENCE DETAILS INSERT --------------------------------------------------------------------------------
 
-    def insert_reference_details(self, Reference_No, Date, Applicant_Status):
-        self.open_connection()
-        try:
-            query = "INSERT INTO Reference(Reference_No, Applicant_ID, Date, Applicant_Status) VALUES (%(Reference_No)s, %(Applicant_ID)s, %(Date)s, %(Applicant_Status)s)"
-            last_applicant_id = self.get_last_applicant_id() # Get the last applicant ID
-            last_reference_id = self.get_last_reference_id() # Get the last applicant ID
-            data = {
-                "Reference_No": last_reference_id, # Data to be inserted
-                "Applicant_ID": last_applicant_id, 
-                "Date": Date,
-                "Applicant_Status": Applicant_Status
-            }
-            self.cursor.execute(query, data)
-            self.con.commit()
-            messagebox.showinfo(title="PCSCO TABLE",message=" NEW RECORD ADDED SUCCESSFULLY")
-        except Error as e:
-            print(f"Error: {e}")
-        finally:
-            self.close_connection()
+
 
     # -------------------------------------------------------FETCH WHOLE DETAILS--------------------------------------------------------------------------
 
 
     def FetchRefApplincatHouseDetails(self):
-            self.open_connection()
+
             try:
                 query = """
                     SELECT R.Reference_No, R.Applicant_ID, R.Date, R.Applicant_Status, A.Full_Name, A.Address, A.Civil_Status, A.Birth_Date, A.Age, A.Sex, A.Nationality, A.Religion, A.Highest_Educ_Attainment, A.Occupation, A.Monthly_Income, A.Membership, A.OtherSourceOfIncome, A.Monthly_Expenditures, A.GrossMonthlyIncome, A.NetMonthlyIncome, H.Household_ID, H.Hhold_Fam_Name, H.Hhold_Fam_Age, H.Hhold_Fam_CivilStatus, H.Hhold_Fam_RSWithPatient, H.Hhold_Fam_HighestEducAttain, H.Hhold_Fam_Occupation, H.Hhold_Fam_MonthlyIncome
@@ -468,8 +493,7 @@ class DatabaseConnection:
                 return rows
             except Error as e:
                 print(f"Error: {e}")
-            finally:
-                self.close_connection()
+
 
 
     # -------------------------------------------------------FETCH APPLICANT DETAILS--------------------------------------------------------------------------
