@@ -101,9 +101,9 @@ class DatabaseConnection:
             with open(file_path, mode='r') as file:
                 reader = csv.reader(file)
                 last_row = None
-                for row in reader:
-                    last_row = row
-                return last_row
+                for row in reader: # Iterate through the rows in the CSV file
+                    last_row = row  # Assign the current row to the variable 'last_row'
+                return last_row  # Return the last row
         except FileNotFoundError:
             print("The file does not exist.")
             return None
@@ -330,6 +330,7 @@ class DatabaseConnection:
 
 
     def get_last_reference_id(self):
+            self.open_connection()
 
             try:
                 last_reference_id_query = "SELECT reference_No FROM reference ORDER BY reference_No DESC LIMIT 1"
@@ -361,6 +362,8 @@ class DatabaseConnection:
             except Error as e:
                 print(f"Error: {e}")
 
+
+# -------------------------------------------------------INSERT APPLICANT AND REFERENCE DETAILS--------------------------------------------------------------------------
     def insert_applicant_and_reference_details(self, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome, Reference_No, Date, Applicant_Status):
 
         try:
@@ -387,7 +390,9 @@ class DatabaseConnection:
                 "GrossMonthlyIncome": GrossMonthlyIncome,
                 "NetMonthlyIncome": NetMonthlyIncome
             }
+            print(f"Insering applicant data: {applicant_data}")
             self.cursor.execute(applicant_query, applicant_data)
+            
             self.con.commit()
 
             # Retrieve the last inserted applicant ID
@@ -404,6 +409,7 @@ class DatabaseConnection:
                 "Date": Date,
                 "Applicant_Status": Applicant_Status
             }
+            print(f"Insering reference data: {reference_data}")
             self.cursor.execute(reference_query, reference_data)
             self.con.commit()
 
@@ -417,44 +423,27 @@ class DatabaseConnection:
 
 
 
-    # -------------------------------------------------------APPLICANT DETAILS INSERT--------------------------------------------------------------------------------
-
-    def insert_applicant_details(self, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome):
-        try:
-            query = "INSERT INTO applicant_details (Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome) VALUES (%(Full_Name)s, %(Address)s, %(Civil_Status)s, %(Birth_Date)s, %(Age)s, %(Sex)s, %(Nationality)s, %(Religion)s, %(Highest_Educ_Attainment)s, %(Occupation)s, %(Monthly_Income)s, %(Membership)s, %(OtherSourceOfIncome)s, %(Monthly_Expenditures)s, %(GrossMonthlyIncome)s, %(NetMonthlyIncome)s)"
-            data = {
-                "Full_Name": Full_Name,
-                "Address": Address,
-                "Civil_Status": Civil_Status,
-                "Birth_Date": Birth_Date,
-                "Age": Age,
-                "Sex": Sex,
-                "Nationality": Nationality,
-                "Religion": Religion,
-                "Highest_Educ_Attainment": Highest_Educ_Attainment,
-                "Occupation": Occupation,
-                "Monthly_Income": Monthly_Income,
-                "Membership": Membership,
-                "OtherSourceOfIncome": OtherSourceOfIncome,
-                "Monthly_Expenditures": Monthly_Expenditures,
-                "GrossMonthlyIncome": GrossMonthlyIncome,
-                "NetMonthlyIncome": NetMonthlyIncome
-            }
-            self.cursor.execute(query, data)
-            self.con.commit()
-            messagebox.showinfo(title="PCSCO TABLE", message="NEW RECORD ADDED SUCCESSFULLY")
-        except Error as e:
-            print(f"Error: {e}")
-
-
     #-------------------------------------------------------HOUSEHOLD DETAILS INSERT --------------------------------------------------------------------------------
-
 
     def insert_household_details(self, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome):
 
         try:
-            household_query = "INSERT INTO household_details (Applicant_ID, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome) VALUES (%(Applicant_ID)s, %(Hhold_Fam_Name)s, %(Hhold_Fam_Age)s, %(Hhold_Fam_CivilStatus)s, %(Hhold_Fam_RSWithPatient)s, %(Hhold_Fam_HighestEducAttain)s, %(Hhold_Fam_Occupation)s, %(Hhold_Fam_MonthlyIncome)s)"
+            household_query = """
+            INSERT INTO Household_Details (
+                Applicant_ID, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus,
+                Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation,
+                Hhold_Fam_MonthlyIncome
+            ) VALUES (
+                %(Applicant_ID)s, %(Hhold_Fam_Name)s, %(Hhold_Fam_Age)s, %(Hhold_Fam_CivilStatus)s,
+                %(Hhold_Fam_RSWithPatient)s, %(Hhold_Fam_HighestEducAttain)s, %(Hhold_Fam_Occupation)s,
+                %(Hhold_Fam_MonthlyIncome)s
+            )
+            """
+
+            # Get the last applicant ID
             last_applicant_id = self.get_last_applicant_id()  # Ensure this method works correctly
+            
+            # Data to be inserted
             household_data = {
                 "Applicant_ID": last_applicant_id,
                 "Hhold_Fam_Name": Hhold_Fam_Name,
@@ -465,14 +454,29 @@ class DatabaseConnection:
                 "Hhold_Fam_Occupation": Hhold_Fam_Occupation,
                 "Hhold_Fam_MonthlyIncome": Hhold_Fam_MonthlyIncome
             }
-            self.cursor.execute(household_query, household_data)
-            self.con.commit()
-            messagebox.showinfo(title="PCSCO TABLE", message="NEW RECORD ADDED SUCCESSFULLY")
-        except Error as e:
-            print(f"Error: {e}")
 
-    
-    #-------------------------------------------------------REFERENCE DETAILS INSERT --------------------------------------------------------------------------------
+            # Print data values for debugging
+            print(f"Inserting data: {household_data}")
+
+            # Execute the query
+            self.cursor.execute(household_query, household_data)
+            
+            # Commit the transaction
+            self.con.commit()
+            
+            # Inform the user
+            # messagebox.showinfo(title="PCSCO TABLE", message="NEW RECORD ADDED SUCCESSFULLY")
+
+        except ValueError as ve:
+            print(f"Value Error: {ve}")
+            messagebox.showerror(title="Error", message=f"Failed to add record: {ve}")
+        except Exception as e:
+            # Handle and log the error
+            print(f"Error: {e}")
+            # messagebox.showerror(title="Error", message="Failed to add record. Check console for details.")
+
+        
+
 
 
 

@@ -29,7 +29,7 @@ class App(tk.Tk):
 
         # Start with the ApplicantAdmin frame
         self.current_frame = None
-        self.switch_frame('adminhomepage')
+        self.switch_frame('applicantadmin')
 
     def clear_frame(self):
         print("Clearing frame...")
@@ -92,8 +92,6 @@ class App(tk.Tk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
-    # db = DatabaseConnection()
-    # db.close_connection()  # Explicitly close the connection
 
 
 
