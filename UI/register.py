@@ -598,7 +598,12 @@ class Register(tk.Canvas):
         
         # if not self.validate_entries():
         #     return
-        
+
+        self.result = messagebox.askyesno("Household Member", "Do you want to add a household member?")
+        if not self.result:
+            self.commit_data()
+            self.switch_frame('applicanthomepage')
+            return
 
         # HIDE THE WIDGETS PAGE 1
         for image_id in self.entryImage:
@@ -778,49 +783,97 @@ class Register(tk.Canvas):
 
     def commit_data(self):
         try:
+            applicantFields = [
+            self.FullName.get(),
+            self.PermanentAddress.get(),
+            self.CivilStatus.get(),
+            self.Birthdate.get(),
+            self.Age.get(),
+            self.Sex.get(),
+            self.Nationality.get(),
+            self.Religion.get(),
+            self.EducationalAttainment.get(),
+            self.Occupation.get(),
+            self.MonthlyIncome.get(),
+            self.Membership.get(),
+            self.OtherSourceOfIncome.get(),
+            self.MonthlyExpenditure.get(),
+            self.GrossMonthlyIncome.get(),
+            self.NetMonthlyIncome.get(),
+            self.ReferenceNo.get(),
+            self.Date.get(),
+            self.ApplicantStatus.get()
+            ]
+
+            hMember1Fields = [
+            self.Member1_HName.get(),
+            self.Member1_HAge.get(),
+            self.Member1_HCivilStatus.get(),
+            self.Member1_HRelation.get(),
+            self.Member1_HEducationalAttainment.get(),
+            self.Member1_HOccupation.get(),
+            self.Member1_HMonthlyincome.get()
+            ]
+
+            hMember2Fields = [
+            self.Member2_HName.get(),
+            self.Member2_HAge.get(),
+            self.Member2_HCivilStatus.get(),
+            self.Member2_HRelation.get(),
+            self.Member2_HEducationalAttainment.get(),
+            self.Member2_HOccupation.get(),
+            self.Member2_HMonthlyincome.get()
+            ]
+
             # Insert applicant and reference details
-            self.database.insert_applicant_and_reference_details(
-                self.FullName.get(),
-                self.PermanentAddress.get(),
-                self.CivilStatus.get(),
-                self.Birthdate.get(),
-                self.Age.get(),
-                self.Sex.get(),
-                self.Nationality.get(),
-                self.Religion.get(),
-                self.EducationalAttainment.get(),
-                self.Occupation.get(),
-                self.MonthlyIncome.get(),
-                self.Membership.get(),
-                self.OtherSourceOfIncome.get(),
-                self.MonthlyExpenditure.get(),
-                self.GrossMonthlyIncome.get(),
-                self.NetMonthlyIncome.get(),
-                self.ReferenceNo.get(),
-                self.Date.get(),
-                self.ApplicantStatus.get()
-            )
+            if all(applicantFields):
+                self.database.insert_applicant_and_reference_details(
+                    self.FullName.get(),
+                    self.PermanentAddress.get(),
+                    self.CivilStatus.get(),
+                    self.Birthdate.get(),
+                    self.Age.get(),
+                    self.Sex.get(),
+                    self.Nationality.get(),
+                    self.Religion.get(),
+                    self.EducationalAttainment.get(),
+                    self.Occupation.get(),
+                    self.MonthlyIncome.get(),
+                    self.Membership.get(),
+                    self.OtherSourceOfIncome.get(),
+                    self.MonthlyExpenditure.get(),
+                    self.GrossMonthlyIncome.get(),
+                    self.NetMonthlyIncome.get(),
+                    self.ReferenceNo.get(),
+                    self.Date.get(),
+                    self.ApplicantStatus.get()
+                )
 
             # Insert household details
-            self.database.insert_household_details(
-                self.Member1_HName.get(),  # Hname
-                self.Member1_HAge.get(),  # Hage
-                self.Member1_HCivilStatus.get(),  # HCivilStatus
-                self.Member1_HRelation.get(),  # Hrelation
-                self.Member1_HEducationalAttainment.get(),  # HHighestEducationalAttainment
-                self.Member1_HOccupation.get(),  # Hoccupation
-                self.Member1_HMonthlyincome.get()  # Hmonthlyincome
+            if all(hMember1Fields):
+                self.database.insert_household_details(
+                    self.Member1_HName.get(),  # Hname
+                    self.Member1_HAge.get(),  # Hage
+                    self.Member1_HCivilStatus.get(),  # HCivilStatus
+                    self.Member1_HRelation.get(),  # Hrelation
+                    self.Member1_HEducationalAttainment.get(),  # HHighestEducationalAttainment
+                    self.Member1_HOccupation.get(),  # Hoccupation
+                    self.Member1_HMonthlyincome.get()  # Hmonthlyincome
+                )
+            
+            if all(hMember2Fields):
+                self.database.insert_household_details(
+                    self.Member2_HName.get(),  # Hname
+                    self.Member2_HAge.get(),  # Hage
+                    self.Member2_HCivilStatus.get(),  # HCivilStatus
+                    self.Member2_HRelation.get(),  # Hrelation
+                    self.Member2_HEducationalAttainment.get(),  # HHighestEducationalAttainment
+                    self.Member2_HOccupation.get(),  # Hoccupation
+                    self.Member2_HMonthlyincome.get()  # Hmonthlyincome
             )
 
-            self.database.insert_household_details(
-                self.Member2_HName.get(),  # Hname
-                self.Member2_HAge.get(),  # Hage
-                self.Member2_HCivilStatus.get(),  # HCivilStatus
-                self.Member2_HRelation.get(),  # Hrelation
-                self.Member2_HEducationalAttainment.get(),  # HHighestEducationalAttainment
-                self.Member2_HOccupation.get(),  # Hoccupation
-                self.Member2_HMonthlyincome.get()  # Hmonthlyincome
-            )
+            self.database.close_connection()
+            print("Data committed successfully")
 
         except mysql.Error as err:
             messagebox.showerror(title="Database Error", message=f"Error: {err}")
