@@ -521,87 +521,87 @@ class Register(tk.Canvas):
             return
 
 
-    # def check_date(self):
-    #     date_str = self.Birthdate.get()
-    #     date_format = '%Y-%m-%d'
+    def check_date(self):
+        date_str = self.Birthdate.get()
+        date_format = '%Y-%m-%d'
         
-    #     if not date_str:
-    #         messagebox.showerror("Invalid Input", "Please fill out the birthdate.")
-    #         return False
+        if not date_str:
+            messagebox.showerror("Invalid Input", "Please fill out the birthdate.")
+            return False
 
-    #     try:
-    #         # Check if date is in 'YYYY/MM/DD' format
-    #         datetime.strptime(date_str, date_format)
-    #         return True
-    #     except ValueError:
-    #         messagebox.showerror("Invalid Input", "Please enter the date in YYYY/MM/DD format.")
-    #         return False
+        try:
+            # Check if date is in 'YYYY/MM/DD' format
+            datetime.strptime(date_str, date_format)
+            return True
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter the date in YYYY/MM/DD format.")
+            return False
 
-    # def validate_entries(self):
-    #     if self.FullName.get() == "" or self.PermanentAddress.get() == "" or self.Age.get() == "" or self.Nationality.get() == "" or self.Religion.get() == "" or self.Occupation.get() == "" or self.MonthlyIncome.get() == "" or self.OtherSourceOfIncome.get() == "" or self.MonthlyExpenditure.get() == "" or self.GrossMonthlyIncome.get() == "" or self.NetMonthlyIncome.get() == "":
-    #         messagebox.showerror("Invalid Input", "Please fill out all the fields.")
-    #         return False
-    #     if self.ApplicantStatus.get() == "None" or self.ApplicantStatus.get() == "":
-    #         messagebox.showerror("Invalid Input", "Please select an Applicant Status.")
-    #         return False
-    #     if self.FullName.get() == "" or not self.FullName.get().replace(" ", "").isalpha():
-    #         messagebox.showerror("Invalid Input", "Please enter your Full Name.")
-    #         return False
-    #     if self.PermanentAddress.get() == "":
-    #         messagebox.showerror("Invalid Input", "Please enter your Permanent Address.")
-    #         return False
-    #     if self.Age.get() == "" or not self.Age.get().isdigit():
-    #         messagebox.showerror("Invalid Input", "Please enter your Age.")
-    #         return False
-    #     if self.Nationality.get() == "" or not self.Nationality.get().isalpha():
-    #         messagebox.showerror("Invalid Input", "Please enter your Nationality")
-    #         return False
-    #     if self.Religion.get() == "" or not self.Religion.get().isalpha():
-    #         messagebox.showerror("Invalid Input", "Please enter your Religion.")
-    #         return False
-    #     if self.Occupation.get() == "" or not self.Occupation.get().isalpha():
-    #         messagebox.showerror("Invalid Input", "Please enter your Occupation.")
-    #         return False
-    #     if self.MonthlyIncome.get() == "" or not self.MonthlyIncome.get().isdigit():
-    #         messagebox.showerror("Invalid Input", "Please enter your Monthly Income.")
-    #         return False
-    #     if self.OtherSourceOfIncome.get() == "" or not self.OtherSourceOfIncome.get().isalpha():
-    #         messagebox.showerror("Invalid Input", "Please enter your Other Source of Income.")
-    #         return False
-    #     if self.MonthlyExpenditure.get() == "" or not self.MonthlyExpenditure.get().isdigit():
-    #         messagebox.showerror("Invalid Input", "Please enter your Monthly Expenditure.")
-    #         return False
-    #     if self.GrossMonthlyIncome.get() == "" or not self.GrossMonthlyIncome.get().isdigit():
-    #         messagebox.showerror("Invalid Input", "Please enter your Gross Monthly Income.")
-    #         return False
-    #     if self.NetMonthlyIncome.get() == "" or not self.NetMonthlyIncome.get().isdigit():
-    #         messagebox.showerror("Invalid Input", "Please enter your Net Monthly Income.")
-    #         return False
-    #     if self.Sex.get() == "None" or self.Sex.get() == "":
-    #         messagebox.showerror("Invalid Input", "Please select a Sex.")
-    #         return False
-    #     if self.Membership.get() == "None" or self.Membership.get() == "":
-    #         messagebox.showerror("Invalid Input", "Please select a Membership.")
-    #         return False
-    #     if self.CivilStatus.get() == "None" or self.CivilStatus.get() == "":
-    #         messagebox.showerror("Invalid Input", "Please select a Civil Status.")
-    #         return False
-    #     if self.EducationalAttainment.get() == "None" or self.EducationalAttainment.get() == "":
-    #         messagebox.showerror("Invalid Input", "Please select an Educational Attainment.")
-    #         return False
+    def validate_entries(self):
+        if self.FullName.get() == "" or self.PermanentAddress.get() == "" or self.Age.get() == "" or self.Nationality.get() == "" or self.Religion.get() == "" or self.Occupation.get() == "" or self.MonthlyIncome.get() == "" or self.OtherSourceOfIncome.get() == "" or self.MonthlyExpenditure.get() == "" or self.GrossMonthlyIncome.get() == "" or self.NetMonthlyIncome.get() == "":
+            messagebox.showerror("Invalid Input", "Please fill out all the fields.")
+            return False
+        if self.ApplicantStatus.get() == "None" or self.ApplicantStatus.get() == "":
+            messagebox.showerror("Invalid Input", "Please select an Applicant Status.")
+            return False
+        if self.FullName.get() == "" or not self.FullName.get().replace(" ", "").isalpha():
+            messagebox.showerror("Invalid Input", "Please enter your Full Name.")
+            return False
+        if self.PermanentAddress.get() == "":
+            messagebox.showerror("Invalid Input", "Please enter your Permanent Address.")
+            return False
+        if self.Age.get() == "" or not self.Age.get().isdigit():
+            messagebox.showerror("Invalid Input", "Please enter your Age.")
+            return False
+        if self.Nationality.get() == "" or not self.Nationality.get().isalpha():
+            messagebox.showerror("Invalid Input", "Please enter your Nationality")
+            return False
+        if self.Religion.get() == "" or not self.Religion.get().isalpha():
+            messagebox.showerror("Invalid Input", "Please enter your Religion.")
+            return False
+        if self.Occupation.get() == "" or not self.Occupation.get().isalpha():
+            messagebox.showerror("Invalid Input", "Please enter your Occupation.")
+            return False
+        if self.MonthlyIncome.get() == "" or not self.MonthlyIncome.get().isdigit():
+            messagebox.showerror("Invalid Input", "Please enter your Monthly Income.")
+            return False
+        if self.OtherSourceOfIncome.get() == "" or not self.OtherSourceOfIncome.get().isalpha():
+            messagebox.showerror("Invalid Input", "Please enter your Other Source of Income.")
+            return False
+        if self.MonthlyExpenditure.get() == "" or not self.MonthlyExpenditure.get().isdigit():
+            messagebox.showerror("Invalid Input", "Please enter your Monthly Expenditure.")
+            return False
+        if self.GrossMonthlyIncome.get() == "" or not self.GrossMonthlyIncome.get().isdigit():
+            messagebox.showerror("Invalid Input", "Please enter your Gross Monthly Income.")
+            return False
+        if self.NetMonthlyIncome.get() == "" or not self.NetMonthlyIncome.get().isdigit():
+            messagebox.showerror("Invalid Input", "Please enter your Net Monthly Income.")
+            return False
+        if self.Sex.get() == "None" or self.Sex.get() == "":
+            messagebox.showerror("Invalid Input", "Please select a Sex.")
+            return False
+        if self.Membership.get() == "None" or self.Membership.get() == "":
+            messagebox.showerror("Invalid Input", "Please select a Membership.")
+            return False
+        if self.CivilStatus.get() == "None" or self.CivilStatus.get() == "":
+            messagebox.showerror("Invalid Input", "Please select a Civil Status.")
+            return False
+        if self.EducationalAttainment.get() == "None" or self.EducationalAttainment.get() == "":
+            messagebox.showerror("Invalid Input", "Please select an Educational Attainment.")
+            return False
         
-    #     return True
+        return True
 
     def next_page(self):
-        # if not self.check_date():
-        #     return
+        if not self.check_date():
+            return
         
-        # if not self.validate_entries():
-        #     return
+        if not self.validate_entries():
+            return
 
         self.result = messagebox.askyesno("Household Member", "Do you want to add a household member?")
         if not self.result:
-            self.commit_data()
+            self.InsertApplicant()
             self.switch_frame('applicanthomepage')
             return
 
@@ -848,6 +848,61 @@ class Register(tk.Canvas):
 
     # TODO If no lalabas error sa database connection no household member inputted
     # TODO Validation sa InsertHousehold1 
+
+    def InsertApplicant(self):
+        try:
+            applicantFields = [
+            self.FullName.get(),
+            self.PermanentAddress.get(),
+            self.CivilStatus.get(),
+            self.Birthdate.get(),
+            self.Age.get(),
+            self.Sex.get(),
+            self.Nationality.get(),
+            self.Religion.get(),
+            self.EducationalAttainment.get(),
+            self.Occupation.get(),
+            self.MonthlyIncome.get(),
+            self.Membership.get(),
+            self.OtherSourceOfIncome.get(),
+            self.MonthlyExpenditure.get(),
+            self.GrossMonthlyIncome.get(),
+            self.NetMonthlyIncome.get(),
+            self.ReferenceNo.get(),
+            self.Date.get(),
+            self.ApplicantStatus.get()
+            ]
+            # Insert applicant and reference details
+            if all(applicantFields):
+                self.database.insert_applicant_and_reference_details(
+                    self.FullName.get(),
+                    self.PermanentAddress.get(),
+                    self.CivilStatus.get(),
+                    self.Birthdate.get(),
+                    self.Age.get(),
+                    self.Sex.get(),
+                    self.Nationality.get(),
+                    self.Religion.get(),
+                    self.EducationalAttainment.get(),
+                    self.Occupation.get(),
+                    self.MonthlyIncome.get(),
+                    self.Membership.get(),
+                    self.OtherSourceOfIncome.get(),
+                    self.MonthlyExpenditure.get(),
+                    self.GrossMonthlyIncome.get(),
+                    self.NetMonthlyIncome.get(),
+                    self.ReferenceNo.get(),
+                    self.Date.get(),
+                    self.ApplicantStatus.get()
+                )
+        except mysql.Error as err:  
+            print(f"An error occurred: {err}")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            self.database.close_connection()
+            self.switch_frame('applicanthomepage')
 
     def InsertHousehold1(self):
         self.database.open_connection()

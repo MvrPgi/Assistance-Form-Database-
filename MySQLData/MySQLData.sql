@@ -137,9 +137,6 @@ VALUES
 ('XY0040', 40, '2021-07-05', 'OLD APPLICANT');
 
 
-INSERT INTO user(FullName,Username,_Password,Applicant_ID)
-VALUES
-('Rhys','Rhys123','user','1');
 
 INSERT INTO admin(Username,_Password)
 VALUES

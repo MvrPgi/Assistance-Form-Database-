@@ -64,8 +64,7 @@ CREATE TABLE IF NOT EXISTS Admin (
 CREATE TABLE IF NOT EXISTS User (
     FullName VARCHAR(50) NOT NULL,
     Username VARCHAR(20) NOT NULL PRIMARY KEY,
-    _Password VARCHAR(20) NOT NULL,
-    Applicant_ID INT,
-    FOREIGN KEY (Applicant_ID) REFERENCES Applicant_Details(Applicant_ID) 
+    _Password VARCHAR(20) NOT NULL
     );
+    
     
