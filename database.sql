@@ -1,3 +1,5 @@
+
+
 -- Create the database if it does not exist and use it
 CREATE DATABASE IF NOT EXISTS practice;
 USE practice;
@@ -33,10 +35,10 @@ CREATE TABLE IF NOT EXISTS Applicant_Details (
 -- Create Household_Details table with ON DELETE CASCADE
 CREATE TABLE IF NOT EXISTS Household_Details (
     Household_ID INT AUTO_INCREMENT PRIMARY KEY,
-    Applicant_ID INT NULL,
+    Applicant_ID INT NOT NULL,
     Hhold_Fam_Name VARCHAR(50) NOT NULL,
     Hhold_Fam_Age INT NOT NULL CHECK (Hhold_Fam_Age <= 999),
-    Hhold_Fam_CivilStatus CHAR(2) NOT NULL CHECK (Hhold_Fam_CivilStatus IN ('S', 'M', 'W', 'SE')),
+    Hhold_Fam_CivilStatus CHAR(2) NOT NULL CHECK (Hhold_Fam_CivilStatus IN ('S', 'M', 'W', 'SE','C','O')),
     Hhold_Fam_RSWithPatient VARCHAR(20) NOT NULL,
     Hhold_Fam_HighestEducAttain VARCHAR(25) NOT NULL,
     Hhold_Fam_Occupation VARCHAR(25) NOT NULL,
@@ -66,3 +68,4 @@ CREATE TABLE IF NOT EXISTS User (
     Applicant_ID INT,
     FOREIGN KEY (Applicant_ID) REFERENCES Applicant_Details(Applicant_ID) 
     );
+    

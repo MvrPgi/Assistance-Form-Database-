@@ -4,6 +4,8 @@ SELECT * FROM practice.applicant_details;
 SELECT * FROM practice.household_details;
 SELECT * FROM practice.reference;
 
+
+SELECT * FROM practice.applicant_details;
 INSERT INTO Applicant_Details (Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome) VALUES
 ('Rhys S. Montillano', '130 Manila East Rd. Baytown, Angono, Rizal', 'S', '1999-04-12', 25, 'F', 'Filipino', 'Catholic', 'College', 'Finance Clerk', 100000, 'Member', 'Marketing', 5000, 7000, 2000),
 ('Mary Z. Castillo', 'A. Mabini Campus, Sta. Mesa, Manila', 'W', '1992-03-25', 52, 'F', 'Filipino', 'Born Again', 'Post-graduate', 'Psychologist', 100000, 'Dependent', 'Teach online courses', 11000, 13000, 2000),
@@ -133,3 +135,15 @@ VALUES
 ('XY0038', 38, '2023-08-12', 'NEW APPLICANT'),
 ('XY0039', 39, '2024-08-01', 'NEW APPLICANT'),
 ('XY0040', 40, '2021-07-05', 'OLD APPLICANT');
+
+
+INSERT INTO user(FullName,Username,_Password,Applicant_ID)
+VALUES
+('Rhys','Rhys123','user','1');
+
+INSERT INTO admin(Username,_Password)
+VALUES
+('Marl','admin'),
+('Alwyn','admin'),
+('Isha','admin'),
+('Lucky','admin');
