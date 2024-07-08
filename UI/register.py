@@ -804,27 +804,6 @@ class Register(tk.Canvas):
             self.Date.get(),
             self.ApplicantStatus.get()
             ]
-
-            hMember1Fields = [
-            self.Member1_HName.get(),
-            self.Member1_HAge.get(),
-            self.Member1_HCivilStatus.get(),
-            self.Member1_HRelation.get(),
-            self.Member1_HEducationalAttainment.get(),
-            self.Member1_HOccupation.get(),
-            self.Member1_HMonthlyincome.get()
-            ]
-
-            hMember2Fields = [
-            self.Member2_HName.get(),
-            self.Member2_HAge.get(),
-            self.Member2_HCivilStatus.get(),
-            self.Member2_HRelation.get(),
-            self.Member2_HEducationalAttainment.get(),
-            self.Member2_HOccupation.get(),
-            self.Member2_HMonthlyincome.get()
-            ]
-
             # Insert applicant and reference details
             if all(applicantFields):
                 self.database.insert_applicant_and_reference_details(
@@ -848,7 +827,22 @@ class Register(tk.Canvas):
                     self.Date.get(),
                     self.ApplicantStatus.get()
                 )
+ 
+            self.InsertHousehold1()
+            self.InsertHousehold2()
 
+
+        except mysql.Error as err:  
+            print(f"An error occurred: {err}")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            self.database.close_connection()
+
+    def InsertHousehold1(self):
+        self.database.open_connection()
+        try:
             # Insert household details
             self.database.insert_household_details(
                 self.Member1_HName.get(),  # Hname
@@ -858,8 +852,18 @@ class Register(tk.Canvas):
                 self.Member1_HEducationalAttainment.get(),  # HHighestEducationalAttainment
                 self.Member1_HOccupation.get(),  # Hoccupation
                 self.Member1_HMonthlyincome.get()  # Hmonthlyincome
+
             )
 
+        except mysql.Error as err:
+            print(f"An error occurred: {err}")
+        finally:
+            self.database.close_connection()
+
+
+    def InsertHousehold2(self):
+        self.database.open_connection()
+        try:
             self.database.insert_household_details(
                 self.Member2_HName.get(),  # Hname
                 self.Member2_HAge.get(),  # Hage
@@ -868,13 +872,14 @@ class Register(tk.Canvas):
                 self.Member2_HEducationalAttainment.get(),  # HHighestEducationalAttainment
                 self.Member2_HOccupation.get(),  # Hoccupation
                 self.Member2_HMonthlyincome.get()  # Hmonthlyincome
-            )
+        )
 
         except mysql.Error as err:
-            messagebox.showerror(title="Database Error", message=f"Error: {err}")
+            print(f"An error occurred: {err}")
+        finally:
+            self.database.close_connection()
 
-        except Exception as e:
-            print(f"An error occurred: {e}")
+
 
 
     def get_reference_id(self):
