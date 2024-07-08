@@ -16,6 +16,7 @@ class ApplicantHomepage(tk.Canvas):
 
 
         
+        
         self.dashboardLogo = PhotoImage(file=resource_path("resources/applicanthome/dashboardlogo.png"))
         self.dashboardBG = PhotoImage(file=resource_path("resources/applicanthome/dashboardbg.png"))
         self.gradiantBG = PhotoImage(file=resource_path("resources/applicanthome/gradiant.png"))
@@ -73,20 +74,17 @@ class ApplicantHomepage(tk.Canvas):
         
 
 
-
-
-
         self.ApplicantAccountID =[]
         self.ApplicantAccountID.append(self.create_image(350.0, 50.0, image = self.UserImageText, state ="hidden"))
         self.ApplicantAccountID.append(self.create_text(260.0, 100.0, anchor = "nw", text = "Applicant ID", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
-        self.ApplicantID = Entry(self, font=("Nokora", 17 * -1,"bold"),state='readonly')
+        self.ApplicantID = Entry(self, font=("Nokora", 17 * -1,"bold"),state='normal')
 
         self.ApplicantAccountID.append(self.create_text(260.0, 160.0, anchor = "nw", text = "User Name", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
-        self.UserName = Entry(self, font=("Nokora", 17 * -1,"bold"),state='readonly')
+        self.UserName = Entry(self, font=("Nokora", 17 * -1,"bold"),state='normal')
         self.ApplicantAccountID.append(self.create_text(260.0, 220.0, anchor = "nw", text = "Full Name", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
-        self.FullName = Entry(self, font=("Nokora", 17 * -1,"bold"),state='readonly')
+        self.FullName = Entry(self, font=("Nokora", 17 * -1,"bold"),state='normal')
         self.ApplicantAccountID.append(self.create_text(260.0, 280.0, anchor = "nw", text = "Password", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
-        self.Password = Entry(self, font=("Nokora", 17 * -1,"bold"),state='readonly')
+        self.Password = Entry(self, font=("Nokora", 17 * -1,"bold"),state='normal')
 
 
         self.GetStartedID = []
@@ -94,10 +92,10 @@ class ApplicantHomepage(tk.Canvas):
         self.GetStartedID.append(self.create_image(520.0, 380.0, image = self.GetStartedButtonBG,state ="hidden"))
         self.GetStartedButton = tk.Button(self, image=self.GetStartedButtonPic, borderwidth=0, highlightthickness=0, command=lambda:print("Get Started"), relief="flat")
 
-    
         self.GetStarted()
 
     def GetStarted(self):
+        self.database.GetApplicantLoginDetails()
         for getstarted in self.GetStartedID:
             self.itemconfigure(getstarted, state="normal")
 
@@ -105,11 +103,14 @@ class ApplicantHomepage(tk.Canvas):
         for account in self.ApplicantAccountID:
             self.itemconfigure(account, state="hidden")
 
+
         self.GetStartedButton.place(x=320.0, y=361.0, width=400.0, height=30.0)
         self.ApplicantID.place(x=260.0, y=120.0, width=400.0, height=30.0)
         self.FullName.place(x=260.0, y=240.0, width=400.0, height=30.0)
         self.UserName.place(x=260.0, y=180.0, width=400.0, height=30.0)
         self.Password.place(x=260.0, y=300.0, width=400.0, height=30.0)
+
+
 
         self.FullName.place_forget()
         self.UserName.place_forget()
@@ -118,33 +119,30 @@ class ApplicantHomepage(tk.Canvas):
 
     def ApplicantAccount(self):
 
-        for getstarted in self.GetStartedID:
-            self.itemconfigure(getstarted, state="hidden")
-
-
-        for account in self.ApplicantAccountID:
-            self.itemconfigure(account, state="normal")
-        self.ApplicantID.place(x=260.0, y=120.0, width=400.0, height=30.0)
-        self.FullName.place(x=260.0, y=240.0, width=400.0, height=30.0)
-        self.UserName.place(x=260.0, y=180.0, width=400.0, height=30.0)
-        self.Password.place(x=260.0, y=300.0, width=400.0, height=30.0)
-        self.GetStartedButton.place(x=320.0, y=361.0, width=400.0, height=30.0)
-        self.GetStartedButton.place_forget()
-
-        rows = self.database.GetApplicantLoginDetails()
         try:
-            self.UserName.config(state='normal')
-            self.FullName.config(state='normal')
-            self.Password.config(state='normal')        
+            for getstarted in self.GetStartedID:
+                self.itemconfigure(getstarted, state="hidden")
+
+
+            for account in self.ApplicantAccountID:
+                self.itemconfigure(account, state="normal")
+            self.ApplicantID.place(x=260.0, y=120.0, width=400.0, height=30.0)
+            self.FullName.place(x=260.0, y=240.0, width=400.0, height=30.0)
+            self.UserName.place(x=260.0, y=180.0, width=400.0, height=30.0)
+            self.Password.place(x=260.0, y=300.0, width=400.0, height=30.0)
+            self.GetStartedButton.place(x=320.0, y=361.0, width=400.0, height=30.0)
+            self.GetStartedButton.place_forget()
+
+
+            rows = self.database.GetApplicantLoginDetails()
+     
             self.UserName.delete(0, tk.END)
             self.FullName.delete(0, tk.END)
             self.Password.delete(0, tk.END)
             self.UserName.insert(0, rows[0][1])
             self.FullName.insert(0, rows[0][0])
             self.Password.insert(0, rows[0][2])
-            self.UserName.config(state='disabled')
-            self.FullName.config(state='disabled')
-            self.Password.config(state='disabled')
+ 
             self.ApplicantID.config(state='normal')
             self.ApplicantID.delete(0, tk.END)
             self.ApplicantID.insert(0, rows[0][3])
@@ -182,4 +180,4 @@ class ApplicantHomepage(tk.Canvas):
         username = self.database.GetLastApplicantEntry()
         print(username)
         return username
-
+    
