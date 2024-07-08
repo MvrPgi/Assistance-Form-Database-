@@ -782,6 +782,11 @@ class Register(tk.Canvas):
         self.nextButton.place(x=645.0, y=451.0, width=125.0, height=26.515151977539062)
 
     def commit_data(self):
+        
+        if self.combobox.get() == "Member 1":
+            messagebox.showerror("Error", "Please add a household member first before submitting.")
+            return
+
         try:
             applicantFields = [
             self.FullName.get(),
@@ -827,7 +832,7 @@ class Register(tk.Canvas):
                     self.Date.get(),
                     self.ApplicantStatus.get()
                 )
- 
+            # TODO Put an If Else statement hereee
             self.InsertHousehold1()
             self.InsertHousehold2()
 
@@ -839,21 +844,38 @@ class Register(tk.Canvas):
             print(f"An error occurred: {e}")
         finally:
             self.database.close_connection()
+            self.switch_frame('applicanthomepage')
+
+    # TODO If no lalabas error sa database connection no household member inputted
+    # TODO Validation sa InsertHousehold1 
 
     def InsertHousehold1(self):
         self.database.open_connection()
+
+        self.HMember1Fields = [
+            self.Member1_HName.get(), 
+            self.Member1_HAge.get(), 
+            self.Member1_HCivilStatus.get(), 
+            self.Member1_HRelation.get(), 
+            self.Member1_HEducationalAttainment.get(), 
+            self.Member1_HOccupation.get(), 
+            self.Member1_HMonthlyincome.get()
+            ]
+            
         try:
             # Insert household details
-            self.database.insert_household_details(
-                self.Member1_HName.get(),  # Hname
-                self.Member1_HAge.get(),  # Hage
-                self.Member1_HCivilStatus.get(),  # HCivilStatus
-                self.Member1_HRelation.get(),  # Hrelation
-                self.Member1_HEducationalAttainment.get(),  # HHighestEducationalAttainment
-                self.Member1_HOccupation.get(),  # Hoccupation
-                self.Member1_HMonthlyincome.get()  # Hmonthlyincome
-
-            )
+            if all(self.HMember1Fields):
+                self.database.insert_household_details(
+                    self.Member1_HName.get(),  # Hname
+                    self.Member1_HAge.get(),  # Hage
+                    self.Member1_HCivilStatus.get(),  # HCivilStatus
+                    self.Member1_HRelation.get(),  # Hrelation
+                    self.Member1_HEducationalAttainment.get(),  # HHighestEducationalAttainment
+                    self.Member1_HOccupation.get(),  # Hoccupation
+                    self.Member1_HMonthlyincome.get()  # Hmonthlyincome
+                    )
+            else:
+                print("No Household Member 1 inputted.")
 
         except mysql.Error as err:
             print(f"An error occurred: {err}")
@@ -863,23 +885,35 @@ class Register(tk.Canvas):
 
     def InsertHousehold2(self):
         self.database.open_connection()
+
+        self.HMember2Fields = [
+            self.Member2_HName.get(), 
+            self.Member2_HAge.get(), 
+            self.Member2_HCivilStatus.get(), 
+            self.Member2_HRelation.get(), 
+            self.Member2_HEducationalAttainment.get(), 
+            self.Member2_HOccupation.get(), 
+            self.Member2_HMonthlyincome.get()
+            ]
+        
         try:
-            self.database.insert_household_details(
-                self.Member2_HName.get(),  # Hname
-                self.Member2_HAge.get(),  # Hage
-                self.Member2_HCivilStatus.get(),  # HCivilStatus
-                self.Member2_HRelation.get(),  # Hrelation
-                self.Member2_HEducationalAttainment.get(),  # HHighestEducationalAttainment
-                self.Member2_HOccupation.get(),  # Hoccupation
-                self.Member2_HMonthlyincome.get()  # Hmonthlyincome
-        )
+            if all(self.HMember2Fields):
+                self.database.insert_household_details(
+                    self.Member2_HName.get(),  # Hname
+                    self.Member2_HAge.get(),  # Hage
+                    self.Member2_HCivilStatus.get(),  # HCivilStatus
+                    self.Member2_HRelation.get(),  # Hrelation
+                    self.Member2_HEducationalAttainment.get(),  # HHighestEducationalAttainment
+                    self.Member2_HOccupation.get(),  # Hoccupation
+                    self.Member2_HMonthlyincome.get()  # Hmonthlyincome
+                    )   
+            else:
+                print("No Household Member 2 inputted.")
 
         except mysql.Error as err:
             print(f"An error occurred: {err}")
         finally:
             self.database.close_connection()
-
-
 
 
     def get_reference_id(self):
@@ -900,7 +934,12 @@ class Register(tk.Canvas):
             print("Switch frame not none")
 
 
-        
-       
+        # Kapag next page, no, commit data
+        # If yes proceed next sa Household
+
+        # Kapag nag No siya magbabato yung insertHousehold ng wala na ininsert na household no messagebox 
+        # If yes, submit button is Disabled
+        # Magiging enabled lang kapag nag-add na ng household member
+        # Member 2 is optional,,, 
 
     
