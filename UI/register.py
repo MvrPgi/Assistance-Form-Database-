@@ -598,7 +598,12 @@ class Register(tk.Canvas):
         
         # if not self.validate_entries():
         #     return
-        
+
+        self.result = messagebox.askyesno("Household Member", "Do you want to add a household member?")
+        if not self.result:
+            self.commit_data()
+            self.switch_frame('applicanthomepage')
+            return
 
         # HIDE THE WIDGETS PAGE 1
         for image_id in self.entryImage:
@@ -778,55 +783,95 @@ class Register(tk.Canvas):
 
     def commit_data(self):
         try:
-            # Get the reference number
-            reference_no = self.ReferenceNo.get()
-            # Insert applicant and reference details with hardcoded values
-            self.database.insert_applicant_and_reference_details(
-                'Justine H. Termo',  # FullName
-                '5678 Jalandoni Street, Barangay Lapuz Norte, Iloilo City, Iloilo',  # PermanentAddress
-                'SE',  # CivilStatus
-                '1992-09-09',  # Birthdate
-                31,  # Age
-                'F',  # Sex
-                'Filipino',  # Nationality
-                'Iglesia ni Cristo',  # Religion
-                'Post-graduate',  # EducationalAttainment
-                'Professor',  # Occupation
-                38000,  # MonthlyIncome
-                'Member',  # Membership
-                'Investment',  # OtherSourceOfIncome
-                9000,  # MonthlyExpenditure
-                17000,  # GrossMonthlyIncome
-                8000,  # NetMonthlyIncome
-                reference_no,  # ReferenceNo
-                '2021-07-05',  # Date
-                'OLD APPLICANT'  # ApplicantStatus
-            )
+            applicantFields = [
+            self.FullName.get(),
+            self.PermanentAddress.get(),
+            self.CivilStatus.get(),
+            self.Birthdate.get(),
+            self.Age.get(),
+            self.Sex.get(),
+            self.Nationality.get(),
+            self.Religion.get(),
+            self.EducationalAttainment.get(),
+            self.Occupation.get(),
+            self.MonthlyIncome.get(),
+            self.Membership.get(),
+            self.OtherSourceOfIncome.get(),
+            self.MonthlyExpenditure.get(),
+            self.GrossMonthlyIncome.get(),
+            self.NetMonthlyIncome.get(),
+            self.ReferenceNo.get(),
+            self.Date.get(),
+            self.ApplicantStatus.get()
+            ]
 
-            # Insert household details for Member1
+            hMember1Fields = [
+            self.Member1_HName.get(),
+            self.Member1_HAge.get(),
+            self.Member1_HCivilStatus.get(),
+            self.Member1_HRelation.get(),
+            self.Member1_HEducationalAttainment.get(),
+            self.Member1_HOccupation.get(),
+            self.Member1_HMonthlyincome.get()
+            ]
+
+            hMember2Fields = [
+            self.Member2_HName.get(),
+            self.Member2_HAge.get(),
+            self.Member2_HCivilStatus.get(),
+            self.Member2_HRelation.get(),
+            self.Member2_HEducationalAttainment.get(),
+            self.Member2_HOccupation.get(),
+            self.Member2_HMonthlyincome.get()
+            ]
+
+            # Insert applicant and reference details
+            if all(applicantFields):
+                self.database.insert_applicant_and_reference_details(
+                    self.FullName.get(),
+                    self.PermanentAddress.get(),
+                    self.CivilStatus.get(),
+                    self.Birthdate.get(),
+                    self.Age.get(),
+                    self.Sex.get(),
+                    self.Nationality.get(),
+                    self.Religion.get(),
+                    self.EducationalAttainment.get(),
+                    self.Occupation.get(),
+                    self.MonthlyIncome.get(),
+                    self.Membership.get(),
+                    self.OtherSourceOfIncome.get(),
+                    self.MonthlyExpenditure.get(),
+                    self.GrossMonthlyIncome.get(),
+                    self.NetMonthlyIncome.get(),
+                    self.ReferenceNo.get(),
+                    self.Date.get(),
+                    self.ApplicantStatus.get()
+                )
+
+            # Insert household details
             self.database.insert_household_details(
-                'Alwyyn Mercene',  # Hname
-                32,  # Hage
-                'M',  # HCivilStatus
-                'Brother',  # Hrelation
-                'College',  # HHighestEducationalAttainment
-                'Partimer',  # Hoccupation
-                15900  # Hmonthlyincome
+                self.Member1_HName.get(),  # Hname
+                self.Member1_HAge.get(),  # Hage
+                self.Member1_HCivilStatus.get(),  # HCivilStatus
+                self.Member1_HRelation.get(),  # Hrelation
+                self.Member1_HEducationalAttainment.get(),  # HHighestEducationalAttainment
+                self.Member1_HOccupation.get(),  # Hoccupation
+                self.Member1_HMonthlyincome.get()  # Hmonthlyincome
             )
 
-            # Insert household details for Member2
             self.database.insert_household_details(
-                'Maria Lopez',  # Hname
-                28,  # Hage
-                'S',  # HCivilStatus
-                'Sister',  # Hrelation
-                'High School',  # HHighestEducationalAttainment
-                'Teacher',  # Hoccupation
-                12000  # Hmonthlyincome
+                self.Member2_HName.get(),  # Hname
+                self.Member2_HAge.get(),  # Hage
+                self.Member2_HCivilStatus.get(),  # HCivilStatus
+                self.Member2_HRelation.get(),  # Hrelation
+                self.Member2_HEducationalAttainment.get(),  # HHighestEducationalAttainment
+                self.Member2_HOccupation.get(),  # Hoccupation
+                self.Member2_HMonthlyincome.get()  # Hmonthlyincome
             )
 
-            self.database.close_connection()
-            print("Data committed successfully!")
+        except mysql.Error as err:
+            messagebox.showerror(title="Database Error", message=f"Error: {err}")
 
         except Exception as e:
             print(f"An error occurred: {e}")
