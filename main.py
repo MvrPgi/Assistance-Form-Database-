@@ -23,14 +23,13 @@ class App(tk.Tk):
         self.geometry("820x500")
         self.resizable(False, False)
 
-
         # Initialize main frame
         self.main_frame = tk.Frame(self, bg="#FFFFFF")
         self.main_frame.pack(fill=tk.BOTH, expand=True)
 
         # Start with the ApplicantAdmin frame
         self.current_frame = None
-        self.switch_frame('applicantadmin')
+        self.switch_frame('adminhomepage')
 
     def clear_frame(self):
         print("Clearing frame...")
@@ -84,6 +83,9 @@ class App(tk.Tk):
 
         if self.current_frame is not None:
             self.current_frame.pack(fill=tk.BOTH, expand=True)
+
+
+
 
 
 
