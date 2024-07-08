@@ -105,7 +105,7 @@ class AdminBench(tk.Toplevel):
             values = self.tree.item(item, "values")  # Get the values of the selected item
             
             # Assuming the second value in the row is the primary key for deletion
-            primary_key = values[0]  # Adjust index based on your primary key column
+            primary_key = values[1]  # Adjust index based on your primary key column
             
             try:
                 self.database.delete_applicant_details(primary_key)

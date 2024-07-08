@@ -3,6 +3,9 @@ import mysql.connector as mysql
 from tkinter import messagebox
 from mysql.connector import Error
 import csv
+import os
+import sys
+from resources.FileTracker.tracker import resource_path
 
 
 class DatabaseConnection:
@@ -80,13 +83,22 @@ class DatabaseConnection:
             self.close_connection()
 
     def appendtocsvApplicant(self, username):
-        with open('successful_loginsApplicant.csv', mode='a', newline='') as file:
+        # Include the folder name 'MySQLData' in the relative path
+        file_path = resource_path(os.path.join('MySQLData', 'successful_loginsApplicant.csv'))
+        
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        with open(file_path, mode='a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([username])
 
     def GetLastApplicantEntry(self):
         try:
-            with open('successful_loginsApplicant.csv', mode='r') as file:
+            # Include the folder name 'MySQLData' in the relative path
+            file_path = resource_path(os.path.join('MySQLData', 'successful_loginsApplicant.csv'))
+            
+            with open(file_path, mode='r') as file:
                 reader = csv.reader(file)
                 last_row = None
                 for row in reader:
@@ -95,6 +107,10 @@ class DatabaseConnection:
         except FileNotFoundError:
             print("The file does not exist.")
             return None
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return None
+        
         
     def GetApplicantLoginDetails(self):
         self.open_connection()
@@ -142,13 +158,23 @@ class DatabaseConnection:
 
         
     def appendtocsvAdmin(self, username):
-        with open('successful_loginsAdmin.csv', mode='a', newline='') as file:
+        # Include the folder name 'MySQLData' in the relative path
+        file_path = resource_path(os.path.join('MySQLData', 'successful_loginsAdmin.csv'))
+        
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        with open(file_path, mode='a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([username])
 
+
     def GetLastAdminEntry(self):
         try:
-            with open('successful_loginsAdmin.csv', mode='r') as file:
+            # Include the folder name 'MySQLData' in the relative path
+            file_path = resource_path(os.path.join('MySQLData', 'successful_loginsAdmin.csv'))
+            
+            with open(file_path, mode='r') as file:
                 reader = csv.reader(file)
                 last_row = None
                 for row in reader:
@@ -157,7 +183,9 @@ class DatabaseConnection:
         except FileNotFoundError:
             print("The file does not exist.")
             return None
-
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return None
 
 
 
@@ -297,31 +325,14 @@ class DatabaseConnection:
 
     # -------------------------------------------------------DELETE APPLICANT DETAILS-------------------------------------------------------------------------
 
-    def delete_applicant_details(self, reference_no):
+    def delete_applicant_details(self, Applicant_ID):
             self.open_connection()
             try:
-                delete_household_query = """
-                DELETE FROM Household_Details
-                WHERE Applicant_ID IN (
-                    SELECT Applicant_ID FROM Reference WHERE Reference_No = %s
-                );
-                """
-                self.cursor.execute(delete_household_query, (reference_no,))
-
-                delete_reference_query = """
-                DELETE FROM Reference
-                WHERE Reference_No = %s;
-                """
-                self.cursor.execute(delete_reference_query, (reference_no,))
-
-                delete_applicant_query = """
+                delete_applicant_id_query = """
                 DELETE FROM Applicant_Details
-                WHERE Applicant_ID NOT IN (
-                    SELECT Applicant_ID FROM Reference
-                );
+                WHERE Applicant_ID = %s;
                 """
-                self.cursor.execute(delete_applicant_query)
-
+                self.cursor.execute(delete_applicant_id_query, (Applicant_ID,))
                 self.con.commit()
                 print("Records deleted successfully.")
             except Error as e:
@@ -615,6 +626,20 @@ class DatabaseConnection:
                 print(f"Error: {e}")
             finally:
                 self.close_connection()
+
+    #--------------------------------------------------------COUNT PHILHEALTH MEMBER-------------------------------------------------------------------------
+
+    def count_philhealth_member(self):
+            self.open_connection()
+            try:
+                query = "SELECT COUNT(*) FROM Applicant_Details WHERE Membership = 'Member'"
+                self.cursor.execute(query)
+                result = self.cursor.fetchone()
+                return result[0]
+            except Error as e:
+                print(f"Error: {e}")
+            finally:
+                self.close_connection()
                 
 
     #---------------------------------------------------------------EASY 1------------------------------------------------------------------------	
@@ -671,10 +696,13 @@ class DatabaseConnection:
     def ModerateTask1(self):
             self.open_connection()
             try:
-                query = "SELECT  Highest_Educ_Attainment, SUM(monthly_income) as monthlyIncome FROM applicant_details WHERE membership <> 'Non-Member' GROUP BY Highest_Educ_Attainment HAVING monthlyIncome > 15000;"
+                query = """SELECT  sex, COUNT(*) as Count
+                            FROM applicant_details
+                            WHERE Monthly_Income < 50000
+                            GROUP BY sex;"""
                 self.cursor.execute(query)
                 rows = self.cursor.fetchall()
-                messagebox.showinfo(title="Generate Report",message="Highest education attainment of applicants who are not a non-member and the sum of their monthly income is greater than 15000")
+                messagebox.showinfo(title="Generate Report",message="Count the number of male and female that has income less than 50000")
                 return rows
             except Error as e:
                 print(f"Error: {e}")
@@ -682,12 +710,32 @@ class DatabaseConnection:
                 self.close_connection()
     #----------------------------------------------------------------Moderate 2------------------------------------------------------------------------
 
+    def ModerateTask2(self):
+            self.open_connection()
+            try:
+                query = """SELECT Highest_Educ_Attainment, ROUND(AVG(Monthly_Income), 2) as averageMonthlyIncome
+                FROM applicant_details
+                GROUP BY Highest_Educ_Attainment
+                ORDER BY averageMonthlyIncome DESC;""" 
+                self.cursor.execute(query)
+                rows = self.cursor.fetchall()
+                messagebox.showinfo(title="Generate Report",message="What is the average salary of the applicants from each educational attainment. Display the average in descending order. ")
+                return rows
+            except Error as e:
+                print(f"Error: {e}")
+
     #----------------------------------------------------------------Moderate 3------------------------------------------------------------------------
 
     def ModerateTask3(self):
             self.open_connection()
             try:
-                query = "SELECT Civil_Status, AVG(Monthly_Income) AS Average_Income FROM applicant_details GROUP BY Civil_Status HAVING AVG(Monthly_Income) > 30000;"
+                query = """SELECT Applicant_ID, Full_Name, Address, ROUND(AVG(Monthly_Income), 2) AS Average_Income
+                    FROM applicant_details
+                    WHERE Address LIKE '%Pasay%' OR Address LIKE '%Quezon%' OR Address LIKE '%Makati%'
+                    GROUP BY Applicant_ID, Full_Name, Address
+                    HAVING AVG(Monthly_Income) > 30000;
+                    ;"""
+
                 self.cursor.execute(query)
                 rows = self.cursor.fetchall()
                 messagebox.showinfo(title="Generate Report",message="Highest education attainment of applicants and their average monthly income, sorted by average monthly income descending")
@@ -695,6 +743,82 @@ class DatabaseConnection:
             except Error as e:
                 print(f"Error: {e}")
 
+#---------------------------------------------------------------MODERATE 4------------------------------------------------------------------------
+
+    def ModerateTask4(self):
+            self.open_connection()
+            try:
+                query = """SELECT Occupation, COUNT(*) AS Member_Count, ROUND(AVG(GrossMonthlyIncome), 2) AS Average_Gross_Income
+                        FROM applicant_details
+                        WHERE Membership = 'Member'
+                        GROUP BY Occupation	
+                        ORDER BY Member_Count DESC;"""
+                
+                self.cursor.execute(query)
+                rows = self.cursor.fetchall()
+                messagebox.showinfo(title="Generate Report",message="Count the number of members in each occupation and the average gross income of the members, sorted by the number of members in descending order")
+                return rows
+            except Error as e:
+                    print(f"Error: {e}")
+
+    #---------------------------------------------------------------- HARD 5------------------------------------------------------------------------
+
+    def HardTask1(self):
+        self.open_connection()
+        try:
+            query = """SELECT ad.Applicant_ID, ad.Full_Name, SUM(Hhold_Fam_MonthlyIncome) AS totalFamIncome
+                            FROM applicant_details ad, household_details hd
+                            WHERE ad.applicant_id = hd.applicant_id
+                            GROUP BY ad.Applicant_ID, ad.Full_Name
+                            ORDER BY totalFamIncome DESC;
+                            """
+            self.cursor.execute(query)
+            rows = self.cursor.fetchall()
+            messagebox.showinfo(title="Generate Report",message="Display the applicantID, applicant name, and the total household family monthly income. Display the monthly income in descending order. ")
+            return rows
+        except Error as e:
+                print(f"Error: {e}")
+
+
+    #---------------------------------------------------------------- HARD 2------------------------------------------------------------------------
+
+    def HardTask2(self):
+        self.open_connection()
+        try:
+            query = """SELECT a.Full_Name AS Applicant_Name,
+                            MIN(h.Hhold_Fam_MonthlyIncome) AS Min_Family_MonthlyIncome,
+                            MAX(h.Hhold_Fam_MonthlyIncome) AS Max_Family_MonthlyIncome
+                            FROM applicant_details a, household_details h
+                            WHERE a.Applicant_ID = h.Applicant_ID
+                            GROUP BY a.Full_Name
+                            ORDER BY Min_Family_MonthlyIncome ASC, Max_Family_MonthlyIncome DESC;
+                            """
+            self.cursor.execute(query)
+            rows = self.cursor.fetchall()
+            messagebox.showinfo(title="Generate Report",message=" Display the minimum and maximum household family income of each applicant. ")
+            return rows
+        except Error as e:
+                print(f"Error: {e}")
+
+
+    def HardTask3(self):
+        self.open_connection()
+        try:
+            query = """SELECT a.Applicant_ID, a.Full_Name,
+                        COUNT(h.Hhold_Fam_Name) AS Family_Member_Count,
+                        ROUND(AVG(h.Hhold_Fam_MonthlyIncome),2) AS Average_Family_Member_Income
+                        FROM applicant_details a, household_details h
+                        WHERE a.Applicant_ID = h.Applicant_ID
+                        GROUP BY a.Applicant_ID, a.Full_Name
+                        HAVING Family_Member_Count >= 2;
+                            """
+            self.cursor.execute(query)
+            rows = self.cursor.fetchall()
+            messagebox.showinfo(title="Generate Report",message="Display the full name of the applicants, count of family members, average monthly income of the family members, grouped by the applicant's full name, for those with more than 2 family members.")
+            return rows
+        except Error as e:
+                print(f"Error: {e}")
+                      
 
 
 

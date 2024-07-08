@@ -41,9 +41,9 @@ class AdminLogin(tk.Canvas,):
         self.LoginButton.place(x=480.0, y=290.0, width=250.0, height=31.0)
 
 
-        self.UserName = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0)
+        self.UserName = Entry(self, font=("Nokora", 10), bd=0, bg="#FFFFFF", highlightthickness=0)
         self.UserName.place(x=480.0, y=183.0, width=240.0, height=25.0)
-        self.Password = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0,show="•")
+        self.Password = Entry(self, font=("Nokora", 10), bd=0, bg="#FFFFFF", highlightthickness=0,show="•")
         self.Password.place(x=480.0, y=229.0, width=240.0, height=25.0)
 
 

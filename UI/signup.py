@@ -38,11 +38,11 @@ class Signup(tk.Canvas):
         self.LoginButton = tk.Button(self, image=self.signuploginButton, command=self.go_to_login,borderwidth=0, highlightthickness=0)
         self.LoginButton.place(x=630.0, y=348.0, anchor="center", width=45, height=18)
 
-        self.Username = Entry(self, bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0)
+        self.Username = Entry(self,font=("Nokora",10), bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0)
         self.Username.place(x=480.0, y=160.0, width=240.0, height=25.0)
-        self.Fullname = Entry(self, bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0)
+        self.Fullname = Entry(self,font=("Nokora",10), bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0)
         self.Fullname.place(x=480.0, y=200.0, width=240.0, height=25.0)
-        self.Password = Entry(self, bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0, show="•")
+        self.Password = Entry(self,font=("Nokora",10), bd=0, bg="#FFFFFF", fg="#000000", highlightthickness=0, show="•")
         self.Password.place(x=480.0, y=240.0, width=240.0, height=25.0)
 
 

@@ -43,9 +43,9 @@ class Login(tk.Canvas):
         self.SignUpButton = tk.Button(self, image=self.SignUpButtonPic, command=self.go_to_signup,borderwidth=0, highlightthickness=0)
         self.SignUpButton.place(x=620.0, y=328.0, anchor="center", width=45, height=13)
 
-        self.Username = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0)
+        self.Username = Entry(self, font=("Nokora", 10), bd=0, bg="#FFFFFF", highlightthickness=0)
         self.Username.place(x=480.0, y=183.0, width=240.0, height=25.0)
-        self.Password = Entry(self, font=("Nokora", 12), bd=0, bg="#FFFFFF", highlightthickness=0,show="•")
+        self.Password = Entry(self, font=("Nokora", 10), bd=0, bg="#FFFFFF", highlightthickness=0,show="•")
         self.Password.place(x=480.0, y=229.0, width=240.0, height=25.0)
 
 

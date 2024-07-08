@@ -27,7 +27,7 @@ class ApplicantTable(tk.Toplevel):
         self.EditBGPic = PhotoImage(file=resource_path("resources/adminbench/UpdateBG.png"))
         self.canvas.create_image(80.0, 90, image=self.EditBGPic)
         self.UpdateButtonImage = PhotoImage(file=resource_path("resources/adminbench/updateButton.png"))
-        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command=lambda:print("ButtonClicked"), borderwidth=0, highlightthickness=0)
+        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command=self.EditButton, borderwidth=0, highlightthickness=0)
         self.updateButton.place(x=80.0, y=90,anchor="center", width=95, height=20)
 
 
@@ -97,7 +97,69 @@ class ApplicantTable(tk.Toplevel):
             color = color1 if index % 2 == 0 else color2
             self.tree.tag_configure(tag, background=color)
             self.tree.insert('', 'end', values=row, tags=(tag,))
+    
+    def UpdateApplicantTable(self,item):
+        new_values =[self.entries[col].get() for col in self.columns]
+        self.tree.item(item, values=new_values)
+        print(new_values)
 
+
+        self.database.UpdateApplicantDetails(
+            new_values[0],new_values[1],new_values[2],new_values[3],new_values[4],new_values[5],new_values[6],new_values[7],new_values[8]
+            ,new_values[9],new_values[10],new_values[11],new_values[12],new_values[13],new_values[14],new_values[15],new_values[16]
+        )
+        self.edit_window.destroy()
+
+
+
+    def EditButton(self):
+        item = self.tree.selection()[0] # Get the selected item
+        values = self.tree.item(item, "values") # Get the values of the selected item
+
+        self.edit_window = tk.Toplevel(self)
+        self.edit_window.geometry("415x470")
+        self.edit_window.wm_resizable(False, False)
+
+        self.edit_window.title("Edit") 
+
+        self.RadioButtonVariable = tk.BooleanVar(value=False)
+        self.RadioButton = tk.Radiobutton(self.edit_window,variable=self.RadioButtonVariable,value=True ,text="Enable",command=self.toggle_entries)
+        self.RadioButton.grid(row=0, column=0)
+        self.RadioButton = tk.Radiobutton(self.edit_window, text="Disable",variable=self.RadioButtonVariable,value=False,command=self.toggle_entries)
+        self.RadioButton.grid(row=0, column=1)
+
+        self.LowerFrameEdit = tk.Frame(self.edit_window)
+        self.LowerFrameEdit.grid(row=1, column=0, columnspan=2)
+        self.EditWindow = tk.Frame(self.edit_window).grid(row=0, column=0, columnspan=2)
+        self.entries = {} # Store the entry widgets
+        for i, col in enumerate(self.columns): # Create the entry widgets
+            tk.Label(self.LowerFrameEdit, text=col).grid(row=i, column=0) # Create a label
+            entry = tk.Entry(self.LowerFrameEdit,width=30, justify="center")# Create an entry widget
+            entry.grid(row=i, column=1,padx=5,pady =2)# Place the entry widget
+            entry.insert(0, values[i]) # Insert the value of the selected item into the entry widget
+            self.entries[col] = entry # Store the entry widget
+
+        for entry in self.entries.values():# Disable the entry widgets
+            entry.config(state="readonly")        # Disable the entry widgets
+        self.entries[self.columns[1]].config(state="readonly") # Disable the entry widgets
+
+        
+        self.saveButton = tk.Button(self.edit_window, text="Save",state='disabled', command=lambda: self.UpdateApplicantTable(item))
+        self.saveButton.grid(row=5, column=0, columnspan=2,pady=7)
+
+
+    def toggle_entries(self):
+        if self.RadioButtonVariable.get() == True:
+            self.saveButton.config(state="normal")
+            for entry in self.entries.values():
+                entry.config(state="normal")
+
+            for i in range(1):  # Disable only columns 0, 1, and 2
+                self.entries[self.columns[i]].config(state="readonly")
+        else:
+            self.saveButton.config(state="disabled") # Disable the save button
+            for entry in self.entries.values():
+                entry.config(state="readonly")
 
 
 
