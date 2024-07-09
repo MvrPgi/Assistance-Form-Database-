@@ -84,7 +84,7 @@ class AdminHomepage(tk.Canvas):
 
 
 
-#Button
+        #Button
         self.DashboardButton = tk.Button(self, image=self.dashboardButton, borderwidth=0, highlightthickness=0, command=lambda:print("DashBoard"), relief="flat")
         self.DashboardButton.place(x=20.0, y=147.0, width=160.0, height=30.0)
         self.TablesButton = tk.Button(self, image=self.tablesButton, borderwidth=0, highlightthickness=0, command=self.go_to_maintable)
