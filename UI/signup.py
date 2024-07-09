@@ -1,7 +1,7 @@
 import sys
 import os
 import tkinter as tk
-from tkinter import PhotoImage, Entry
+from tkinter import PhotoImage, Entry, messagebox
 from mysql_connection import DatabaseConnection
 from resources.FileTracker.tracker import resource_path
 
@@ -99,7 +99,7 @@ class Signup(tk.Canvas):
 
         # Check if username already exists
         if self.database.check_username_exists(username):
-            print("Username already exists.")
+            messagebox.showerror("Error", "Username already exists.")
             return
 
         # Insert new user into database
