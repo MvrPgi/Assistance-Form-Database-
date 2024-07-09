@@ -768,16 +768,16 @@ class DatabaseConnection:
     def ModerateTask3(self):
             self.open_connection()
             try:
-                query = """SELECT Applicant_ID, Full_Name, Address, ROUND(AVG(Monthly_Income), 2) AS Average_Income
-                    FROM applicant_details
-                    WHERE Address LIKE '%Pasay%' OR Address LIKE '%Quezon%' OR Address LIKE '%Makati%'
-                    GROUP BY Applicant_ID, Full_Name, Address
-                    HAVING AVG(Monthly_Income) > 30000;
+                query = """SELECT Civil_Status, COUNT(*) AS College_Graduates_Count, SUM(Monthly_Income) as SumOfMonthlyIncome
+                            FROM applicant_details
+                            WHERE Highest_Educ_Attainment = 'College'
+                            GROUP BY Civil_Status
+                            HAVING SumOfMonthlyIncome > 35000;
                     ;"""
 
                 self.cursor.execute(query)
                 rows = self.cursor.fetchall()
-                messagebox.showinfo(title="Generate Report",message="Highest education attainment of applicants and their average monthly income, sorted by average monthly income descending")
+                messagebox.showinfo(title="Generate Report",message="Display the count of college graduates and the total monthly income of each civil status. Display only the totals which fall greater than 35k.")
                 return rows
             except Error as e:
                 print(f"Error: {e}")
@@ -800,7 +800,7 @@ class DatabaseConnection:
             except Error as e:
                     print(f"Error: {e}")
 
-    #---------------------------------------------------------------- HARD 5------------------------------------------------------------------------
+    #---------------------------------------------------------------- HARD 1------------------------------------------------------------------------
 
     def HardTask1(self):
         self.open_connection()
@@ -813,7 +813,7 @@ class DatabaseConnection:
                             """
             self.cursor.execute(query)
             rows = self.cursor.fetchall()
-            messagebox.showinfo(title="Generate Report",message="Display the applicantID, applicant name, and the total household family monthly income. Display the monthly income in descending order. ")
+            messagebox.showinfo(title="Generate Report",message="Display the total household family monthly income per applicant. Display the applicant’s name as well and sort by total household family monthly income in descending order")
             return rows
         except Error as e:
                 print(f"Error: {e}")
@@ -839,6 +839,7 @@ class DatabaseConnection:
         except Error as e:
                 print(f"Error: {e}")
 
+#   ---------------------------------------------------------------- HARD 3------------------------------------------------------------------------
 
     def HardTask3(self):
         self.open_connection()
@@ -848,16 +849,17 @@ class DatabaseConnection:
                         ROUND(AVG(h.Hhold_Fam_MonthlyIncome),2) AS Average_Family_Member_Income
                         FROM applicant_details a, household_details h
                         WHERE a.Applicant_ID = h.Applicant_ID
-                        GROUP BY a.Applicant_ID, a.Full_Name
+                        GROUP BY a.Applicant_ID
                         HAVING Family_Member_Count >= 2;
                             """
             self.cursor.execute(query)
             rows = self.cursor.fetchall()
-            messagebox.showinfo(title="Generate Report",message="Display the full name of the applicants, count of family members, average monthly income of the family members, grouped by the applicant's full name, for those with more than 2 family members.")
+            messagebox.showinfo(title="Generate Report",message="Display the count of each applicant's household family member and the average monthly income of the household members. Display the applicant's full name as well and show only those with more than 2 family members.")
             return rows
         except Error as e:
                 print(f"Error: {e}")
-                      
+
+
 
 
 
