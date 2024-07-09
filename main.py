@@ -1,14 +1,17 @@
 import tkinter as tk
 from UI.applicantadmin import ApplicantAdmin
 from UI.adminBench import AdminBench
+from UI.applicantHomepage import ApplicantHomepage
 from UI.login import Login
 from UI.register import Register
 from UI.signup import Signup
 from UI.adminlogin import AdminLogin
 from UI.adminHomepage import AdminHomepage
 from UI.HouseHoldTable import AdminBenchHousehold
-from UI.ApplicantTable import AdminBenchHousehold
+from UI.ApplicantTable import ApplicantTable
 from UI.referenceTable import AdminBenchReference
+from mysql_connection import DatabaseConnection
+
 
 import tkinter as tk
 from tkinter import ttk
@@ -16,10 +19,9 @@ from tkinter import ttk
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Main App")
+        self.title("PCSOIA PORTAL")
         self.geometry("820x500")
         self.resizable(False, False)
-
 
         # Initialize main frame
         self.main_frame = tk.Frame(self, bg="#FFFFFF")
@@ -59,12 +61,14 @@ class App(tk.Tk):
             admin_bench_window.mainloop()
         elif frame_name == 'applicant':
             self.withdraw()  # Hide the main window
-            admin_bench_window = AdminBenchHousehold(master=self)
+            admin_bench_window = ApplicantTable(master=self)
             admin_bench_window.mainloop()
         elif frame_name == 'reference':
             self.withdraw()
             admin_bench_window = AdminBenchReference(master=self)
             admin_bench_window.mainloop()
+        elif frame_name =='applicanthomepage':
+            self.current_frame = ApplicantHomepage(master=self.main_frame, switch_frame=self.switch_frame)
         elif frame_name == 'register':
             self.current_frame = Register(master=self.main_frame, switch_frame=self.switch_frame)
         elif frame_name == 'login':
@@ -81,6 +85,13 @@ class App(tk.Tk):
             self.current_frame.pack(fill=tk.BOTH, expand=True)
 
 
+
+
+
+
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+
+
+

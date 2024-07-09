@@ -14,33 +14,49 @@ class AdminBench(tk.Toplevel):
         self.configure(bg="#FFFFFF")
         self.resizable(False, False)
         self.database = DatabaseConnection()
+        self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
         # Create the canvas in the upper frame
         self.canvas = tk.Canvas(self, bg="#FFFFFF")
         self.canvas.place(x=0, y=0, relwidth=1, relheight=1)
 
         self.Header = PhotoImage(file=resource_path("resources/adminbench/header.png"))
-        self.canvas.create_image(960.0, 30, image=self.Header)
+        self.canvas.create_image(955.0, 15, image=self.Header)
+        self.canvas.create_text(435.0, 90, text="Filter By :", font=("Nokora", 10), fill="#000000")
+        # self.canvas.create_line(15, 106, 1895, 106, fill="#000000")
+        # self.canvas.create_line(13, 106, 13, 680, fill="#000000")
+        # self.canvas.create_line(1896, 106, 1896, 680, fill="#000000")
 
-        self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male", "Female"], state="readonly", width=10)
-        self.ComboBoxSex.place(x=400, y=90, anchor="center")
+
+
+
+
+        self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male", "Female"], state="readonly", width=10, font=("Nokora", 10,))
+        self.ComboBoxSex.place(x=512, y=90, anchor="center")
         self.ComboBoxSex.bind("<<ComboboxSelected>>", self.GenderPicker)
 
+
+        self.DeleteBGPic = PhotoImage(file=resource_path("resources/adminbench/DeleteBG.png"))
+        self.canvas.create_image(80.0, 90, image=self.DeleteBGPic)
         self.DeleteButtonImage = PhotoImage(file=resource_path("resources/adminbench/deleteButton.png"))
-        self.deleteButton = tk.Button(self.canvas, image=self.DeleteButtonImage, command=self.DeleteRow)
-        self.deleteButton.place(x=100.0, y=90, anchor="center", width=95, height=20)
+        self.deleteButton = tk.Button(self.canvas, image=self.DeleteButtonImage, command=self.DeleteRow, borderwidth=0, highlightthickness=0)
+        self.deleteButton.place(x=80.0, y=90, anchor="center", width=95, height=20)
 
+        self.EditBGPic = PhotoImage(file=resource_path("resources/adminbench/UpdateBG.png"))
+        self.canvas.create_image(210.0, 90, image=self.EditBGPic)
         self.UpdateButtonImage = PhotoImage(file=resource_path("resources/adminbench/updateButton.png"))
-        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command= self.EditButton)
-        self.updateButton.place(x=200.0, y=90, anchor="center", width=95, height=20)
+        self.updateButton = tk.Button(self.canvas, image=self.UpdateButtonImage, command= self.EditButton, borderwidth=0, highlightthickness=0)
+        self.updateButton.place(x=210.0, y=90, anchor="center", width=95, height=20)
 
+        self.RefreshBGPic = PhotoImage(file=resource_path("resources/adminbench/updateBG.png"))
+        self.canvas.create_image(340.0, 90, image=self.RefreshBGPic)
         self.RefreshButtonImage = PhotoImage(file=resource_path("resources/adminbench/refreshButton.png"))
-        self.refreshButton = tk.Button(self.canvas, image=self.RefreshButtonImage, command=self.FetchReferenceApplicantData)
-        self.refreshButton.place(x=300.0, y=90, anchor="center", width=95, height=20)
+        self.refreshButton = tk.Button(self.canvas, image=self.RefreshButtonImage, command=self.FetchReferenceApplicantData, borderwidth=0, highlightthickness=0)
+        self.refreshButton.place(x=340.0, y=92, anchor="center", width=95, height=18)
 
-
-        self.backButton = tk.Button(self.canvas, text="Back", command=self.back_to_admin_homepage)
-        self.backButton.place(x=500.0, y=90, anchor="center", width=95, height=20)
+        self.backButtonImage = PhotoImage(file=resource_path("resources/adminbench/homeButton.png"))
+        self.backButton = tk.Button(self.canvas,image=self.backButtonImage, command=self.back_to_admin_homepage,borderwidth=0, highlightthickness=0)
+        self.backButton.place(x=25.0, y=25, anchor="center", width=30, height=20)
 
         self.columns = (
             "Reference_No", "Applicant_ID", "Date", "Applicant_Status", "Full_Name", "Address", "Civil_Status", 
@@ -53,34 +69,23 @@ class AdminBench(tk.Toplevel):
         # Create the Treeview widget
         self.tree = ttk.Treeview(self.canvas, columns=self.columns, show='headings', height=20)
         self.tree.pack_propagate(False) # Prevent the treeview from resizing with the window
-        self.tree.place(x=955.0, y=400, anchor="center", width=1900, height=550)
+        self.tree.place(x=955.0, y=400, anchor="center", width=1880, height=560)
 
         # Style configuration
         self.style = ttk.Style()
-        self.style.configure("Treeview.Heading", background="#FFFFF", foreground="#000000", font=("Helvetica", 10))
+        self.style.configure("Treeview.Heading", background="#FFFFF", foreground="#000000", font=("Nokora", 10))
         self.style.configure("Treeview", rowheight=25)
 
-
-
-        # Column widths configuration
-        column_widths = {
-            "Reference_No": 100, "Applicant_ID": 100, "Date": 100, "Applicant_Status": 150, "Full_Name": 150, 
-            "Address": 300, "Civil_Status": 75, "Birth_Date": 100, "Age": 50, "Sex": 50, "Nationality": 100, 
-            "Religion": 100, "Highest Educational Attainment": 250, "Occupation": 150, "Monthly_Income": 150, 
-            "Membership": 100, "OtherSourceOfIncome": 150, "Monthly_Expenditures": 175, "GrossMonthlyIncome": 150, 
-            "NetMonthlyIncome": 150, "Household_ID": 100, "Family Full Name": 150, "Family Age": 50,
-            "Family Civil Status": 150, "Relationship": 100, "Family Highest Educational Attainment": 240,
-            "Family Occupation": 150, "Family Income": 150
-        }
+ 
 
         # Set headings and column widths
         for col in self.columns:
             self.tree.heading(col, text=col.replace("_", " ").title())
-            self.tree.column(col, width=column_widths.get(col, 100), anchor=tk.CENTER)
+            self.tree.column(col, width=150, minwidth=150, anchor=tk.CENTER, stretch=tk.YES)            
 
         # Create the horizontal scrollbar
         self.HScroll = ttk.Scrollbar(self.canvas, orient=tk.HORIZONTAL, command=self.tree.xview)
-        self.HScroll.place(x=960.0, y=115, anchor="center", width=1900)
+        self.HScroll.place(x=955.0, y=115, anchor="center", width=1880)
 
         # Configure the tree view to use the scrollbar
         self.tree.configure(xscrollcommand=self.HScroll.set)
@@ -88,86 +93,9 @@ class AdminBench(tk.Toplevel):
 
         # Destroy the window when the close button is clicked
         self.protocol("WM_DELETE_WINDOW", self.on_close)
-
-
         self.FetchReferenceApplicantData()
 
-    def FetchReferenceApplicantData(self):
-        rows = self.database.FetchRefApplincatHouseDetails()
 
-        for row in self.tree.get_children():
-            self.tree.delete(row)# Clear the existing data in the treeview
-
-        
-        # Define alternating colors
-        color1 = "#CFCECE"  # Light grey
-        color2 = "#FFFFFF"  # Slightly darker grey
-
-        # Insert data with alternating colors
-        for index, row in enumerate(rows):
-            tag = f"color_{index % 2}"  # Alternating tag
-            color = color1 if index % 2 == 0 else color2
-            self.tree.tag_configure(tag, background=color)
-            self.tree.insert('', 'end', values=row, tags=(tag,))
-
-
-
-    def MaleFetchApplicantData(self):
-        rows = self.database.FetchMaleApplicantDetails()
-
-        for row in self.tree.get_children():
-            self.tree.delete(row)  # Clear the existing data in the Treeview
-
-        # Define alternating colors
-        color1 = "#CFCECE"  # Light grey
-        color2 = "#FFFFFF"  # Slightly darker grey
-
-        # Insert data with alternating colors
-        for index, row in enumerate(rows):
-            tag = f"color_{index % 2}"  # Alternating tag
-            color = color1 if index % 2 == 0 else color2
-            self.tree.tag_configure(tag, background=color)
-            self.tree.insert('', 'end', values=row, tags=(tag,))
-
-    def FemaleFetchApplicantData(self):
-        rows = self.database.FetchFemaleApplicantDetails()
-
-        for row in self.tree.get_children():
-            self.tree.delete(row)  # Clear the existing data in the Treeview
-
-        color1 = "#CFCECE"  # Light grey
-        color2 = "#FFFFFF"  # Slightly darker grey
-
-        # Insert data with alternating colors
-        for index, row in enumerate(rows):
-            tag = f"color_{index % 2}"  # Alternating tag
-            color = color1 if index % 2 == 0 else color2
-            self.tree.tag_configure(tag, background=color)
-            self.tree.insert('', 'end', values=row, tags=(tag,))
-    
-    def GenderPicker(self,event):
-        if self.ComboBoxSex.get() =='Male':
-            self.MaleFetchApplicantData()
-        if self.ComboBoxSex.get() =='Female':
-            self.FemaleFetchApplicantData()
-
-
-
-    def UpdateRefAppHouseDetails(self, item):
-        new_values = [self.entries[col].get() for col in self.columns]
-        self.tree.item(item, values=new_values)
-
-        # Update the database with the new values
-        self.database.UpdateRefAppHouseDetails(
-            new_values[0], new_values[1], new_values[2], new_values[3], new_values[4], new_values[5], new_values[6],  # Update the database with the new values
-            new_values[7], new_values[8], new_values[9], new_values[10], new_values[11], new_values[12], 
-            new_values[13], new_values[14], new_values[15], new_values[16], new_values[17], new_values[18], new_values[19], new_values[20], new_values[21],new_values[22],new_values[23],new_values[24],new_values[25],new_values[26],new_values[27]
-        )
-
-        self.edit_window.destroy()
-
-
-    
 
 
     def DeleteRow(self):
@@ -177,7 +105,7 @@ class AdminBench(tk.Toplevel):
             values = self.tree.item(item, "values")  # Get the values of the selected item
             
             # Assuming the second value in the row is the primary key for deletion
-            primary_key = values[0]  # Adjust index based on your primary key column
+            primary_key = values[1]  # Adjust index based on your primary key column
             
             try:
                 self.database.delete_applicant_details(primary_key)
@@ -197,6 +125,20 @@ class AdminBench(tk.Toplevel):
         else:
             print("No item selected.")
 
+
+
+
+    def UpdateRefAppHouseDetails(self, item):
+        new_values = [self.entries[col].get() for col in self.columns]
+        self.tree.item(item, values=new_values)
+
+        # Update the database with the new values
+        self.database.UpdateRefAppHouseDetails(
+            new_values[0], new_values[1], new_values[2], new_values[3], new_values[4], new_values[5], new_values[6],  # Update the database with the new values
+            new_values[7], new_values[8], new_values[9], new_values[10], new_values[11], new_values[12], 
+            new_values[13], new_values[14], new_values[15], new_values[16], new_values[17], new_values[18], new_values[19], new_values[20], new_values[21],new_values[22],new_values[23],new_values[24],new_values[25],new_values[26],new_values[27]
+        )
+        self.edit_window.destroy()
 
 
     def EditButton(self):
@@ -253,6 +195,70 @@ class AdminBench(tk.Toplevel):
                 entry.config(state="readonly")
             for i in range(3):
                 self.entries[self.columns[i]].config(state="readonly")
+
+
+    def FetchReferenceApplicantData(self):
+        self.ComboBoxSex.set("") # Clear the combobox selection
+        rows = self.database.FetchRefApplincatHouseDetails()
+
+        for row in self.tree.get_children():
+            self.tree.delete(row)# Clear the existing data in the treeview
+
+        
+        # Define alternating colors
+        color1 = "#CFCECE"  # Light grey
+        color2 = "#FFFFFF"  # Slightly darker grey
+
+        # Insert data with alternating colors
+        for index, row in enumerate(rows):
+            tag = f"color_{index % 2}"  # Alternating tag
+            color = color1 if index % 2 == 0 else color2
+            self.tree.tag_configure(tag, background=color)
+            self.tree.insert('', 'end', values=row, tags=(tag,))
+
+
+
+    def MaleFetchApplicantData(self):
+        rows = self.database.FetchMaleApplicantDetails()
+
+        for row in self.tree.get_children():
+            self.tree.delete(row)  # Clear the existing data in the Treeview
+
+        # Define alternating colors
+        color1 = "#CFCECE"  # Light grey
+        color2 = "#FFFFFF"  # Slightly darker grey
+
+        # Insert data with alternating colors
+        for index, row in enumerate(rows):
+            tag = f"color_{index % 2}"  # Alternating tag
+            color = color1 if index % 2 == 0 else color2
+            self.tree.tag_configure(tag, background=color)
+            self.tree.insert('', 'end', values=row, tags=(tag,))
+
+
+
+    def FemaleFetchApplicantData(self):
+        rows = self.database.FetchFemaleApplicantDetails()
+
+        for row in self.tree.get_children():
+            self.tree.delete(row)  # Clear the existing data in the Treeview
+
+        color1 = "#CFCECE"  # Light grey
+        color2 = "#FFFFFF"  # Slightly darker grey
+
+        # Insert data with alternating colors
+        for index, row in enumerate(rows):
+            tag = f"color_{index % 2}"  # Alternating tag
+            color = color1 if index % 2 == 0 else color2
+            self.tree.tag_configure(tag, background=color)
+            self.tree.insert('', 'end', values=row, tags=(tag,))
+    
+    def GenderPicker(self,event):
+        if self.ComboBoxSex.get() =='Male':
+            self.MaleFetchApplicantData()
+        if self.ComboBoxSex.get() =='Female':
+            self.FemaleFetchApplicantData()
+
             
 
     def on_close(self):
