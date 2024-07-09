@@ -553,19 +553,19 @@ class Register(tk.Canvas):
         if self.Age.get() == "" or not self.Age.get().isdigit():
             messagebox.showerror("Invalid Input", "Please enter your Age.")
             return False
-        if self.Nationality.get() == "" or not self.Nationality.get().isalpha():
+        if self.Nationality.get() == "" or not self.Nationality.get().replace(" ", "").isalpha():
             messagebox.showerror("Invalid Input", "Please enter your Nationality")
             return False
-        if self.Religion.get() == "" or not self.Religion.get().isalpha():
+        if self.Religion.get() == "" or not self.Religion.get().replace(" ", "").isalpha():
             messagebox.showerror("Invalid Input", "Please enter your Religion.")
             return False
-        if self.Occupation.get() == "" or not self.Occupation.get().isalpha():
+        if self.Occupation.get() == "" or not self.Occupation.get().replace(" ", "").isalpha():
             messagebox.showerror("Invalid Input", "Please enter your Occupation.")
             return False
         if self.MonthlyIncome.get() == "" or not self.MonthlyIncome.get().isdigit():
             messagebox.showerror("Invalid Input", "Please enter your Monthly Income.")
             return False
-        if self.OtherSourceOfIncome.get() == "" or not self.OtherSourceOfIncome.get().isalpha():
+        if self.OtherSourceOfIncome.get() == "" or not self.OtherSourceOfIncome.get().replace(" ", "").isalpha():
             messagebox.showerror("Invalid Input", "Please enter your Other Source of Income.")
             return False
         if self.MonthlyExpenditure.get() == "" or not self.MonthlyExpenditure.get().isdigit():
@@ -781,11 +781,20 @@ class Register(tk.Canvas):
         self.homeButton.place(x=7.0, y=3.0, width=30.0, height=29.0)
         self.nextButton.place(x=645.0, y=451.0, width=125.0, height=26.515151977539062)
 
+    def checkCombobox(self, current_list, previous_list):
+        if current_list == previous_list:
+            return False
+        else:
+            return True
+
+
     def commit_data(self):
         
-        if self.combobox.get() == "Member 1":
+        if not self.checkCombobox(self.householdMember, ["Member 1", "Member 2"]):
             messagebox.showerror("Error", "Please add a household member first before submitting.")
             return
+        else:
+            pass
 
         try:
             applicantFields = [
@@ -842,8 +851,11 @@ class Register(tk.Canvas):
 
         except Exception as e:
             print(f"An error occurred: {e}")
-        finally:
+
+        finally:    
             self.database.close_connection()
+            self.switch_frame('applicanthomepage')
+
 
     def InsertApplicant(self):
         try:
@@ -897,11 +909,9 @@ class Register(tk.Canvas):
         except Exception as e:
             print(f"An error occurred: {e}")
         finally:
-            self.database.close_connection()
             self.switch_frame('applicanthomepage')
 
     def InsertHousehold1(self):
-        self.database.open_connection()
 
         self.HMember1Fields = [
             self.Member1_HName.get(), 
@@ -927,15 +937,16 @@ class Register(tk.Canvas):
                     )
             else:
                 print("No Household Member 1 inputted.")
+                
 
         except mysql.Error as err:
             print(f"An error occurred: {err}")
-        finally:
-            self.database.close_connection()
+
+ 
+
 
 
     def InsertHousehold2(self):
-        self.database.open_connection()
 
         self.HMember2Fields = [
             self.Member2_HName.get(), 
@@ -958,13 +969,16 @@ class Register(tk.Canvas):
                     self.Member2_HOccupation.get(),  # Hoccupation
                     self.Member2_HMonthlyincome.get()  # Hmonthlyincome
                     )   
+                self.database.close_connection()
+                
             else:
                 print("No Household Member 2 inputted.")
 
         except mysql.Error as err:
             print(f"An error occurred: {err}")
-        finally:
-            self.database.close_connection()
+
+
+
 
 
     def get_reference_id(self):
