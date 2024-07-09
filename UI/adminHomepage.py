@@ -125,9 +125,6 @@ class AdminHomepage(tk.Canvas):
 
 
 
-
-
-
     def CountApplicants(self):
         count = self.database.count_applicant_details
         self.TotalApplicants.set(count)

@@ -16,7 +16,6 @@ class ApplicantHomepage(tk.Canvas):
 
 
         
-        
         self.dashboardLogo = PhotoImage(file=resource_path("resources/applicanthome/dashboardlogo.png"))
         self.dashboardBG = PhotoImage(file=resource_path("resources/applicanthome/dashboardbg.png"))
         self.gradiantBG = PhotoImage(file=resource_path("resources/applicanthome/gradiant.png"))
@@ -148,7 +147,6 @@ class ApplicantHomepage(tk.Canvas):
     #         self.ApplicantID.config(state='disabled')
     #     except:
     #         print("Applicant ID not found")
-
 
 
 

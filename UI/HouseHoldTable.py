@@ -17,7 +17,6 @@ class AdminBenchHousehold(tk.Toplevel):
         self.switch_frame = switch_frame  # Reference to the switch_frame method of the main app
 
 
-
         # Create the canvas in the upper frame
         self.canvas = tk.Canvas(self, bg="#FFFFFF")
         self.canvas.place(x=0, y=0, relwidth=1, relheight=1)
@@ -189,8 +188,6 @@ class AdminBenchHousehold(tk.Toplevel):
             self.saveButton.config(state="disabled") # Disable the save button
             for entry in self.entries.values():
                 entry.config(state="readonly")
-
-
 
 
 

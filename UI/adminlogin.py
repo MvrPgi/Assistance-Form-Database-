@@ -13,14 +13,15 @@ class AdminLogin(tk.Canvas,):
         
 
         self.GradiantBg = PhotoImage(file=resource_path("resources/adminlogin/landingPagebg.png"))
-        self.welcomText = PhotoImage(file=resource_path("resources/adminlogin/WelcomeText.png"))
+        #self.welcomText = PhotoImage(file=resource_path("resources/adminlogin/WelcomeText.png"))
+        self.pcsioText = PhotoImage(file=resource_path("resources/applicantadmin/pcsio_text.png"))
         self.Logo = PhotoImage(file=resource_path("resources/adminlogin/Logo.png"))
         self.LogoBg = PhotoImage(file=resource_path("resources/adminlogin/loginBg.png"))
         self.TextBoxBG = PhotoImage(file=resource_path("resources/adminlogin/textBOX.png"))
         self.loginButtonBG = PhotoImage(file=resource_path("resources/adminlogin/blueBG.png"))
         self.loginButtonPic = PhotoImage(file=resource_path("resources/adminlogin/loginButton.png"))
         self.SignUpButtonPic = PhotoImage(file=resource_path("resources/adminlogin/signupButton.png"))
-        self.HomePic = PhotoImage(file=resource_path("resources/adminlogin/HomeButton.png"))
+        self.HomePic = PhotoImage(file=resource_path("resources/login/HomeButton.png"))
                                      
 
 
@@ -29,14 +30,15 @@ class AdminLogin(tk.Canvas,):
         self.create_image(0, 0, image=self.GradiantBg, anchor="nw")
         self.create_image(600.0, 250.0, image=self.LogoBg)
         self.create_image(610.0, 145, image=self.Logo)
-        self.create_image(300.0, 250, image=self.welcomText)
+        #self.create_image(300.0, 250, image=self.welcomText)
+        self.create_image(300.0, 250.0, image=self.pcsioText)
         self.create_image(603.0, 195.0, image=self.TextBoxBG)
         self.create_image(603.0, 240.0, image=self.TextBoxBG)
         
         self.create_image(603.0, 305.0, image=self.loginButtonBG)
 
         self.HomeButton = tk.Button(self, image=self.HomePic, command=self.go_to_applicant_admin,borderwidth=0, highlightthickness=0)
-        self.HomeButton.place(x=25.0, y=25.0, anchor="center", width=48, height=50)
+        self.HomeButton.place(x=40.0, y=40.0, width=40, height=40)
 
         self.create_text(475.0, 265.0, anchor="nw", text="Remember Me", fill="#000000", font=("Nokora", 12 * -1))
         self.CheckButton = tk.Checkbutton(self, bg="#FFFFFF", activebackground="#FFFFFF", selectcolor="#FFFFFF")
