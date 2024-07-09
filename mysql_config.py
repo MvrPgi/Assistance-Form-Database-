@@ -12,6 +12,6 @@ dbConfig = {
 #   host="localhost",
 #   user="root",
 #   password="1234",
-#  database="IMDB" 
+#  database="PCSODATABASE"  # PCSO DATABASE
 
 
