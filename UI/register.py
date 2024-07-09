@@ -844,65 +844,6 @@ class Register(tk.Canvas):
             print(f"An error occurred: {e}")
         finally:
             self.database.close_connection()
-            self.switch_frame('applicanthomepage')
-
-    # TODO If no lalabas error sa database connection no household member inputted
-    # TODO Validation sa InsertHousehold1 
-
-    def InsertApplicant(self):
-        try:
-            applicantFields = [
-            self.FullName.get(),
-            self.PermanentAddress.get(),
-            self.CivilStatus.get(),
-            self.Birthdate.get(),
-            self.Age.get(),
-            self.Sex.get(),
-            self.Nationality.get(),
-            self.Religion.get(),
-            self.EducationalAttainment.get(),
-            self.Occupation.get(),
-            self.MonthlyIncome.get(),
-            self.Membership.get(),
-            self.OtherSourceOfIncome.get(),
-            self.MonthlyExpenditure.get(),
-            self.GrossMonthlyIncome.get(),
-            self.NetMonthlyIncome.get(),
-            self.ReferenceNo.get(),
-            self.Date.get(),
-            self.ApplicantStatus.get()
-            ]
-            # Insert applicant and reference details
-            if all(applicantFields):
-                self.database.insert_applicant_and_reference_details(
-                    self.FullName.get(),
-                    self.PermanentAddress.get(),
-                    self.CivilStatus.get(),
-                    self.Birthdate.get(),
-                    self.Age.get(),
-                    self.Sex.get(),
-                    self.Nationality.get(),
-                    self.Religion.get(),
-                    self.EducationalAttainment.get(),
-                    self.Occupation.get(),
-                    self.MonthlyIncome.get(),
-                    self.Membership.get(),
-                    self.OtherSourceOfIncome.get(),
-                    self.MonthlyExpenditure.get(),
-                    self.GrossMonthlyIncome.get(),
-                    self.NetMonthlyIncome.get(),
-                    self.ReferenceNo.get(),
-                    self.Date.get(),
-                    self.ApplicantStatus.get()
-                )
-        except mysql.Error as err:  
-            print(f"An error occurred: {err}")
-
-        except Exception as e:
-            print(f"An error occurred: {e}")
-        finally:
-            self.database.close_connection()
-            self.switch_frame('applicanthomepage')
 
     def InsertHousehold1(self):
         self.database.open_connection()
@@ -988,3 +929,8 @@ class Register(tk.Canvas):
         else:
             print("Switch frame not none")
 
+
+        
+       
+
+    
