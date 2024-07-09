@@ -5,6 +5,8 @@ SELECT * FROM practice.household_details;
 SELECT * FROM practice.reference;
 
 
+# Insert data into the tables
+
 SELECT * FROM practice.applicant_details;
 INSERT INTO Applicant_Details (Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome) VALUES
 ('Rhys S. Montillano', '130 Manila East Rd. Baytown, Angono, Rizal', 'S', '1999-04-12', 25, 'F', 'Filipino', 'Catholic', 'College', 'Finance Clerk', 100000, 'Member', 'Marketing', 5000, 7000, 2000),
@@ -47,6 +49,10 @@ INSERT INTO Applicant_Details (Full_Name, Address, Civil_Status, Birth_Date, Age
 ('Rynn B. Reyes', '6251 Rita St., Summerwind I, Imus, Cavite', 'M', '2000-01-17', 24, 'F', 'Filipino', 'Iglesia ni Cristo', 'Post-graduate', 'Real Estate Agent', 81000, 'Member', 'Residential Property', 21000, 32000, 11000),
 ('Diana A. Tala', 'Blk 9 Lot 20, Brgy 630, Sta Mesa, Manila', 'S', '1985-10-29', 38, 'F', 'Filipino', 'Catholic', 'High School', 'Welder', 24000, 'Dependent', 'None', 10000, 14000, 4000),
 ('Cecille H. Termo', '5678 Jalandoni Street, Barangay Lapuz Norte, Iloilo City, Iloilo', 'SE', '1992-09-09', 31, 'F', 'Filipino', 'Iglesia ni Cristo', 'Post-graduate', 'Professor', 38000, 'Member', 'Investment', 9000, 17000, 8000);
+
+
+
+# Insert data into the tables
 
 INSERT INTO Household_Details (
     Household_ID, Applicant_ID, Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome
@@ -93,6 +99,7 @@ INSERT INTO Household_Details (
 (40, 40, 'Daryel H. Termo', 33, 'M', 'Cousin', 'High School', 'Cook', 22000);
 
 
+# Insert data into the tables
 INSERT INTO Reference (Reference_No, Applicant_ID, Date, Applicant_Status)
 VALUES 
 ('XY0001', 1, '2024-04-23', 'OLD APPLICANT'),
@@ -136,7 +143,7 @@ VALUES
 ('XY0039', 39, '2024-08-01', 'NEW APPLICANT'),
 ('XY0040', 40, '2021-07-05', 'OLD APPLICANT');
 
-
+# Insert data into the tables
 
 INSERT INTO admin(Username,_Password)
 VALUES

@@ -10,7 +10,7 @@ from UI.adminHomepage import AdminHomepage
 from UI.HouseHoldTable import AdminBenchHousehold
 from UI.ApplicantTable import ApplicantTable
 from UI.referenceTable import AdminBenchReference
-from mysql_connection import DatabaseConnection
+
 
 
 import tkinter as tk
@@ -83,9 +83,6 @@ class App(tk.Tk):
 
         if self.current_frame is not None:
             self.current_frame.pack(fill=tk.BOTH, expand=True)
-
-
-
 
 
 

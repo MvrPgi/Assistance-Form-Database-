@@ -1,3 +1,5 @@
+# MySQL Configuration File
+
 dbConfig = {
     'host': 'localhost',
     'user': 'root',
@@ -11,4 +13,5 @@ dbConfig = {
 #   user="root",
 #   password="1234",
 #  database="IMDB" 
+
 
