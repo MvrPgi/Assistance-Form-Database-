@@ -19,7 +19,7 @@ from tkinter import ttk
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Main App")
+        self.title("PCSOIA PORTAL")
         self.geometry("820x500")
         self.resizable(False, False)
 
