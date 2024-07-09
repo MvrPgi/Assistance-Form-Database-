@@ -20,6 +20,8 @@ class AdminLogin(tk.Canvas,):
         self.loginButtonBG = PhotoImage(file=resource_path("resources/adminlogin/blueBG.png"))
         self.loginButtonPic = PhotoImage(file=resource_path("resources/adminlogin/loginButton.png"))
         self.SignUpButtonPic = PhotoImage(file=resource_path("resources/adminlogin/signupButton.png"))
+        self.HomePic = PhotoImage(file=resource_path("resources/adminlogin/HomeButton.png"))
+                                     
 
 
 
@@ -32,6 +34,9 @@ class AdminLogin(tk.Canvas,):
         self.create_image(603.0, 240.0, image=self.TextBoxBG)
         
         self.create_image(603.0, 305.0, image=self.loginButtonBG)
+
+        self.HomeButton = tk.Button(self, image=self.HomePic, command=self.go_to_applicant_admin,borderwidth=0, highlightthickness=0)
+        self.HomeButton.place(x=25.0, y=25.0, anchor="center", width=48, height=50)
 
         self.create_text(475.0, 265.0, anchor="nw", text="Remember Me", fill="#000000", font=("Nokora", 12 * -1))
         self.CheckButton = tk.Checkbutton(self, bg="#FFFFFF", activebackground="#FFFFFF", selectcolor="#FFFFFF")
@@ -96,3 +101,8 @@ class AdminLogin(tk.Canvas,):
             if self.switch_frame:
                 print("Switching to adminhomepage...")
                 self.switch_frame('adminhomepage')
+
+
+    def go_to_applicant_admin(self):
+        if self.switch_frame:
+            self.switch_frame('applicantadmin')
