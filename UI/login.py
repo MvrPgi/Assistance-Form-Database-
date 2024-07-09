@@ -24,7 +24,7 @@ class Login(tk.Canvas):
         self.loginButtonPic = PhotoImage(file=resource_path("resources/login/loginButton.png"))
         self.SignUpButtonPic = PhotoImage(file=resource_path("resources/login/signupButton.png"))
         self.dontHaveAccount = PhotoImage(file=resource_path("resources/login/dontHave_text.png"))
-        self.HomePic = PhotoImage(file=resource_path("resources/adminlogin/HomeButton.png"))
+        self.HomePic = PhotoImage(file=resource_path("resources/login/HomeButton.png"))
 
 
 
@@ -38,9 +38,8 @@ class Login(tk.Canvas):
         self.create_image(603.0, 285.0, image=self.loginButtonBG)
 
         self.HomeButton = tk.Button(self, image=self.HomePic, command=self.go_to_applicant_admin,borderwidth=0, highlightthickness=0)
-        self.HomeButton.place(x=25.0, y=25.0, anchor="center", width=48, height=50)
+        self.HomeButton.place(x=40.0, y=40.0, width=40, height=40)
 
-        
         self.LoginButton = tk.Button(self, image=self.loginButtonPic, command=self.loginApplicant,borderwidth=0, highlightthickness=0)
         self.LoginButton.place(x=480.0, y=270.0, width=250.0, height=31.0)
 
