@@ -175,16 +175,21 @@ class Register(tk.Canvas):
 
         self.NewApplicant = Radiobutton(self, text="New Applicant", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="New Applicant", variable=self.ApplicantStatus, font = self.radiobuttonFont)
         self.OldApplicant = Radiobutton(self, text="Old Applicant", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Old Applicant", variable=self.ApplicantStatus, font = self.radiobuttonFont)
+        
         self.Male = Radiobutton(self, text="Male", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.Sex, font=self.radiobuttonFont)
         self.Female = Radiobutton(self, text="Female", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="F", variable=self.Sex, font=self.radiobuttonFont)
+        
         self.Member = Radiobutton(self, text="Member", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Member", variable = self.Membership, font=self.radiobuttonFont)
         self.NonMember = Radiobutton(self, text="Non-Member", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Non-Member", variable = self.Membership, font=self.radiobuttonFont)
         self.Dependent = Radiobutton(self, text="Dependent", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Dependent", variable = self.Membership, font=self.radiobuttonFont)
+        
         self.Single = Radiobutton(self, text="Single", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="S", variable=self.CivilStatus, font=self.radiobuttonFont)
         self.Married = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.CivilStatus, font=self.radiobuttonFont)
         self.Widow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="W", variable=self.CivilStatus, font=self.radiobuttonFont) 
         self.Separated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="SE", variable=self.CivilStatus, font=self.radiobuttonFont)
-        self.WithPartner = Radiobutton(self, text="With Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="C", variable=self.CivilStatus, font=self.radiobuttonFont)
+        self.WithPartner = Radiobutton(self, text="w/ Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="C", variable=self.CivilStatus, font=self.radiobuttonFont)
+        self.Other = Radiobutton(self, text="Other", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="O", variable=self.CivilStatus, font=self.radiobuttonFont)
+
         self.PostGraduate = Radiobutton(self, text="Post Graduate", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Post Graduate", variable=self.EducationalAttainment, font=self.radiobuttonFont)
         self.College = Radiobutton(self, text="College", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="College", variable=self.EducationalAttainment, font=self.radiobuttonFont)
         self.Elementary = Radiobutton(self, text="Elementary", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Elementary", variable=self.EducationalAttainment, font=self.radiobuttonFont)
@@ -195,16 +200,21 @@ class Register(tk.Canvas):
         # RADIOBUTTON PLACE
         self.NewApplicant.place(x=55.0, y=96, width=100.0, height=20.0)
         self.OldApplicant.place(x=160.0, y=96, width=100.0, height=20.0)
+
         self.Male.place(x=472.0, y=180.0, width=60.0, height=15.0)
         self.Female.place(x=564.0, y=180.0, width=60.0, height=15.0)
+
         self.Member.place(x=472.0, y=220.0, width=80.0, height=15.0)
         self.NonMember.place(x=550.0, y=220.0, width=120.0, height=15.0)
         self.Dependent.place(x=660.0, y=220.0, width=100.0, height=15.0)
+
         self.Single.place(x=477.0, y=270.0, width=60.0, height=15.0)
-        self.Married.place(x=564.0, y=270.0, width=60.0, height=15.0)
-        self.Widow.place(x=668.0, y=270.0, width=60.0, height=15.0)
+        self.Married.place(x=550.0, y=270.0, width=60.0, height=15.0)
+        self.Widow.place(x=620.0, y=270.0, width=60.0, height=15.0)
         self.Separated.place(x=477.0, y=288.0, width=80.0, height=15.0)
-        self.WithPartner.place(x=563.0, y=288.0, width=170.0, height=15.0)
+        self.WithPartner.place(x=557.0, y=288.0, width=170.0, height=15.0)
+        self.Other.place(x=680.0, y=270.0, width=60.0, height=15.0)
+        
         self.PostGraduate.place(x=468.0, y=330.0, width=120.0, height=15.0)
         self.College.place(x=590.0, y=330.0, width=80.0, height=15.0)
         self.Elementary.place(x=670.0, y=330.0, width=100.0, height=15.0)
@@ -315,7 +325,7 @@ class Register(tk.Canvas):
         self.Member1_HWidow = Radiobutton(self, text="Widow", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="W", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
         self.Member1_HMarried = Radiobutton(self, text="Married", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="M", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
         self.Member1_HSeparated = Radiobutton(self, text="Separated", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="SE", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
-        self.Member1_HWithPartner = Radiobutton(self, text="w/ Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="C", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)
+        self.Member1_HWithPartner = Radiobutton(self, text="w/ Common Law Partner", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="C", variable=self.Member1_HCivilStatus, font = self.radiobuttonFont)      
 
         self.Member1_HPost_Graduate = Radiobutton(self, text="Post Graduate", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="Post Graduate", variable=self.Member1_HEducationalAttainment, font=self.radiobuttonFont)
         self.Member1_HCollege = Radiobutton(self, text="College", bg="#FFFFFF", fg="#000716", activebackground="#FFFFFF", activeforeground="#000716", borderwidth=0, highlightthickness=0, value="College", variable=self.Member1_HEducationalAttainment, font=self.radiobuttonFont)
@@ -639,6 +649,7 @@ class Register(tk.Canvas):
         self.Widow.place_forget()
         self.Separated.place_forget()
         self.WithPartner.place_forget()
+        self.Other.place_forget()
         self.PostGraduate.place_forget()
         self.College.place_forget()
         self.Elementary.place_forget()
