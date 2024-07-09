@@ -23,7 +23,6 @@ class ApplicantTable(tk.Toplevel):
         self.canvas.create_image(955.0, 15, image=self.Header)
      
 
-
         self.EditBGPic = PhotoImage(file=resource_path("resources/adminbench/UpdateBG.png"))
         self.canvas.create_image(80.0, 90, image=self.EditBGPic)
         self.UpdateButtonImage = PhotoImage(file=resource_path("resources/adminbench/updateButton.png"))
