@@ -28,9 +28,6 @@ class AdminBench(tk.Toplevel):
         # self.canvas.create_line(1896, 106, 1896, 680, fill="#000000")
 
 
-
-
-
         self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male", "Female"], state="readonly", width=10, font=("Nokora", 10,))
         self.ComboBoxSex.place(x=512, y=90, anchor="center")
         self.ComboBoxSex.bind("<<ComboboxSelected>>", self.GenderPicker)
