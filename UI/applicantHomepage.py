@@ -178,5 +178,6 @@ class ApplicantHomepage(tk.Canvas):
     def GetUserName(self):
         username = self.database.GetLastApplicantEntry()
         print(username)
+        self.database.close_connection()
         return username
     

@@ -658,7 +658,7 @@ class Register(tk.Canvas):
         self.Member1_HRelation.place(x=108.0, y=300.0, width=100.0, height=15.0)
         self.Member1_HOccupation.place(x=108.0, y=349.0, width=100.0, height=15.0)
         self.Member1_HAge.place(x=300.0, y=300.0, width=100.0, height=15.0)
-        self.Member1_HMonthlyincome.place(x=300.0, y=349.0, width=100.0, height=15.0)
+        self.Member1_HMonthlyincome.place(x=300.0, y=350.0, width=100.0, height=15.0)
 
         self.addButton.place(x=650.0, y=103.0, width=40.0, height=35.0)
         self.deleteButton.place(x=695.0, y=103.0, width=40.0, height=35.0)
@@ -844,6 +844,61 @@ class Register(tk.Canvas):
             print(f"An error occurred: {e}")
         finally:
             self.database.close_connection()
+
+    def InsertApplicant(self):
+        try:
+            applicantFields = [
+            self.FullName.get(),
+            self.PermanentAddress.get(),
+            self.CivilStatus.get(),
+            self.Birthdate.get(),
+            self.Age.get(),
+            self.Sex.get(),
+            self.Nationality.get(),
+            self.Religion.get(),
+            self.EducationalAttainment.get(),
+            self.Occupation.get(),
+            self.MonthlyIncome.get(),
+            self.Membership.get(),
+            self.OtherSourceOfIncome.get(),
+            self.MonthlyExpenditure.get(),
+            self.GrossMonthlyIncome.get(),
+            self.NetMonthlyIncome.get(),
+            self.ReferenceNo.get(),
+            self.Date.get(),
+            self.ApplicantStatus.get()
+            ]
+            # Insert applicant and reference details
+            if all(applicantFields):
+                self.database.insert_applicant_and_reference_details(
+                    self.FullName.get(),
+                    self.PermanentAddress.get(),
+                    self.CivilStatus.get(),
+                    self.Birthdate.get(),
+                    self.Age.get(),
+                    self.Sex.get(),
+                    self.Nationality.get(),
+                    self.Religion.get(),
+                    self.EducationalAttainment.get(),
+                    self.Occupation.get(),
+                    self.MonthlyIncome.get(),
+                    self.Membership.get(),
+                    self.OtherSourceOfIncome.get(),
+                    self.MonthlyExpenditure.get(),
+                    self.GrossMonthlyIncome.get(),
+                    self.NetMonthlyIncome.get(),
+                    self.ReferenceNo.get(),
+                    self.Date.get(),
+                    self.ApplicantStatus.get()
+                )
+        except mysql.Error as err:  
+            print(f"An error occurred: {err}")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            self.database.close_connection()
+            self.switch_frame('applicanthomepage')
 
     def InsertHousehold1(self):
         self.database.open_connection()
