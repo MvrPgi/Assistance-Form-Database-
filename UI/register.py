@@ -675,8 +675,8 @@ class Register(tk.Canvas):
         self.Member1_HCollege.place(x=600.0, y=315.0, width=80.0, height=15.0)
         self.Member1_HHigh_School.place(x=484.0, y=333.0, width=100.0, height=15.0)
         self.Member1_HElementary_School.place(x=599.0, y=333.0, width=100.0, height=15.0)
-        self.Member1_HVocational.place(x=479.0, y=348.0, width=100.0, height=15.0)
-        self.Member1_HNone.place(x=603.0, y=348.0, width=60.0, height=15.0)
+        self.Member1_HVocational.place(x=479.0, y=350.0, width=100.0, height=15.0)
+        self.Member1_HNone.place(x=603.0, y=350.0, width=60.0, height=15.0)
 
         self.combobox.place(x=70.0, y=153.0, width=672.0, height=30.0)
         self.combobox.config(state="readonly")

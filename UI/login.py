@@ -15,21 +15,23 @@ class Login(tk.Canvas):
 
 
         self.GradiantBg = PhotoImage(file=resource_path("resources/login/landingPagebg.png"))
-        self.welcomText = PhotoImage(file=resource_path("resources/login/WelcomeText.png"))
+        #self.welcomText = PhotoImage(file=resource_path("resources/login/WelcomeText.png"))
+        self.pcsioText = PhotoImage(file=resource_path("resources/applicantadmin/pcsio_text.png"))
         self.Logo = PhotoImage(file=resource_path("resources/login/Logo.png"))
         self.LogoBg = PhotoImage(file=resource_path("resources/login/loginBg.png"))
         self.TextBoxBG = PhotoImage(file=resource_path("resources/login/textBOX.png"))
         self.loginButtonBG = PhotoImage(file=resource_path("resources/login/blueBG.png"))
         self.loginButtonPic = PhotoImage(file=resource_path("resources/login/loginButton.png"))
         self.SignUpButtonPic = PhotoImage(file=resource_path("resources/login/signupButton.png"))
-
+        self.dontHaveAccount = PhotoImage(file=resource_path("resources/login/dontHave_text.png"))
 
 
 
         self.create_image(0, 0, image=self.GradiantBg, anchor="nw")
         self.create_image(600.0, 250.0, image=self.LogoBg)
         self.create_image(610.0, 145, image=self.Logo)
-        self.create_image(300.0, 250, image=self.welcomText)
+        self.create_image(300.0, 250.0, image=self.pcsioText)
+        #self.create_image(300.0, 250, image=self.welcomText)
         self.create_image(603.0, 195.0, image=self.TextBoxBG)
         self.create_image(603.0, 240.0, image=self.TextBoxBG)
         self.create_image(603.0, 285.0, image=self.loginButtonBG)
@@ -38,10 +40,12 @@ class Login(tk.Canvas):
         self.LoginButton.place(x=480.0, y=270.0, width=250.0, height=31.0)
 
         self.create_line(470.0, 320.5, 735.0, 320.5, fill="#000000")
-        self.create_text(470.0, 320.0, anchor="nw", text="Don't have an account?", fill="#000000", font=("Nokora", 12 * -1))
+        #self.create_text(510.0, 340.0, anchor="nw", text="Don't have an account?", fill="#000000", font=("Nokora", 12 * -1))
+        self.create_image(568.0, 350.0, image=self.dontHaveAccount) 
+
 
         self.SignUpButton = tk.Button(self, image=self.SignUpButtonPic, command=self.go_to_signup,borderwidth=0, highlightthickness=0)
-        self.SignUpButton.place(x=620.0, y=328.0, anchor="center", width=45, height=13)
+        self.SignUpButton.place(x=673.0, y=349.0, anchor="center", width=45, height=13)
 
         self.Username = Entry(self, font=("Nokora", 10), bd=0, bg="#FFFFFF", highlightthickness=0)
         self.Username.place(x=480.0, y=183.0, width=240.0, height=25.0)
