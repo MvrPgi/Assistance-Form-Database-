@@ -10,7 +10,7 @@ from UI.adminHomepage import AdminHomepage
 from UI.HouseHoldTable import AdminBenchHousehold
 from UI.ApplicantTable import ApplicantTable
 from UI.referenceTable import AdminBenchReference
-from mysql_connection import DatabaseConnection
+
 
 
 import tkinter as tk
@@ -19,7 +19,7 @@ from tkinter import ttk
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Main App")
+        self.title("PCSOIA PORTAL")
         self.geometry("820x500")
         self.resizable(False, False)
 
@@ -83,9 +83,6 @@ class App(tk.Tk):
 
         if self.current_frame is not None:
             self.current_frame.pack(fill=tk.BOTH, expand=True)
-
-
-
 
 
 

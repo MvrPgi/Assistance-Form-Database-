@@ -1,7 +1,17 @@
 # PCSO IMAP APPLICATION DATABASE
 
-
 Welcome to the Information Management Prerequisite Project repository! This project is designed as a prerequisite assignment for our Information Management course.
+
+## Pre-requisites
+###### Installing SQL Connector
+You can install `mysql-connector-python` using `pip`, Python's package installer. Open your terminal or command prompt and enter the following command:
+```bash
+pip install mysql-connector-python
+```
+Note: If There Is An Error, Try Using `pip3` Instead Of `pip`, Or Add `--user` At The End Of The Command.
+
+
+
 ## Introduction
 
 The Philippine Charity Sweepstakes Office (PCSO) developed the Individual Medical Assistance Program (IMAP) applicant database to transform how medical assistance is provided throughout the Philippines. The goal is to improve data management effectiveness, simplify application procedures, and guarantee the safe handling of private and health-related data through careful database architecture. 
