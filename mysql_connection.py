@@ -352,16 +352,26 @@ class DatabaseConnection:
     # -------------------------------------------------------GET LAST APPLICANT ID----------------------------------------------------------------------------
 
     
+    # def get_last_applicant_id(self):
+
+    #         try:
+    #             last_applicant_id_query = "SELECT LAST_INSERT_ID() "
+    #             self.cursor.execute(last_applicant_id_query)
+    #             last_applicant_id = self.cursor.fetchone()
+    #             return last_applicant_id[0]
+    #         except Error as e:
+    #             print(f"Error: {e}")
+
+
     def get_last_applicant_id(self):
-
-            try:
-                last_applicant_id_query = "SELECT LAST_INSERT_ID()"
-                self.cursor.execute(last_applicant_id_query)
-                last_applicant_id = self.cursor.fetchone()
-                return last_applicant_id[0]
-            except Error as e:
-                print(f"Error: {e}")
-
+        try:
+            last_applicant_id_query = "SELECT MAX(applicant_id) FROM Applicant_Details"
+            self.cursor.execute(last_applicant_id_query)
+            last_applicant_id = self.cursor.fetchone()
+            return last_applicant_id[0]
+        except Error as e:
+            print(f"Error: {e}")
+            return None
 
 # -------------------------------------------------------INSERT APPLICANT AND REFERENCE DETAILS--------------------------------------------------------------------------
     def insert_applicant_and_reference_details(self, Full_Name, Address, Civil_Status, Birth_Date, Age, Sex, Nationality, Religion, Highest_Educ_Attainment, Occupation, Monthly_Income, Membership, OtherSourceOfIncome, Monthly_Expenditures, GrossMonthlyIncome, NetMonthlyIncome, Reference_No, Date, Applicant_Status):
