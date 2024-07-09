@@ -202,6 +202,7 @@ class DatabaseConnection:
                 data = (Applicant_ID, Date, Applicant_Status, Reference_No)
                 self.cursor.execute(query, data)
                 self.con.commit()
+                messagebox.showinfo(title="Edit Success", message="Edit Success")
             except Error as e:
                 print(f"Error: {e}")
             finally:
@@ -238,6 +239,7 @@ class DatabaseConnection:
                 data = (Applicant_ID,Hhold_Fam_Name, Hhold_Fam_Age, Hhold_Fam_CivilStatus, Hhold_Fam_RSWithPatient, Hhold_Fam_HighestEducAttain, Hhold_Fam_Occupation, Hhold_Fam_MonthlyIncome, Household_Id)
                 self.cursor.execute(query, data)
                 self.con.commit()
+                messagebox.showinfo(title="Edit Success", message="Edit Success")
             except Error as e:
                 print(f"Error: {e}")
             finally:
@@ -295,7 +297,7 @@ class DatabaseConnection:
                 """
                 self.cursor.execute(delete_applicant_id_query, (Applicant_ID,))
                 self.con.commit()
-                print("Records deleted successfully.")
+                messagebox.showinfo(title="Delete Success", message="Delete Success")
             except Error as e:
                 print(f"Error: {e}")
                 if self.con.is_connected():
@@ -314,7 +316,7 @@ class DatabaseConnection:
                 """
                 self.cursor.execute(delete_household_query, (household_id,))
                 self.con.commit()
-                print("Records deleted successfully.")
+                messagebox.showinfo(title="Delete Success", message="Delete Success")
             except Error as e:
                 print(f"Error: {e}")
                 if self.con.is_connected():
@@ -423,7 +425,7 @@ class DatabaseConnection:
             self.cursor.execute(reference_query, reference_data)
             self.con.commit()
 
-            messagebox.showinfo(title="PCSCO TABLE", message="NEW RECORD AND REFERENCE ADDED SUCCESSFULLY")
+            messagebox.showinfo(title="PCSCO TABLE", message="NEW RECORD ADDED SUCCESSFULLY")
 
         except Error as e:
             print(f"Error: {e}")
@@ -470,7 +472,6 @@ class DatabaseConnection:
 
             # Execute the query
             self.cursor.execute(household_query, household_data)
-            
             # Commit the transaction
             self.con.commit()
             
