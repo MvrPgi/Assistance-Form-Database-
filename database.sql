@@ -1,4 +1,4 @@
-
+--  Author: Alwyn John M. Mercene
 
 -- Create the database if it does not exist and use it
 CREATE DATABASE IF NOT EXISTS practice;
