@@ -292,7 +292,7 @@ class AdminHomepage(tk.Canvas):
     
     def Moderate3Columns(self):
         self.Moderate3Columns = self.database.ModerateTask3()
-        self.ColumnsModerate = ("Applicant ID", "Full Name", "Address", "Average Monthly Income")
+        self.ColumnsModerate = ("Civil Status", "College Graduate Count", "Sum Of Montly Income")
         self.Tree["columns"] = self.ColumnsModerate
 
         for col in self.ColumnsModerate:
@@ -380,7 +380,7 @@ class AdminHomepage(tk.Canvas):
 
     def Hard3Columns(self):
         self.Hard3Columns = self.database.HardTask3()
-        self.ColumnsHard = ("Applicant ID", "Full Name", "Family Member Count", "Average Family Income")
+        self.ColumnsHard = ("Applicant ID", "Full Name", "Family Member Count", "Average Family Member Income")
         self.Tree["columns"] = self.ColumnsHard
 
         for col in self.ColumnsHard:
