@@ -544,7 +544,7 @@ class Register(tk.Canvas):
             datetime.strptime(date_str, date_format)
             return True
         except ValueError:
-            messagebox.showerror("Invalid Input", "Please enter the date in YYYY/MM/DD format.")
+            messagebox.showerror("Invalid Input", "Please enter the date in YYYY-MM-DD format.")
             return False
 
     def validate_entries(self):
@@ -555,37 +555,37 @@ class Register(tk.Canvas):
             messagebox.showerror("Invalid Input", "Please select an Applicant Status.")
             return False
         if self.FullName.get() == "" or not self.FullName.get().replace(" ", "").isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Full Name.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Full Name.")
             return False
         if self.PermanentAddress.get() == "":
-            messagebox.showerror("Invalid Input", "Please enter your Permanent Address.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Permanent Address.")
             return False
         if self.Age.get() == "" or not self.Age.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Age.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Age.")
             return False
         if self.Nationality.get() == "" or not self.Nationality.get().replace(" ", "").isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Nationality")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Nationality")
             return False
         if self.Religion.get() == "" or not self.Religion.get().replace(" ", "").isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Religion.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Religion.")
             return False
         if self.Occupation.get() == "" or not self.Occupation.get().replace(" ", "").isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Occupation.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Occupation.")
             return False
         if self.MonthlyIncome.get() == "" or not self.MonthlyIncome.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Monthly Income.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Monthly Income.")
             return False
         if self.OtherSourceOfIncome.get() == "" or not self.OtherSourceOfIncome.get().replace(" ", "").isalpha():
-            messagebox.showerror("Invalid Input", "Please enter your Other Source of Income.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Other Source of Income.")
             return False
         if self.MonthlyExpenditure.get() == "" or not self.MonthlyExpenditure.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Monthly Expenditure.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Monthly Expenditure.")
             return False
         if self.GrossMonthlyIncome.get() == "" or not self.GrossMonthlyIncome.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Gross Monthly Income.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Gross Monthly Income.")
             return False
         if self.NetMonthlyIncome.get() == "" or not self.NetMonthlyIncome.get().isdigit():
-            messagebox.showerror("Invalid Input", "Please enter your Net Monthly Income.")
+            messagebox.showerror("Invalid Input", "Please enter a valid value for Net Monthly Income.")
             return False
         if self.Sex.get() == "None" or self.Sex.get() == "":
             messagebox.showerror("Invalid Input", "Please select a Sex.")
