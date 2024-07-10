@@ -112,26 +112,26 @@ class DatabaseConnection:
             return None
         
         
-    # def GetApplicantLoginDetails(self):
-    #     self.open_connection()
-    #     username = self.GetLastApplicantEntry()
-    #     if not username:
-    #         print("No username found.")
-    #         return None
+    def GetApplicantLoginDetails(self):
+        self.open_connection()
+        username = self.GetLastApplicantEntry()
+        if not username:
+            print("No username found.")
+            return None
 
-    #     try:
-    #         query = """
-    #             SELECT U.FullName, U.Username,U._Password,A.Applicant_ID
-    #             FROM user as U
-    #             WHERE U.Applicant_ID AND U.Username = %s 
-    #         """
-    #         self.cursor.execute(query,username,)
-    #         rows = self.cursor.fetchall()
-    #         return rows
-    #     except Error as e:
-    #         print(f"Error: {e}")
-    #     finally:
-    #         self.close_connection()
+        try:
+            query = """
+                SELECT U.FullName, U.Username,U._Password
+                FROM user as U
+                WHERE U.Username = %s 
+            """
+            self.cursor.execute(query,username,)
+            rows = self.cursor.fetchall()
+            return rows
+        except Error as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
 
 
 # ---------------------------------------------------------------ADMIN LOGIN-----------------------------------------------------------------------------
@@ -510,6 +510,7 @@ class DatabaseConnection:
                 print(f"Error: {e}")
 
 
+                # LEFT JOIN ensures that all applicants are included, regardless of whether they have household details.
 
     # -------------------------------------------------------FETCH APPLICANT DETAILS--------------------------------------------------------------------------
 
