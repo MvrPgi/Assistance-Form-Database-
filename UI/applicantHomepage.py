@@ -58,7 +58,7 @@ class ApplicantHomepage(tk.Canvas):
         self.RegisterButton.place(x=20.0, y=200.0, width=160.0, height=28.0)
 
         self.create_image(100.0, 265.0, image = self.ButtonBG)
-        self.ProfileButton = tk.Button(self, image=self.ProfileButtonPic, borderwidth=0, highlightthickness=0, command=lambda:print("Enter"), relief="flat")
+        self.ProfileButton = tk.Button(self, image=self.ProfileButtonPic, borderwidth=0, highlightthickness=0, command=self.ApplicantAccount, relief="flat")
         self.ProfileButton.place(x=20.0, y=250.0, width=160.0, height=28.0)
 
 
@@ -75,14 +75,13 @@ class ApplicantHomepage(tk.Canvas):
 
         self.ApplicantAccountID =[]
         self.ApplicantAccountID.append(self.create_image(350.0, 50.0, image = self.UserImageText, state ="hidden"))
-        self.ApplicantAccountID.append(self.create_text(260.0, 100.0, anchor = "nw", text = "Applicant ID", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
-        self.ApplicantID = Entry(self, font=("Nokora", 17 * -1,"bold"),state='normal')
 
-        self.ApplicantAccountID.append(self.create_text(260.0, 160.0, anchor = "nw", text = "User Name", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
+        self.ApplicantAccountID.append(self.create_text(260.0, 120.0, anchor = "nw", text = "User Name", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
         self.UserName = Entry(self, font=("Nokora", 17 * -1,"bold"),state='normal')
-        self.ApplicantAccountID.append(self.create_text(260.0, 220.0, anchor = "nw", text = "Full Name", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
+     
+        self.ApplicantAccountID.append(self.create_text(260.0, 190.0, anchor = "nw", text = "Full Name", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
         self.FullName = Entry(self, font=("Nokora", 17 * -1,"bold"),state='normal')
-        self.ApplicantAccountID.append(self.create_text(260.0, 280.0, anchor = "nw", text = "Password", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
+        self.ApplicantAccountID.append(self.create_text(260.0, 255.0, anchor = "nw", text = "Password", fill="#000000", font=("Nokora", 17 * -1,"bold"), state ="hidden"))
         self.Password = Entry(self, font=("Nokora", 17 * -1,"bold"),state='normal')
 
 
@@ -103,50 +102,49 @@ class ApplicantHomepage(tk.Canvas):
 
 
         self.GetStartedButton.place(x=320.0, y=361.0, width=400.0, height=30.0)
-        # self.ApplicantID.place(x=260.0, y=120.0, width=400.0, height=30.0)
-        # self.FullName.place(x=260.0, y=240.0, width=400.0, height=30.0)
-        # self.UserName.place(x=260.0, y=180.0, width=400.0, height=30.0)
-        # self.Password.place(x=260.0, y=300.0, width=400.0, height=30.0)
+
+        self.UserName.place(x=260.0, y=150.0, width=400.0, height=30.0)
+        self.FullName.place(x=260.0, y=215.0, width=400.0, height=30.0)
+        self.Password.place(x=260.0, y=280.0, width=400.0, height=30.0)
 
 
-
-        # self.FullName.place_forget()
-        # self.UserName.place_forget()
-        # self.Password.place_forget()
-        # self.ApplicantID.place_forget()
-
-    # def ApplicantAccount(self):
-
-    #     try:
-    #         for getstarted in self.GetStartedID:
-    #             self.itemconfigure(getstarted, state="hidden")
+        self.FullName.place_forget()
+        self.UserName.place_forget()
+        self.Password.place_forget()
 
 
-    #         for account in self.ApplicantAccountID:
-    #             self.itemconfigure(account, state="normal")
-    #         self.ApplicantID.place(x=260.0, y=120.0, width=400.0, height=30.0)
-    #         self.FullName.place(x=260.0, y=240.0, width=400.0, height=30.0)
-    #         self.UserName.place(x=260.0, y=180.0, width=400.0, height=30.0)
-    #         self.Password.place(x=260.0, y=300.0, width=400.0, height=30.0)
-    #         self.GetStartedButton.place(x=320.0, y=361.0, width=400.0, height=30.0)
-    #         self.GetStartedButton.place_forget()
+    def ApplicantAccount(self):
+
+        try:
+            for getstarted in self.GetStartedID:
+                self.itemconfigure(getstarted, state="hidden")
 
 
-    #         rows = self.database.GetApplicantLoginDetails()
+            for account in self.ApplicantAccountID:
+                self.itemconfigure(account, state="normal")
+
+            self.UserName.place(x=260.0, y=150.0, width=400.0, height=30.0)
+            self.FullName.place(x=260.0, y=215.0, width=400.0, height=30.0)
+            self.Password.place(x=260.0, y=280.0, width=400.0, height=30.0)
+            
+            self.GetStartedButton.place(x=320.0, y=361.0, width=400.0, height=30.0)
+            self.GetStartedButton.place_forget()
+
+            rows = self.database.GetApplicantLoginDetails()
      
-    #         self.UserName.delete(0, tk.END)
-    #         self.FullName.delete(0, tk.END)
-    #         self.Password.delete(0, tk.END)
-    #         self.UserName.insert(0, rows[0][1])
-    #         self.FullName.insert(0, rows[0][0])
-    #         self.Password.insert(0, rows[0][2])
+            self.UserName.delete(0, tk.END)
+            self.FullName.delete(0, tk.END)
+            self.Password.delete(0, tk.END)
+            self.UserName.insert(0, rows[0][1])
+            self.FullName.insert(0, rows[0][0])
+            self.Password.insert(0, rows[0][2])
+            self.UserName.config(state='readonly')
+            self.FullName.config(state='readonly')
+            self.Password.config(state='readonly')
  
-    #         self.ApplicantID.config(state='normal')
-    #         self.ApplicantID.delete(0, tk.END)
-    #         self.ApplicantID.insert(0, rows[0][3])
-    #         self.ApplicantID.config(state='disabled')
-    #     except:
-    #         print("Applicant ID not found")
+
+        except:
+            print("Applicant ID not found")
 
 
 
