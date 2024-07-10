@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import PhotoImage, Entry
+from tkinter import PhotoImage, Entry,messagebox
 import mysql.connector
 from mysql_config import dbConfig
 from mysql_connection import DatabaseConnection
@@ -28,8 +28,8 @@ class AdminBench(tk.Toplevel):
         # self.canvas.create_line(1896, 106, 1896, 680, fill="#000000")
 
 
-        self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Male", "Female"], state="readonly", width=10, font=("Nokora", 10,))
-        self.ComboBoxSex.place(x=512, y=90, anchor="center")
+        self.ComboBoxSex = ttk.Combobox(self.canvas, values=["Gender - Male", "Gender - Female"], state="readonly", width=30, font=("Nokora", 10,))
+        self.ComboBoxSex.place(x=595, y=90, anchor="center")
         self.ComboBoxSex.bind("<<ComboboxSelected>>", self.GenderPicker)
 
 
@@ -50,6 +50,17 @@ class AdminBench(tk.Toplevel):
         self.RefreshButtonImage = PhotoImage(file=resource_path("resources/adminbench/refreshButton.png"))
         self.refreshButton = tk.Button(self.canvas, image=self.RefreshButtonImage, command=self.FetchReferenceApplicantData, borderwidth=0, highlightthickness=0)
         self.refreshButton.place(x=340.0, y=92, anchor="center", width=95, height=18)
+
+        self.SearchBGPic = PhotoImage(file=resource_path("resources/adminbench/searchBG.png"))
+        self.canvas.create_image(1820.0, 90, image=self.SearchBGPic)
+        self.SearchButtonImage = PhotoImage(file=resource_path("resources/adminbench/searchButton.png"))
+        self.searchButton = tk.Button(self.canvas, image=self.SearchButtonImage, borderwidth=0, highlightthickness=0, command=self.SearchApplicant)
+        self.searchButton.place(x=1820.0, y=90, anchor="center", width=95, height=20)
+
+        self.searchBG = PhotoImage(file=resource_path("resources/adminbench/searchEntry.png"))
+        self.canvas.create_image(1600.0, 90, image=self.searchBG)
+        self.EntrySearch = Entry(self.canvas, font=("Nokora", 10), width=30,bd=0, bg="#FFFFFF",highlightthickness=0, relief="flat")
+        self.EntrySearch.place(x=1590.0, y=90, anchor="center")
 
         self.backButtonImage = PhotoImage(file=resource_path("resources/adminbench/homeButton.png"))
         self.backButton = tk.Button(self.canvas,image=self.backButtonImage, command=self.back_to_admin_homepage,borderwidth=0, highlightthickness=0)
@@ -193,8 +204,35 @@ class AdminBench(tk.Toplevel):
             for i in range(3):
                 self.entries[self.columns[i]].config(state="readonly")
 
+    def SearchApplicant(self):
+        search = self.EntrySearch.get()
+        rows = self.database.searchApplicantDetails(search)
+        
+        # Debugging statements
+        print(f"Search term: {search}")
+        print(f"Rows returned: {rows}")
+
+
+        for row in self.tree.get_children(): 
+            self.tree.delete(row)
+
+
+        if not rows: # If no results are found
+            print("No results found.")
+            messagebox.showinfo("No Results", "No references found.")
+            return
+
+        color1 = "#CFCECE"  # Light grey
+        color2 = "#FFFFFF"  # Slightly darker grey
+
+        for index, row in enumerate(rows):
+            tag = f"color_{index % 2}"
+            color = color1 if index % 2 == 0 else color2
+            self.tree.tag_configure(tag, background=color)
+            self.tree.insert('', 'end', values=row, tags=(tag,))
 
     def FetchReferenceApplicantData(self):
+        self.EntrySearch.delete(0, tk.END)  # Clear the search entry
         self.ComboBoxSex.set("") # Clear the combobox selection
         rows = self.database.FetchRefApplincatHouseDetails()
 
@@ -237,6 +275,7 @@ class AdminBench(tk.Toplevel):
     def FemaleFetchApplicantData(self):
         rows = self.database.FetchFemaleApplicantDetails()
 
+
         for row in self.tree.get_children():
             self.tree.delete(row)  # Clear the existing data in the Treeview
 
@@ -251,9 +290,11 @@ class AdminBench(tk.Toplevel):
             self.tree.insert('', 'end', values=row, tags=(tag,))
     
     def GenderPicker(self,event):
-        if self.ComboBoxSex.get() =='Male':
+        if self.ComboBoxSex.get() =='Gender - Male':
+            self.EntrySearch.delete(0, tk.END)  # Clear the search entr
             self.MaleFetchApplicantData()
-        if self.ComboBoxSex.get() =='Female':
+        if self.ComboBoxSex.get() =='Gender - Female':
+            self.EntrySearch.delete(0, tk.END)  # Clear the search entry
             self.FemaleFetchApplicantData()
 
             

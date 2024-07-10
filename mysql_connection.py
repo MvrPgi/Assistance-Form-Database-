@@ -326,6 +326,26 @@ class DatabaseConnection:
             finally:
                 self.close_connection
 
+# -------------------------------------------------------SEARCH APPLICANT DETAILS-------------------------------------------------------------------------
+
+    def searchApplicantDetails(self,reference_no):
+            self.open_connection()
+            try:
+                query = """
+                    SELECT R.Reference_No, R.Applicant_ID, R.Date, R.Applicant_Status, A.Full_Name, A.Address, A.Civil_Status, A.Birth_Date, A.Age, A.Sex, A.Nationality, A.Religion, A.Highest_Educ_Attainment, A.Occupation, A.Monthly_Income, A.Membership, A.OtherSourceOfIncome, A.Monthly_Expenditures, A.GrossMonthlyIncome, A.NetMonthlyIncome, H.Household_ID, H.Hhold_Fam_Name, H.Hhold_Fam_Age, H.Hhold_Fam_CivilStatus, H.Hhold_Fam_RSWithPatient, H.Hhold_Fam_HighestEducAttain, H.Hhold_Fam_Occupation, H.Hhold_Fam_MonthlyIncome
+                    FROM Reference AS R
+                    JOIN Applicant_Details AS A ON R.Applicant_ID = A.Applicant_ID
+                    LEFT JOIN Household_Details AS H ON A.Applicant_ID = H.Applicant_ID
+                    WHERE R.Reference_No = %s;
+                """
+                self.cursor.execute(query, (reference_no,))
+                rows = self.cursor.fetchall()
+                return rows
+            except Error as e:
+                print(f"Error: {e}")
+            finally:
+                self.close_connection()
+
 
 
 # -------------------------------------------------------GET LAST REFERENCE ID----------------------------------------------------------------------------
@@ -875,6 +895,7 @@ class DatabaseConnection:
                 print(f"Error: {e}")
         finally:
                 self.close_connection()
+
 
 
 
