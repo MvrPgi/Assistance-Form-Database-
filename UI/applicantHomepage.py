@@ -42,7 +42,7 @@ class ApplicantHomepage(tk.Canvas):
         self.create_line(20.0, 100.0, 200.0, 100.0, fill="#FFFFFF")
 
 
-        self.DashBoardButtonPic = PhotoImage(file=resource_path("resources/applicanthome/DashBoardButton.png"))
+        self.DashBoardButtonPic = PhotoImage(file=resource_path("resources/applicanthome/dashboardButton.png"))
         self.RegisterButtonPic = PhotoImage(file=resource_path("resources/applicanthome/RegisterButton.png"))
         self.ProfileButtonPic = PhotoImage(file=resource_path("resources/applicanthome/ProfileButton.png"))
         self.LogoutButtonPic = PhotoImage(file=resource_path("resources/applicanthome/LogoutButton.png"))
