@@ -495,6 +495,7 @@ class DatabaseConnection:
 
 
     def FetchRefApplincatHouseDetails(self):
+            self.open_connection()
 
             try:
                 query = """
@@ -508,6 +509,8 @@ class DatabaseConnection:
                 return rows
             except Error as e:
                 print(f"Error: {e}")
+            finally:
+                 self.close_connection()
 
 
                 # LEFT JOIN ensures that all applicants are included, regardless of whether they have household details.
@@ -763,6 +766,8 @@ class DatabaseConnection:
                 return rows
             except Error as e:
                 print(f"Error: {e}")
+            finally:
+                self.close_connection()
 
     #----------------------------------------------------------------Moderate 3------------------------------------------------------------------------
 
@@ -782,6 +787,8 @@ class DatabaseConnection:
                 return rows
             except Error as e:
                 print(f"Error: {e}")
+            finally:
+                self.close_connection()
 
 #---------------------------------------------------------------MODERATE 4------------------------------------------------------------------------
 
@@ -800,6 +807,8 @@ class DatabaseConnection:
                 return rows
             except Error as e:
                     print(f"Error: {e}")
+            finally:
+                self.close_connection()
 
     #---------------------------------------------------------------- HARD 1------------------------------------------------------------------------
 
@@ -818,6 +827,9 @@ class DatabaseConnection:
             return rows
         except Error as e:
                 print(f"Error: {e}")
+
+        finally:
+            self.close_connection()
 
 
     #---------------------------------------------------------------- HARD 2------------------------------------------------------------------------
@@ -839,6 +851,8 @@ class DatabaseConnection:
             return rows
         except Error as e:
                 print(f"Error: {e}")
+        finally:
+                self.close_connection()
 
 #   ---------------------------------------------------------------- HARD 3------------------------------------------------------------------------
 
@@ -859,6 +873,8 @@ class DatabaseConnection:
             return rows
         except Error as e:
                 print(f"Error: {e}")
+        finally:
+                self.close_connection()
 
 
 
