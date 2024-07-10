@@ -949,11 +949,9 @@ class Register(tk.Canvas):
             else:
                 print("No Household Member 1 inputted.")
                 
-
         except mysql.Error as err:
             print(f"An error occurred: {err}")
-        finally:
-            self.database.close_connection()
+
 
 
     def InsertHousehold2(self):
