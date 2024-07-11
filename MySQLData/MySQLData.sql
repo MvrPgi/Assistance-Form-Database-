@@ -91,7 +91,7 @@ INSERT INTO Household_Details (
 (31, 31, 'Hera P. Germinal', 63, 'W', 'Mother', 'High School', 'Masseuse', 15000),
 (32, 32, 'Joy Y. Dy', 24, 'M', 'Sister', 'College', 'Marketing Associate', 26000),
 (33, 33, 'Belle Z. Milan', 41, 'M', 'Spouse', 'College', 'Senior Programmer', 78000),
-(34, 34, 'Belen Z. Milan', 23, 'S', 'Daughter', 'College', 'Assistant Accountant', 23000),
+(34, 33, 'Belen Z. Milan', 23, 'S', 'Daughter', 'College', 'Assistant Accountant', 23000),
 (35, 36, 'Apple B. Cailing', 42, 'SE', 'Sister', 'Post-graduate', 'Professor', 35000),
 (36, 36, 'Rosendo B. Cailing', 76, 'M', 'Father', 'Elementary', 'Carpenter', 15000),
 (37, 37, 'Lester Z. Cruz', 35, 'S', 'Brother', 'College', 'Seaman', 43000),
