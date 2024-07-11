@@ -59,15 +59,10 @@ Take a look at some screenshots showcasing the intuitive application form and po
     </tr>
     <tr>
         <td>
-            <img src="resources/UI/ApplicantStatus.png" alt="Applicant Status" />
+            <img src="resources/UI/Tables.png" alt="Main Table" />
             <br />
-            <p align="center">Applicant Status</p></td>
+            <p align="center">Main Table</p></td>
         <td>
-            <img src="resources/UI/UserProfile.png" alt="User Profile" />
-            <br />
-            <p align="center">User Profile</p></td>
-    </tr>
-
 </table> 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
