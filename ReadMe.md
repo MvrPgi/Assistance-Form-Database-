@@ -10,6 +10,67 @@ pip install mysql-connector-python
 ```
 Note: If There Is An Error, Try Using `pip3` Instead Of `pip`, Or Add `--user` At The End Of The Command.
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Screenshots
+
+Take a look at some screenshots showcasing the intuitive application form and powerful admin control of our Job Application Portal.
+
+<table>
+   <tr>
+        <td>
+            <img src="resources/UI/ApplicantLandingPage.png" alt="Landing Page" />
+            <br />
+            <p align="center">Landing Page</p></td>
+        <td>
+            <img src="resources/UI/ApplicantSignUP.png" alt="Sign Up" />
+            <br />
+            <p align="center">Sign Up</p></td>
+    </tr>
+    <tr>
+        <td>
+            <img src="resources/UI/AdminLogin.png" alt="Admin Login" />
+            <br />
+            <p align="center">Admin Login</p></td>
+        <td>
+            <img src="resources/UI/ApplicantLogin.png" alt="Applicant Login" />
+            <br />
+            <p align="center">Applicant Login</p></td>
+    </tr>
+    <tr>
+        <td>
+            <img src="resources/UI/ApplicantHome.png" alt="User" />
+            <br />
+            <p align="center">Home Page</p></td>
+        <td>
+            <img src="resources/UI/AdminHomePage.png" alt="Admin" />
+            <br />
+            <p align="center">Admin</p></td>
+    </tr>
+    <tr>
+        <td>
+            <img src="resources/UI/RegisterPage1.png" alt="Register Page 1" />
+            <br />
+            <p align="center">Register Page 1</p></td>
+        <td>
+            <img src="resources/UI/RegisterPage2.png" alt="Register Page 2" />
+            <br />
+            <p align="center">Register Page 2</p></td>
+    </tr>
+    <tr>
+        <td>
+            <img src="resources/UI/ApplicantStatus.png" alt="Applicant Status" />
+            <br />
+            <p align="center">Applicant Status</p></td>
+        <td>
+            <img src="resources/UI/UserProfile.png" alt="User Profile" />
+            <br />
+            <p align="center">User Profile</p></td>
+    </tr>
+
+</table> 
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 ## Introduction
