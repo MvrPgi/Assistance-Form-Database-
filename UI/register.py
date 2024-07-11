@@ -88,7 +88,7 @@ class Register(tk.Canvas):
         self.textImage.append(self.create_image(272.0, 300.0, image=self.religionText))
         self.textImage.append(self.create_image(295.0, 340.0, image=self.monthlyincomeText))
         self.textImage.append(self.create_image(490.0, 169.0, image=self.sexText))
-        self.textImage.append(self.create_image(515.0, 209.0, image=self.membershipText))
+        self.textImage.append(self.create_image(545.0, 209.0, image=self.membershipText))
         self.textImage.append(self.create_image(510.0, 256.0, image=self.civilstatusText))
         self.textImage.append(self.create_image(568.0, 320.0, image=self.educattainmentText))
         self.textImage.append(self.create_image(122.0, 400.0, image=self.otherincomeText))
