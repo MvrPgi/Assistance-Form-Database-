@@ -97,3 +97,9 @@ A complete database system must be developed to manage Individual Medical Assist
 - **Automated Form Gathering**: Extract and process form data from incoming emails.
 - **Database Management**: Store and manage gathered data using SQL..
 - **Data Analysis**: Generate reports and insights from the stored data.
+
+## Contributors
+- **Alwyn John M Mercene** - Project Manager/Developer/Documentation
+- **Marl Ivan Alibado** - UI/UX Designer/Developer
+- **Lucky Silo** - UI/UX Designer
+- **Isha Velasco** - Database Architect
