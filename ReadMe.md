@@ -64,15 +64,11 @@ PSCO APPLICANT ASSISTANCE DATABASE APPLICATION
             <p align="center">Register Page 2</p>
         </td>
     </tr>
-    <tr>
-        <td>
+    <tr> 
+        <td colspan ="2">
             <img src="resources/UI/Tables.png" alt="Main Table" />
             <br />
             <p align="center">Main Table</p>
-        </td>
-        <td>
-            <!-- Add content for the second column here -->
-        </td>
     </tr>
 </table>
 
